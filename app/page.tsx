@@ -1,403 +1,579 @@
+"use client";
+
+import { useRef, useState } from "react";
 import {
-  ArrowDownRight,
+  ArrowDown,
+  ArrowRight,
   ArrowUpRight,
-  BookOpen,
-  BrainCircuit,
+  Asterisk,
   Check,
-  Code2,
   Database,
-  Layers3,
-  MessageCircle,
-  Network,
-  ShieldCheck,
-  Sparkles,
-  Workflow,
+  FileText,
+  Code2,
+  Layers,
+  Plus,
+  Search,
+  X,
 } from "lucide-react";
 
-const pipeline = [
-  "Question guard",
-  "Intent planning",
-  "Semantic retrieval",
-  "SQL generation",
-  "Contract validation",
-  "Database execution",
-  "Quality review",
-  "Insight + chart",
-];
-
-const milestones = [
+const projects = [
   {
-    date: "09 Feb 2026",
-    title: "A reliable data foundation",
-    copy: "Added connection validation and live schema exploration so the application worked from verified database metadata rather than assumptions.",
-    tag: "Daily work log",
+    name: "Accelerator AI",
+    type: "Enterprise AI · Team project",
+    stack: "TypeScript / React / Qdrant",
+    intro:
+      "An enterprise analytics platform that connects business questions to governed data. My work spans the React interface, semantic modeling, retrieval, and the backend path from a question to validated SQL.",
+    challenge:
+      "A useful answer needs more than a plausible query. The system needs the right datasource, relevant business definitions, and clear boundaries around execution.",
+    contributions: [
+      "Database connection validation and live schema exploration.",
+      "Semantic modeling and connection-scoped vector retrieval.",
+      "SQL validation and backend-owned datasource resolution.",
+      "Separation of routes, services, repositories, and frontend features.",
+    ],
+    note: "Based on personal work records and project documentation, February–September 2026. This is a team contribution. The visual is an illustrative concept; company data and proprietary implementation details are omitted.",
   },
   {
-    date: "20 Mar 2026",
-    title: "From physical schema to business meaning",
-    copy: "Moved semantic-model generation toward live metadata, mapping tables and fields into business-facing dimensions and measures.",
-    tag: "Daily work log",
+    name: "Hybrid Document RAG",
+    type: "AI engineering · Exploration",
+    stack: "Python / ChromaDB / Ollama",
+    intro:
+      "A document retrieval project exploring how chunking, embeddings, and persistent vector storage can ground language-model responses in relevant source material.",
+    challenge:
+      "Retrieval quality shapes answer quality. Finding useful context and handling unreliable API calls are as important as choosing a model.",
+    contributions: [
+      "Custom document chunking and embedding workflows.",
+      "Persistent vector storage with ChromaDB.",
+      "Local model experimentation with Ollama.",
+      "Resilient backoff around external model APIs.",
+    ],
+    note: "A personal learning project. The preview is a conceptual illustration, not a live document search service.",
   },
   {
-    date: "03 Jun 2026",
-    title: "Natural-language analytics becomes the core",
-    copy: "Worked across an Express and React system that mapped questions to governed metrics, generated multi-dialect SQL, and rendered analytical results.",
-    tag: "Daily work log",
-  },
-  {
-    date: "29 Jul 2026",
-    title: "Revisioned semantics and resilient retrieval",
-    copy: "Helped introduce per-connection semantic revisions, deterministic validation, vector retrieval, retry-safe synchronization, and stronger session boundaries.",
-    tag: "Daily work log",
-  },
-  {
-    date: "19–25 Aug 2026",
-    title: "Grounded RAG and automatic source resolution",
-    copy: "Connected retrieval to governed candidates, tightened SQL trust boundaries, and helped move datasource selection behind the backend instead of exposing it to users.",
-    tag: "Daily work log",
-  },
-  {
-    date: "02–04 Sep 2026",
-    title: "Architecture prepared for continued growth",
-    copy: "Contributed to a phased separation of routes, services, repositories, domain rules, infrastructure, and frontend feature ownership while preserving behavior.",
-    tag: "Daily work log",
-  },
-];
-
-const capabilities = [
-  {
-    icon: Database,
-    title: "Data foundations",
-    copy: "Connection validation, live schema discovery, metadata workflows, credential boundaries, and adapters for relational and cloud data platforms.",
-    accent: "cyan",
-  },
-  {
-    icon: Layers3,
-    title: "Governed semantics",
-    copy: "Business entities, dimensions, measures, relationships, reusable metrics, KPI definitions, revision checks, and deterministic model validation.",
-    accent: "blue",
-  },
-  {
-    icon: BrainCircuit,
-    title: "Grounded AI analytics",
-    copy: "Intent routing, connection-scoped RAG, semantic matching, natural-language-to-SQL, bounded repair, and context-aware analytical responses.",
-    accent: "violet",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Reliability by design",
-    copy: "Read-only SQL boundaries, semantic ownership checks, parameterized filters, stage-owned retries, timeouts, caching, telemetry, and regression coverage.",
-    accent: "amber",
+    name: "JOBBEE API",
+    type: "Backend engineering · Course project",
+    stack: "Node.js / Express / MongoDB",
+    intro:
+      "A REST API project built while studying backend development, covering the practical foundations of a job platform: authentication, search, filtering, and file handling.",
+    challenge:
+      "A clean endpoint is only the beginning. APIs also need predictable pagination, appropriate access boundaries, and input protection.",
+    contributions: [
+      "Authentication workflows using JWT.",
+      "Geospatial filtering and paginated results.",
+      "File handling and REST endpoint organization.",
+      "Input protection against common injection attacks.",
+    ],
+    note: "A course-based project presented as applied learning. The endpoint preview is illustrative; it does not call a live API.",
   },
 ];
 
-const skillGroups = [
-  ["Languages", "TypeScript", "JavaScript", "Python", "Java", "SQL"],
-  ["Frontend", "React", "Vite", "Tailwind CSS", "Redux Toolkit", "Responsive UI"],
-  ["Backend", "Node.js", "Express", "FastAPI", "Spring Boot", "REST APIs"],
-  ["AI systems", "RAG", "Agent workflows", "Qdrant", "Ollama", "LLM APIs"],
-  ["Data", "PostgreSQL", "MySQL", "SQL Server", "TypeORM", "Semantic models"],
-  ["Engineering", "SQL validation", "API security", "Testing", "Caching", "Git"],
-];
-
-const completedLearning = [
-  "Azure AI Foundry Agent Service",
-  "Local LLMs with Ollama & LM Studio",
-  "FastAPI — Beginner to Advanced",
-  "Node.js RESTful API Masterclass",
-  "React 18 / 19",
-  "Complete JavaScript Course",
-];
+function AnalyticsVisual() {
+  const [view, setView] = useState("Insights");
+  return (
+    <div className="analytics-window">
+      <div className="window-top">
+        <span className="mini-brand">
+          <Asterisk size={20} /> accelerator<span>ai</span>
+        </span>
+        <span className="sample-label">ILLUSTRATIVE PREVIEW</span>
+      </div>
+      <div className="analytics-body">
+        <aside className="mock-sidebar" aria-hidden="true">
+          <Layers size={18} />
+          <Database size={18} />
+          <FileText size={18} />
+          <span className="sidebar-bottom">B</span>
+        </aside>
+        <div className="analytics-main">
+          <div className="mock-heading">
+            <span>Your data. A little clearer.</span>
+            <span className="connected">
+              <i /> Connected
+            </span>
+          </div>
+          <div className="question">
+            <span>What’s the story behind this quarter?</span>
+            <span className="question-arrow">
+              <ArrowUpRight size={17} />
+            </span>
+          </div>
+          <div className="mock-tabs" aria-label="Explore the concept preview">
+            {["Insights", "Query"].map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                aria-pressed={view === tab}
+                onClick={() => setView(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+            <span>
+              <Check size={12} /> Validated
+            </span>
+          </div>
+          {view === "Insights" ? (
+            <div className="chart-panel">
+              <div className="chart-label">
+                <span>Quarterly overview</span>
+                <span>Sample data</span>
+              </div>
+              <div
+                className="chart"
+                aria-label="Illustrative bar chart with no real business data"
+                role="img"
+              >
+                {[36, 53, 44, 65, 57, 79, 69, 93, 81, 108, 97, 126].map(
+                  (height, i) => (
+                    <span key={i} style={{ height: `${height}px` }} />
+                  ),
+                )}
+              </div>
+              <div className="chart-axis">
+                <span>JAN</span>
+                <span>FEB</span>
+                <span>MAR</span>
+              </div>
+            </div>
+          ) : (
+            <div className="query-panel">
+              <span className="code-comment">
+                -- Illustrative read-only query
+              </span>
+              <code>
+                <b>SELECT</b> month, SUM(revenue)
+                <br />
+                <b>FROM</b> sample_sales
+                <br />
+                <b>GROUP BY</b> month
+                <br />
+                <b>ORDER BY</b> month;
+              </code>
+            </div>
+          )}
+          <div className="grounding">
+            <span className="ground-dot" /> Grounded in semantics. Checked
+            before execution.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
-  return (
-    <main>
-      <a className="skip-link" href="#main-content">Skip to content</a>
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [selected, setSelected] = useState(0);
+  const project = projects[selected];
+  function openProject(index: number) {
+    setSelected(index);
+    dialog.current?.showModal();
+  }
 
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Binay Uppen Sharma, home">
-          <span className="brand-mark">BU</span>
-          <span>Binay Uppen Sharma</span>
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <header className="header wrap" id="top">
+        <a
+          className="wordmark"
+          href="#top"
+          aria-label="Binay Uppen Sharma home"
+        >
+          binay<span>✳</span>
         </a>
-        <nav aria-label="Primary navigation">
+        <nav aria-label="Main navigation">
           <a href="#work">Work</a>
-          <a href="#experience">Experience</a>
-          <a href="#learning">Learning</a>
-          <a className="nav-cta" href="#connect">Connect <ArrowDownRight size={15} aria-hidden="true" /></a>
+          <a href="#about">About</a>
+          <a className="contact-nav" href="#contact">
+            Let’s talk <ArrowUpRight size={15} />
+          </a>
         </nav>
       </header>
-
-      <div id="main-content">
-        <section className="hero shell" id="top">
-          <div className="hero-copy">
-            <p className="eyebrow"><span /> Full-stack + AI engineering</p>
-            <h1>I build governed AI systems that turn complex data into clear decisions.</h1>
-            <p className="lede">
-              Programmer Analyst Trainee working across semantic analytics,
-              natural-language-to-SQL, RAG, database systems, and polished React experiences.
-            </p>
-            <div className="hero-actions">
-              <a className="button primary" href="#work">Explore the work <ArrowUpRight size={17} aria-hidden="true" /></a>
-              <a className="button ghost" href="https://github.com/BinayUppenSharma" target="_blank" rel="noreferrer">
-                <Code2 size={17} aria-hidden="true" /> GitHub
+      <main id="main">
+        <section className="hero wrap" aria-labelledby="hero-title">
+          <div className="hero-topline">
+            <span className="eyebrow">FULL-STACK & AI ENGINEER</span>
+            <span className="location">
+              <span className="status-dot" /> BASED IN CHENNAI, INDIA
+            </span>
+          </div>
+          <div className="hero-composition">
+            <div className="hero-type">
+              <h1 id="hero-title">
+                Thoughtfully
+                <br />
+                built.
+                <br />
+                <span className="serif-word">Intelligently</span>
+                <br />
+                connected<span className="blue-period">.</span>
+              </h1>
+            </div>
+            <div className="sculpture" aria-hidden="true">
+              {["one", "two", "three", "four", "five", "six", "seven"].map(
+                (n) => (
+                  <div className={`orbital o-${n}`} key={n} />
+                ),
+              )}
+              <div className="sculpture-core" />
+              <span className="sculpture-coordinate">01 / SYSTEMS IN SYNC</span>
+              <span className="sculpture-plus">+</span>
+            </div>
+            <div className="hero-intro">
+              <p>
+                I’m Binay Uppen Sharma.
+                <br />I build full-stack products and AI systems that make
+                complex things feel simple.
+              </p>
+              <a className="round-link" href="#work">
+                <span className="round-icon">
+                  <ArrowDown size={18} />
+                </span>
+                Explore selected work
               </a>
             </div>
           </div>
-
-          <aside className="system-card" aria-label="Accelerator AI system overview">
-            <div className="system-card-top">
-              <p>Flagship case study</p>
-              <span>2026 · active</span>
-            </div>
-            <h2>Accelerator AI</h2>
-            <p className="system-summary">
-              A sanitized view of an enterprise semantic analytics platform developed with a broader team.
-            </p>
-            <div className="pipeline-mini" aria-label="Simplified analytics flow">
-              <div><Sparkles size={16} aria-hidden="true" /><span>Natural language</span></div>
-              <div><Database size={16} aria-hidden="true" /><span>Governed semantics</span></div>
-              <div><ShieldCheck size={16} aria-hidden="true" /><span>Validated SQL</span></div>
-            </div>
-            <div className="system-proof">
-              <span>TypeScript / Express</span><span>React / Vite</span><span>Qdrant / Ollama</span>
-            </div>
-          </aside>
-        </section>
-
-        <section className="proof-strip" aria-label="Professional summary">
-          <div><strong>2</strong><span>SRM role stages</span></div>
-          <div><strong>Feb ’26</strong><span>Flagship project start</span></div>
-          <div><strong>Full stack</strong><span>Interface to infrastructure</span></div>
-          <p>Evidence over adjectives.</p>
-        </section>
-
-        <section className="section shell case-study" id="work">
-          <div className="section-heading">
-            <p className="section-kicker">01 · Flagship work</p>
-            <h2>Accelerator AI: from connected data to governed answers.</h2>
+          <div className="hero-bottom">
+            <span>CODE WITH INTENT. BUILD WITH CURIOSITY.</span>
+            <span>SELECTED WORK / 2025—26</span>
           </div>
+        </section>
 
-          <div className="case-intro-grid">
-            <article>
-              <p className="large-copy">
-                The platform began as a database-connectivity and schema experience. It evolved into
-                a semantic analytics system that resolves the right governed datasource, retrieves
-                relevant business concepts, generates bounded SQL, validates it, executes it, and
-                turns the result into an analytical response.
+        <section
+          className="work-section wrap"
+          id="work"
+          aria-labelledby="work-title"
+        >
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">01 / SELECTED WORK</span>
+              <h2 id="work-title">
+                A few things
+                <br />
+                <span className="serif-word">I’ve been building.</span>
+              </h2>
+            </div>
+            <p>
+              Across interfaces, APIs,
+              <br />
+              and the intelligence in between.
+            </p>
+          </div>
+          <article className="flagship">
+            <div className="flagship-copy">
+              <div className="project-overline">
+                <span>01</span>
+                <span>FEATURED PROJECT</span>
+              </div>
+              <div>
+                <span className="project-category">
+                  ENTERPRISE AI · TEAM PROJECT
+                </span>
+                <h3>Accelerator AI</h3>
+                <p>
+                  Making complex data
+                  <br />a conversation.
+                </p>
+                <span className="project-stack">
+                  TypeScript · React · Qdrant
+                </span>
+              </div>
+              <button className="project-link" onClick={() => openProject(0)}>
+                Inside the project{" "}
+                <span>
+                  <ArrowUpRight size={22} />
+                </span>
+              </button>
+            </div>
+            <div className="flagship-visual">
+              <div className="visual-grid" />
+              <AnalyticsVisual />
+              <span className="visual-caption">
+                QUESTION → CONTEXT → CLARITY
+              </span>
+            </div>
+          </article>
+          <div className="project-grid">
+            <article className="small-project">
+              <button
+                className="project-preview rag-preview"
+                aria-label="View Hybrid Document RAG project"
+                onClick={() => openProject(1)}
+              >
+                <span className="preview-index">
+                  02 / DOCUMENT INTELLIGENCE
+                </span>
+                <div className="document doc-back">
+                  <FileText size={24} />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </div>
+                <div className="document doc-front">
+                  <span className="doc-title">
+                    From pages
+                    <br />
+                    to perspective.
+                  </span>
+                  <span className="doc-rule" />
+                  <span className="doc-match">
+                    <Search size={13} /> Context found
+                  </span>
+                  <div className="doc-lines">
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                </div>
+                <span className="rag-orbit" />
+                <span className="preview-open">
+                  <ArrowUpRight size={21} />
+                </span>
+              </button>
+              <div className="project-caption">
+                <div>
+                  <h3>Hybrid Document RAG</h3>
+                  <p>Better answers start with better context.</p>
+                </div>
+                <span>PYTHON / RAG</span>
+              </div>
+            </article>
+            <article className="small-project">
+              <button
+                className="project-preview api-preview"
+                aria-label="View JOBBEE API project"
+                onClick={() => openProject(2)}
+              >
+                <span className="preview-index">03 / BACKEND FOUNDATIONS</span>
+                <div className="terminal">
+                  <div className="terminal-top">
+                    <span>
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                    <span>jobbee / api</span>
+                  </div>
+                  <div className="terminal-content">
+                    <p>
+                      <span className="http-method">GET</span> /api/v1/jobs
+                    </p>
+                    <div className="terminal-rule" />
+                    <span className="code-comment">
+                      {"// The next opportunity starts here."}
+                    </span>
+                    <div className="json-code">
+                      {"{"}
+                      <br />
+                      &nbsp;&nbsp;<span>&quot;success&quot;</span>:{" "}
+                      <em>true</em>,<br />
+                      &nbsp;&nbsp;<span>&quot;data&quot;</span>: [<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;{"{"}{" "}
+                      <span>&quot;role&quot;</span>:{" "}
+                      <em>&quot;Your next chapter&quot;</em> {"}"}
+                      <br />
+                      &nbsp;&nbsp;]
+                      <br />
+                      {"}"}
+                    </div>
+                    <span className="response-status">
+                      <i /> 200 OK <span>ILLUSTRATIVE RESPONSE</span>
+                    </span>
+                  </div>
+                </div>
+                <span className="preview-open">
+                  <ArrowUpRight size={21} />
+                </span>
+              </button>
+              <div className="project-caption">
+                <div>
+                  <h3>JOBBEE API</h3>
+                  <p>The foundations behind a job platform.</p>
+                </div>
+                <span>NODE.JS / EXPRESS</span>
+              </div>
+            </article>
+          </div>
+          <div className="work-footnote">
+            <span>
+              Work shown with care. Company details kept confidential.
+            </span>
+            <a
+              href="https://github.com/Uppen-Sharma"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Find me on GitHub <ArrowUpRight size={15} />
+            </a>
+          </div>
+        </section>
+
+        <section
+          className="about-section"
+          id="about"
+          aria-labelledby="about-title"
+        >
+          <div className="wrap about-grid">
+            <div className="about-left">
+              <span className="eyebrow">02 / A LITTLE ABOUT ME</span>
+              <div className="monogram-art" aria-hidden="true">
+                <span>b.</span>
+                <Asterisk className="monogram-star" />
+                <span className="monogram-label">
+                  ALWAYS A WORK IN PROGRESS.
+                </span>
+              </div>
+            </div>
+            <div className="about-copy">
+              <h2 id="about-title">
+                Curious by default.
+                <br />
+                <span className="serif-word">Engineer by practice.</span>
+              </h2>
+              <p>
+                I like understanding how the whole thing works—from the first
+                interaction to the query behind it.
               </p>
               <p>
-                My contribution spans that evolution across the TypeScript/Express backend and the
-                React/Vite frontend. The work is presented as team contribution; confidential data,
-                customer names, connection details, and internal identifiers are intentionally omitted.
+                At SRM Technologies, I’m growing from full-stack development
+                into AI engineering, working on semantic analytics, retrieval,
+                and reliable data workflows.
               </p>
-            </article>
-            <aside className="evidence-note">
-              <BookOpen size={22} aria-hidden="true" />
-              <h3>Evidence basis</h3>
-              <p>Personal daily work records cross-checked against current project documentation.</p>
-              <ul>
-                <li><Check size={14} aria-hidden="true" /> Dated engineering milestones</li>
-                <li><Check size={14} aria-hidden="true" /> Current architecture review</li>
-                <li><Check size={14} aria-hidden="true" /> Proprietary details removed</li>
-              </ul>
-            </aside>
-          </div>
-
-          <div className="architecture-card">
-            <div className="architecture-title">
-              <div>
-                <p className="micro-label">Active analytical path</p>
-                <h3>One question. Eight guarded stages.</h3>
+              <div className="about-facts">
+                <div>
+                  <span>CURRENTLY</span>
+                  <strong>Programmer Analyst Trainee</strong>
+                  <p>SRM Technologies · Chennai</p>
+                </div>
+                <div>
+                  <span>EXPLORING</span>
+                  <strong>Better data foundations</strong>
+                  <p>TypeORM · PostgreSQL · SQL</p>
+                </div>
               </div>
-              <Workflow size={28} aria-hidden="true" />
+              <div className="toolkit">
+                <span>MY EVERYDAY TOOLKIT</span>
+                <p>
+                  TypeScript <b>/</b> React <b>/</b> Node.js <b>/</b> Python{" "}
+                  <b>/</b> SQL
+                </p>
+              </div>
             </div>
-            <ol className="architecture-flow">
-              {pipeline.map((step, index) => (
-                <li key={step}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{step}</strong>
+          </div>
+        </section>
+
+        <section
+          className="contact-section wrap"
+          id="contact"
+          aria-labelledby="contact-title"
+        >
+          <div className="contact-top">
+            <span className="eyebrow">03 / WHAT’S NEXT?</span>
+            <span className="contact-note">
+              GOOD WORK STARTS WITH A CONVERSATION.
+            </span>
+          </div>
+          <a
+            className="contact-title"
+            href="https://www.linkedin.com/in/BinayUppenSharma"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <h2 id="contact-title">
+              Let’s build
+              <br />
+              <span className="serif-word">something good.</span>
+            </h2>
+            <span className="contact-arrow">
+              <ArrowUpRight strokeWidth={1.2} />
+            </span>
+          </a>
+          <div className="contact-bottom">
+            <p>
+              Have an interesting problem?
+              <br />
+              I’d love to hear about it.
+            </p>
+            <div>
+              <a
+                href="https://www.linkedin.com/in/BinayUppenSharma"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn <ArrowUpRight size={16} />
+              </a>
+              <a
+                href="https://github.com/Uppen-Sharma"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Code2 size={16} /> GitHub <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="footer wrap">
+        <a className="wordmark" href="#top" aria-label="Back to top">
+          binay<span>✳</span>
+        </a>
+        <span>© {new Date().getFullYear()} BINAY UPPEN SHARMA</span>
+        <a href="#top">
+          BACK TO TOP <ArrowUpRight size={14} />
+        </a>
+      </footer>
+
+      <dialog
+        ref={dialog}
+        className="project-dialog"
+        aria-labelledby="dialog-title"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) dialog.current?.close();
+        }}
+      >
+        <div className="dialog-inner">
+          <div className="dialog-top">
+            <span className="eyebrow">PROJECT NOTES / 0{selected + 1}</span>
+            <button
+              className="close-button"
+              aria-label="Close project details"
+              onClick={() => dialog.current?.close()}
+              autoFocus
+            >
+              <X size={22} />
+            </button>
+          </div>
+          <span className="project-category">{project.type}</span>
+          <h2 id="dialog-title">{project.name}</h2>
+          <p className="dialog-intro">{project.intro}</p>
+          <div className="dialog-section">
+            <h3>The problem</h3>
+            <p>{project.challenge}</p>
+          </div>
+          <div className="dialog-section">
+            <h3>My focus</h3>
+            <ul>
+              {project.contributions.map((item) => (
+                <li key={item}>
+                  <Plus size={16} />
+                  <span>{item}</span>
                 </li>
               ))}
-            </ol>
-            <p className="architecture-caption">
-              The system stops on missing or ambiguous semantic evidence instead of guessing a physical owner or executing an unsafe query.
-            </p>
+            </ul>
           </div>
-
-          <div className="capability-grid">
-            {capabilities.map(({ icon: Icon, title, copy, accent }) => (
-              <article className={`capability-card ${accent}`} key={title}>
-                <div className="icon-box"><Icon size={22} aria-hidden="true" /></div>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section timeline-section">
-          <div className="shell">
-            <div className="section-heading compact">
-              <p className="section-kicker">Project progression</p>
-              <h2>Dated work, not a retrospective claim.</h2>
-            </div>
-            <div className="timeline">
-              {milestones.map((item, index) => (
-                <article className="timeline-item" key={item.date}>
-                  <div className="timeline-index">{String(index + 1).padStart(2, "0")}</div>
-                  <div className="timeline-date"><time>{item.date}</time><span>{item.tag}</span></div>
-                  <div className="timeline-copy"><h3>{item.title}</h3><p>{item.copy}</p></div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section shell" id="experience">
-          <div className="section-heading split-heading">
-            <div>
-              <p className="section-kicker">02 · Experience</p>
-              <h2>Growth through increasingly complex systems.</h2>
-            </div>
-            <p>Chennai, India</p>
-          </div>
-
-          <div className="experience-list">
-            <article className="experience-card featured">
-              <div className="experience-meta"><span>SRM Technologies</span><span>Sep 2025 — Present</span></div>
-              <div className="role-grid">
-                <div>
-                  <p className="role-date">Apr 2026 — Present</p>
-                  <h3>Programmer Analyst Trainee</h3>
-                </div>
-                <div>
-                  <p className="role-date">Sep 2025 — Mar 2026</p>
-                  <h3>Full-Stack & AI Developer Intern</h3>
-                </div>
-              </div>
-              <p>
-                Progressed from frontend foundations and application workflows into database connectivity,
-                semantic modeling, RAG, agent orchestration, SQL reliability, application security, and system architecture.
-              </p>
-              <div className="experience-tags"><span>Accelerator AI</span><span>Full-stack delivery</span><span>Enterprise analytics</span></div>
-            </article>
-
-            <article className="experience-card">
-              <div className="experience-meta"><span>Fimo Info Solutions Pvt. Ltd.</span><span>Mar — Jun 2025</span></div>
-              <h3>Java Developer Intern</h3>
-              <div className="outcome-grid">
-                <div><strong>50,000+</strong><span>messages delivered</span></div>
-                <div><strong>&lt; 15 sec</strong><span>recorded processing time</span></div>
-              </div>
-              <p>
-                Built a bulk messaging application with Java, Spring Boot, Spring Kafka, and parallel processing;
-                also developed a Linux-hosted HLS live-streaming application.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section className="section projects-section">
-          <div className="shell">
-            <div className="section-heading compact">
-              <p className="section-kicker">Selected supporting work</p>
-              <h2>Projects that reinforce the core story.</h2>
-            </div>
-            <div className="project-grid">
-              <article className="project-card">
-                <div className="project-number">A</div>
-                <div>
-                  <p className="micro-label">AI engineering</p>
-                  <h3>Hybrid Document RAG</h3>
-                  <p>Context-grounded document retrieval using custom chunking, embeddings, persistent vector storage, and resilient API backoff.</p>
-                  <div className="project-tags"><span>Python</span><span>ChromaDB</span><span>Ollama</span><span>Gemini</span></div>
-                </div>
-              </article>
-              <article className="project-card">
-                <div className="project-number">B</div>
-                <div>
-                  <p className="micro-label">Backend systems</p>
-                  <h3>JOBBEE API</h3>
-                  <p>REST backend with authentication, geospatial filtering, pagination, file handling, and defenses against common injection attacks.</p>
-                  <div className="project-tags"><span>Node.js</span><span>Express</span><span>MongoDB</span><span>JWT</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section className="section shell toolkit-section" id="about">
-          <div className="section-heading">
-            <p className="section-kicker">03 · Toolkit</p>
-            <h2>Comfortable across the path from interface to query execution.</h2>
-          </div>
-          <div className="skills-grid">
-            {skillGroups.map(([title, ...skills]) => (
-              <article key={title}>
-                <h3>{title}</h3>
-                <div>{skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section learning-section" id="learning">
-          <div className="shell learning-grid">
-            <div>
-              <p className="section-kicker">04 · Learning in public</p>
-              <h2>Structured learning tied back to practical work.</h2>
-              <p className="large-copy small">
-                Courses are selected for relevance, not volume. Completed training in agent systems,
-                local LLMs, backend APIs, and frontend engineering supports the work shown above.
-              </p>
-            </div>
-            <div className="learning-list">
-              {completedLearning.map((course, index) => (
-                <div key={course}><span>{String(index + 1).padStart(2, "0")}</span><p>{course}</p><Check size={16} aria-label="Completed" /></div>
-              ))}
-            </div>
-          </div>
-          <div className="shell current-focus">
-            <div className="focus-icon"><Network size={25} aria-hidden="true" /></div>
-            <div>
-              <p className="micro-label">Current engineering focus · Sep 2026</p>
-              <h3>TypeORM + PostgreSQL</h3>
-              <p>Entity design, SQL constraints, relationships, repositories, QueryBuilder, joins, compound filters, schema verification, and connection lifecycle handling.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="section shell education-section">
-          <div className="education-card">
-            <div className="education-mark"><BookOpen size={26} aria-hidden="true" /></div>
-            <div>
-              <p className="section-kicker">Education</p>
-              <h2>Master of Computer Applications</h2>
-              <p>Kristu Jayanti University, Bangalore · 2023 — 2025</p>
-            </div>
-            <strong>8.14 CGPA</strong>
-          </div>
-        </section>
-
-        <section className="connect-section" id="connect">
-          <div className="shell connect-grid">
-            <div>
-              <p className="section-kicker">Let’s connect</p>
-              <h2>Interested in full-stack systems, AI engineering, or data products?</h2>
-            </div>
-            <div className="connect-actions">
-              <a href="https://www.linkedin.com/in/BinayUppenSharma" target="_blank" rel="noreferrer"><MessageCircle size={18} /> LinkedIn <ArrowUpRight size={16} /></a>
-              <a href="https://github.com/BinayUppenSharma" target="_blank" rel="noreferrer"><Code2 size={18} /> GitHub <ArrowUpRight size={16} /></a>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <footer className="site-footer shell">
-        <div className="brand"><span className="brand-mark">BU</span><span>Binay Uppen Sharma</span></div>
-        <p>Full-stack & AI engineering · Chennai, India</p>
-        <a href="#top">Back to top <ArrowUpRight size={14} aria-hidden="true" /></a>
-      </footer>
-    </main>
+          <p className="dialog-stack">{project.stack}</p>
+          <p className="dialog-note">{project.note}</p>
+          <button
+            className="dialog-back"
+            onClick={() => dialog.current?.close()}
+          >
+            Back to selected work <ArrowRight size={16} />
+          </button>
+        </div>
+      </dialog>
+    </>
   );
 }
