@@ -242,7 +242,7 @@ export default function Home() {
       <main id="main">
         <section className="hero wrap" aria-labelledby="hero-title">
           <div className="hero-topline">
-            <span className="eyebrow">FULL-STACK & AI ENGINEER</span>
+            <span className="eyebrow">JAVASCRIPT · MERN STACK DEVELOPER</span>
             <span className="location">
               <span className="status-dot" /> BASED IN CHENNAI, INDIA
             </span>
@@ -272,8 +272,8 @@ export default function Home() {
             <div className="hero-intro">
               <p>
                 I’m Binay Uppen Sharma.
-                <br />I build full-stack products and AI systems that make
-                complex things feel simple.
+                <br />I build with JavaScript, React, Node.js and MongoDB—bringing
+                thoughtful interfaces and AI-powered workflows together.
               </p>
               <a className="round-link" href="#work">
                 <span className="round-icon">
@@ -325,7 +325,7 @@ export default function Home() {
                   <br />a conversation.
                 </p>
                 <span className="project-stack">
-                  TypeScript · React · Qdrant
+                  Node.js · React · Semantic analytics
                 </span>
               </div>
               <button className="project-link" onClick={() => openProject(0)}>
@@ -455,7 +455,7 @@ export default function Home() {
           <ProjectCollection onOpen={openProject} />
           <div className="work-footnote">
             <span>
-              Work shown with care. Company details kept confidential.
+              SRM learning, internship POCs and team contributions. Company details kept confidential.
             </span>
             <a
               href="https://github.com/Uppen-Sharma"
@@ -487,13 +487,13 @@ export default function Home() {
                 <div>
                   <span>2025 — PRESENT</span>
                   <strong>SRM Technologies</strong>
-                  <p>Full-stack & AI internship → Programmer Analyst Trainee</p>
+                  <p>Internship (7 months) → Programmer Analyst Trainee (full time)</p>
                 </div>
                 <div>
                   <span>MAR — JUN 2025</span>
                   <strong>Fimo Info Solutions</strong>
                   <p>
-                    Java internship · Spring Kafka messaging and HLS streaming
+                    Internship · Live streaming application; messaging POC
                   </p>
                 </div>
                 <div>
@@ -514,9 +514,9 @@ export default function Home() {
                 interaction to the query behind it.
               </p>
               <p>
-                At SRM Technologies, I’m growing from full-stack development
-                into AI engineering, working on semantic analytics, retrieval,
-                and reliable data workflows.
+                JavaScript is my foundation. At SRM Technologies, I’m focusing on
+                MERN development alongside semantic analytics, retrieval and AI
+                proofs of concept. My TypeScript work is AI-assisted.
               </p>
               <div className="about-facts">
                 <div>
@@ -533,9 +533,10 @@ export default function Home() {
               <div className="toolkit">
                 <span>MY EVERYDAY TOOLKIT</span>
                 <p>
-                  TypeScript <b>/</b> React <b>/</b> Node.js <b>/</b> Python{" "}
-                  <b>/</b> Java <b>/</b> MySQL
+                  JavaScript <b>/</b> MongoDB <b>/</b> Express <b>/</b> React{" "}
+                  <b>/</b> Node.js <b>/</b> MySQL
                 </p>
+                <p>Claude Code &amp; Codex for automation, agentic workflows and implementation.</p>
               </div>
             </div>
           </div>

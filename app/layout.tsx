@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Binay Uppen Sharma | Full-Stack & AI Engineer",
+  title: "Binay Uppen Sharma | JavaScript & MERN Stack Developer",
   description:
-    "Full-stack and AI engineering portfolio with evidence-backed case studies in semantic analytics, RAG, and database systems.",
+    "JavaScript-first MERN stack developer. Explore SRM learning projects, proofs of concept, Accelerator AI contributions, and AI-assisted development workflows.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

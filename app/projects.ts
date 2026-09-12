@@ -18,10 +18,10 @@ export type Project = {
 export const projects: Project[] = [
   {
     name: "Accelerator AI",
-    type: "Enterprise analytics · Team contribution",
+    type: "SRM · Evolving analytics project · Team contribution",
     category: "AI",
     summary: "From a business question to a grounded, validated answer.",
-    stack: "TypeScript / Express / React / Qdrant / Ollama",
+    stack: "Node.js / Express / React / Qdrant / Ollama / TypeScript (AI-assisted)",
     intro:
       "An enterprise analytics platform that connects business questions to governed data. My contribution spans the React interface, semantic modeling, retrieval, and the backend path from a question to validated SQL.",
     challenge:
@@ -31,12 +31,13 @@ export const projects: Project[] = [
       "Semantic models and connection-scoped vector retrieval to connect business language with relevant data concepts.",
       "Backend-owned datasource resolution and SQL validation before query execution.",
       "Separation of routes, services, repositories, and frontend features as the platform evolved.",
+      "Earlier autonomous-analytics and DeepAgent POCs are iterations of this same project, not separate product achievements.",
     ],
     note: "Based on personal work records and project documentation, February–September 2026. Team contribution; proprietary source and company data are not published here. The visual is an illustrative concept.",
   },
   {
     name: "Document Intelligence",
-    type: "Document processing · Full-stack AI",
+    type: "SRM internship · Document-processing POC",
     category: "AI",
     summary: "From dense PDFs to structured Excel and CSV files.",
     stack:
@@ -60,7 +61,7 @@ export const projects: Project[] = [
   },
   {
     name: "TaskFlows",
-    type: "Workflow application · Full stack",
+    type: "Workflow application · MERN stack",
     category: "Full stack",
     summary: "Task proposals, approvals, and time tracking in one flow.",
     stack: "React / Redux Toolkit / Node.js / Express / MongoDB / Vitest",
@@ -83,7 +84,7 @@ export const projects: Project[] = [
   },
   {
     name: "Power BI Migration Toolkit",
-    type: "BI migration · Data tooling",
+    type: "SRM internship · BI migration POC family",
     category: "Data",
     summary: "Cognos XML → model mapping → a Power BI project.",
     stack: "Python / FastAPI / React / React Flow / Monaco / Gemini",
@@ -97,7 +98,7 @@ export const projects: Project[] = [
       "AI-assisted DAX generation with reference checks and validation helpers.",
       "Generation of model and report definitions packaged as a downloadable Power BI project archive.",
     ],
-    note: "The public code shows the migration approach; customer models and report data stay private. Generated output is reviewed before use in Power BI.",
+    note: "SRM learning and internship POC work. Related migration-tool iterations are grouped here rather than counted as separate products. The public version documents a 5-step wizard; this is workflow scope, not a measured business-performance claim. Customer models and private repository details stay private.",
     repo: "https://github.com/Uppen-Sharma/XML_TO_PowerBI_Project",
     evidence: {
       label: "Project export implementation",
@@ -129,10 +130,10 @@ export const projects: Project[] = [
   },
   {
     name: "Multi-Agent Reflection",
-    type: "Local AI · Agent orchestration",
+    type: "SRM internship · Agent-workflow POC",
     category: "AI",
     summary: "Generate, evaluate, reflect—and refine the next draft.",
-    stack: "TypeScript / Node.js / Ollama",
+    stack: "Node.js / Ollama / TypeScript (AI-assisted)",
     intro:
       "An experimental multi-agent system that iterates on generated work using producer, evaluator, and critic/coordinator roles. Local language models supply drafts and feedback within a bounded refinement loop.",
     challenge:
@@ -175,7 +176,7 @@ export const projects: Project[] = [
   },
   {
     name: "JOBBEE API",
-    type: "REST API · Course project",
+    type: "SRM internship · Applied backend learning",
     category: "Backend",
     summary: "Job search, geospatial filtering, and application uploads.",
     stack: "Node.js / Express / MongoDB / Mongoose / JWT",
@@ -198,12 +199,12 @@ export const projects: Project[] = [
   },
   {
     name: "Live Streaming Platform",
-    type: "Java application · Media systems",
+    type: "Fimo internship · Main project",
     category: "Backend",
     summary: "Live playback, chat, recordings, and highlight clips.",
     stack: "Java / Spring Boot / MySQL / HLS / Nginx RTMP / FFmpeg",
     intro:
-      "A live-streaming web application bringing HLS playback together with chat, audience analytics, recordings, and highlights. Developed during my Java internship, with deployment on Linux.",
+      "My main project during the Fimo internship: a live-streaming application bringing HLS playback together with chat, audience analytics, recordings and highlights, deployed on Linux. A separate Spring Kafka messaging application was a proof of concept.",
     challenge:
       "A streaming product has more than a video player: sessions, engagement data, playback delivery, and saved content all need to work together.",
     contributions: [
@@ -244,7 +245,7 @@ export const projects: Project[] = [
   },
   {
     name: "FastAPI Books",
-    type: "API fundamentals · Learning project",
+    type: "SRM internship · API learning project",
     category: "Backend",
     summary:
       "Typed requests, validation, filtering, and explicit HTTP responses.",
@@ -268,7 +269,7 @@ export const projects: Project[] = [
   },
   {
     name: "React Engineering Lab",
-    type: "Frontend patterns · Learning collection",
+    type: "SRM internship · React learning collection",
     category: "Full stack",
     summary: "State management, component tests, and practical React patterns.",
     stack: "React / Vite / Redux Toolkit / Context API / Testing Library",
