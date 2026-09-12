@@ -16,56 +16,7 @@ import {
   X,
 } from "lucide-react";
 
-const projects = [
-  {
-    name: "Accelerator AI",
-    type: "Enterprise AI · Team project",
-    stack: "TypeScript / React / Qdrant",
-    intro:
-      "An enterprise analytics platform that connects business questions to governed data. My work spans the React interface, semantic modeling, retrieval, and the backend path from a question to validated SQL.",
-    challenge:
-      "A useful answer needs more than a plausible query. The system needs the right datasource, relevant business definitions, and clear boundaries around execution.",
-    contributions: [
-      "Database connection validation and live schema exploration.",
-      "Semantic modeling and connection-scoped vector retrieval.",
-      "SQL validation and backend-owned datasource resolution.",
-      "Separation of routes, services, repositories, and frontend features.",
-    ],
-    note: "Based on personal work records and project documentation, February–September 2026. This is a team contribution. The visual is an illustrative concept; company data and proprietary implementation details are omitted.",
-  },
-  {
-    name: "Hybrid Document RAG",
-    type: "AI engineering · Exploration",
-    stack: "Python / ChromaDB / Ollama",
-    intro:
-      "A document retrieval project exploring how chunking, embeddings, and persistent vector storage can ground language-model responses in relevant source material.",
-    challenge:
-      "Retrieval quality shapes answer quality. Finding useful context and handling unreliable API calls are as important as choosing a model.",
-    contributions: [
-      "Custom document chunking and embedding workflows.",
-      "Persistent vector storage with ChromaDB.",
-      "Local model experimentation with Ollama.",
-      "Resilient backoff around external model APIs.",
-    ],
-    note: "A personal learning project. The preview is a conceptual illustration, not a live document search service.",
-  },
-  {
-    name: "JOBBEE API",
-    type: "Backend engineering · Course project",
-    stack: "Node.js / Express / MongoDB",
-    intro:
-      "A REST API project built while studying backend development, covering the practical foundations of a job platform: authentication, search, filtering, and file handling.",
-    challenge:
-      "A clean endpoint is only the beginning. APIs also need predictable pagination, appropriate access boundaries, and input protection.",
-    contributions: [
-      "Authentication workflows using JWT.",
-      "Geospatial filtering and paginated results.",
-      "File handling and REST endpoint organization.",
-      "Input protection against common injection attacks.",
-    ],
-    note: "A course-based project presented as applied learning. The endpoint preview is illustrative; it does not call a live API.",
-  },
-];
+import { projects } from "./projects";
 
 function AnalyticsVisual() {
   const [view, setView] = useState("Insights");
@@ -161,6 +112,103 @@ function AnalyticsVisual() {
   );
 }
 
+function ProjectCollection({ onOpen }: { onOpen: (index: number) => void }) {
+  const [filter, setFilter] = useState("All");
+  const [expanded, setExpanded] = useState(false);
+  const collection = projects
+    .map((project, index) => ({ ...project, index }))
+    .slice(3);
+  const filtered = collection.filter(
+    (project) => filter === "All" || project.category === filter,
+  );
+  const shown = expanded ? filtered : filtered.slice(0, 4);
+  return (
+    <section className="project-collection" aria-labelledby="collection-title">
+      <div className="collection-heading">
+        <div>
+          <span className="eyebrow">MORE FROM THE WORKBENCH</span>
+          <h3 id="collection-title">
+            Different problems.
+            <br />
+            <span className="serif-word">Same curiosity.</span>
+          </h3>
+        </div>
+        <p>
+          Explore the thinking.
+          <br />
+          Then explore the code.
+        </p>
+      </div>
+      <div
+        className="collection-filters"
+        role="group"
+        aria-label="Filter projects by discipline"
+      >
+        {["All", "AI", "Data", "Full stack", "Backend"].map((category) => (
+          <button
+            key={category}
+            aria-pressed={filter === category}
+            onClick={() => {
+              setFilter(category);
+              setExpanded(false);
+            }}
+          >
+            {category}
+            <span>
+              {category === "All"
+                ? collection.length
+                : collection.filter((project) => project.category === category)
+                    .length}
+            </span>
+          </button>
+        ))}
+      </div>
+      <div className="collection-list">
+        {shown.map((project) => (
+          <article className="collection-row" key={project.name}>
+            <span className="collection-number">
+              {String(project.index + 1).padStart(2, "0")}
+            </span>
+            <button
+              className="collection-open"
+              onClick={() => onOpen(project.index)}
+              aria-label={`View ${project.name} project`}
+            >
+              <span className="collection-project-name">{project.name}</span>
+              <span className="collection-summary">{project.summary}</span>
+            </button>
+            <span className="collection-category">{project.category}</span>
+            <a
+              className="collection-source"
+              href={project.repo}
+              aria-label={`${project.name} on GitHub`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Code2 size={17} />
+              <ArrowUpRight size={14} />
+            </a>
+          </article>
+        ))}
+      </div>
+      <div className="collection-bottom">
+        <p aria-live="polite">
+          Showing {shown.length} of {filtered.length}{" "}
+          {filter === "All" ? "projects" : filter.toLowerCase() + " projects"}
+        </p>
+        {filtered.length > 4 && (
+          <button onClick={() => setExpanded(!expanded)}>
+            {expanded
+              ? "Show fewer projects"
+              : "Show all " + filtered.length + " projects"}
+            <Plus size={15} className={expanded ? "expanded-icon" : ""} />
+          </button>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const dialog = useRef<HTMLDialogElement>(null);
   const [selected, setSelected] = useState(0);
@@ -181,7 +229,7 @@ export default function Home() {
           href="#top"
           aria-label="Binay Uppen Sharma home"
         >
-          binay<span>✳</span>
+          Binay Uppen Sharma
         </a>
         <nav aria-label="Main navigation">
           <a href="#work">Work</a>
@@ -299,7 +347,7 @@ export default function Home() {
             <article className="small-project">
               <button
                 className="project-preview rag-preview"
-                aria-label="View Hybrid Document RAG project"
+                aria-label="View Document Intelligence project"
                 onClick={() => openProject(1)}
               >
                 <span className="preview-index">
@@ -314,13 +362,13 @@ export default function Home() {
                 </div>
                 <div className="document doc-front">
                   <span className="doc-title">
-                    From pages
+                    From PDFs
                     <br />
-                    to perspective.
+                    to rows.
                   </span>
                   <span className="doc-rule" />
                   <span className="doc-match">
-                    <Search size={13} /> Context found
+                    <Search size={13} /> Fields extracted
                   </span>
                   <div className="doc-lines">
                     <i />
@@ -335,53 +383,60 @@ export default function Home() {
               </button>
               <div className="project-caption">
                 <div>
-                  <h3>Hybrid Document RAG</h3>
-                  <p>Better answers start with better context.</p>
+                  <h3>Document Intelligence</h3>
+                  <p>From dense PDFs to structured spreadsheets.</p>
                 </div>
-                <span>PYTHON / RAG</span>
+                <span>REACT / FASTAPI / AI</span>
               </div>
             </article>
             <article className="small-project">
               <button
                 className="project-preview api-preview"
-                aria-label="View JOBBEE API project"
+                aria-label="View TaskFlows project"
                 onClick={() => openProject(2)}
               >
-                <span className="preview-index">03 / BACKEND FOUNDATIONS</span>
-                <div className="terminal">
-                  <div className="terminal-top">
+                <span className="preview-index">03 / WORKFLOW ENGINEERING</span>
+                <div className="task-preview-window" aria-hidden="true">
+                  <div className="task-preview-header">
                     <span>
-                      <i />
-                      <i />
-                      <i />
+                      TaskFlows<span className="task-logo-dot">.</span>
                     </span>
-                    <span>jobbee / api</span>
+                    <span>WORKSPACE</span>
                   </div>
-                  <div className="terminal-content">
-                    <p>
-                      <span className="http-method">GET</span> /api/v1/jobs
-                    </p>
-                    <div className="terminal-rule" />
-                    <span className="code-comment">
-                      {"// The next opportunity starts here."}
-                    </span>
-                    <div className="json-code">
-                      {"{"}
-                      <br />
-                      &nbsp;&nbsp;<span>&quot;success&quot;</span>:{" "}
-                      <em>true</em>,<br />
-                      &nbsp;&nbsp;<span>&quot;data&quot;</span>: [<br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;{"{"}{" "}
-                      <span>&quot;role&quot;</span>:{" "}
-                      <em>&quot;Your next chapter&quot;</em> {"}"}
-                      <br />
-                      &nbsp;&nbsp;]
-                      <br />
-                      {"}"}
+                  <div className="task-preview-title">
+                    <span>A little more flow.</span>
+                    <span>ILLUSTRATIVE PREVIEW</span>
+                  </div>
+                  <div className="task-board">
+                    <div>
+                      <span className="task-column-title">
+                        <i />
+                        Proposed
+                      </span>
+                      <div className="task-tile">
+                        <span>Review the brief</span>
+                        <p>Ready for a fresh perspective.</p>
+                        <small>AWAITING APPROVAL</small>
+                      </div>
                     </div>
-                    <span className="response-status">
-                      <i /> 200 OK <span>ILLUSTRATIVE RESPONSE</span>
-                    </span>
+                    <div>
+                      <span className="task-column-title">
+                        <i />
+                        In progress
+                      </span>
+                      <div className="task-tile">
+                        <span>Build something good</span>
+                        <p>One thoughtful step at a time.</p>
+                        <small>
+                          <span className="timer-dot" />
+                          TIMER RUNNING
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="task-preview-footer">
+                    <Check size={12} />
+                    Clear owners. Visible progress.
                   </div>
                 </div>
                 <span className="preview-open">
@@ -390,13 +445,14 @@ export default function Home() {
               </button>
               <div className="project-caption">
                 <div>
-                  <h3>JOBBEE API</h3>
-                  <p>The foundations behind a job platform.</p>
+                  <h3>TaskFlows</h3>
+                  <p>From proposed work to shared progress.</p>
                 </div>
-                <span>NODE.JS / EXPRESS</span>
+                <span>REACT / NODE.JS / MONGODB</span>
               </div>
             </article>
           </div>
+          <ProjectCollection onOpen={openProject} />
           <div className="work-footnote">
             <span>
               Work shown with care. Company details kept confidential.
@@ -420,11 +476,31 @@ export default function Home() {
             <div className="about-left">
               <span className="eyebrow">02 / A LITTLE ABOUT ME</span>
               <div className="monogram-art" aria-hidden="true">
-                <span>b.</span>
+                <span className="initials">BUS</span>
                 <Asterisk className="monogram-star" />
-                <span className="monogram-label">
-                  ALWAYS A WORK IN PROGRESS.
-                </span>
+                <span className="monogram-label">BINAY UPPEN SHARMA</span>
+              </div>
+              <div
+                className="career-notes"
+                aria-label="Experience and education"
+              >
+                <div>
+                  <span>2025 — PRESENT</span>
+                  <strong>SRM Technologies</strong>
+                  <p>Full-stack & AI internship → Programmer Analyst Trainee</p>
+                </div>
+                <div>
+                  <span>MAR — JUN 2025</span>
+                  <strong>Fimo Info Solutions</strong>
+                  <p>
+                    Java internship · Spring Kafka messaging and HLS streaming
+                  </p>
+                </div>
+                <div>
+                  <span>2023 — 2025</span>
+                  <strong>Master of Computer Applications</strong>
+                  <p>Kristu Jayanti University · 8.14 CGPA</p>
+                </div>
               </div>
             </div>
             <div className="about-copy">
@@ -451,14 +527,14 @@ export default function Home() {
                 <div>
                   <span>EXPLORING</span>
                   <strong>Better data foundations</strong>
-                  <p>TypeORM · PostgreSQL · SQL</p>
+                  <p>TypeORM · MySQL · SQL</p>
                 </div>
               </div>
               <div className="toolkit">
                 <span>MY EVERYDAY TOOLKIT</span>
                 <p>
                   TypeScript <b>/</b> React <b>/</b> Node.js <b>/</b> Python{" "}
-                  <b>/</b> SQL
+                  <b>/</b> Java <b>/</b> MySQL
                 </p>
               </div>
             </div>
@@ -518,7 +594,7 @@ export default function Home() {
       </main>
       <footer className="footer wrap">
         <a className="wordmark" href="#top" aria-label="Back to top">
-          binay<span>✳</span>
+          Binay Uppen Sharma
         </a>
         <span>© {new Date().getFullYear()} BINAY UPPEN SHARMA</span>
         <a href="#top">
@@ -536,7 +612,9 @@ export default function Home() {
       >
         <div className="dialog-inner">
           <div className="dialog-top">
-            <span className="eyebrow">PROJECT NOTES / 0{selected + 1}</span>
+            <span className="eyebrow">
+              PROJECT NOTES / {String(selected + 1).padStart(2, "0")}
+            </span>
             <button
               className="close-button"
               aria-label="Close project details"
@@ -565,6 +643,20 @@ export default function Home() {
             </ul>
           </div>
           <p className="dialog-stack">{project.stack}</p>
+          {project.repo && (
+            <div className="project-sources">
+              <a href={project.repo} target="_blank" rel="noreferrer">
+                <Code2 size={16} /> Explore repository{" "}
+                <ArrowUpRight size={16} />
+              </a>
+              {project.evidence && (
+                <a href={project.evidence.url} target="_blank" rel="noreferrer">
+                  {project.evidence.label}
+                  <ArrowUpRight size={14} />
+                </a>
+              )}
+            </div>
+          )}
           <p className="dialog-note">{project.note}</p>
           <button
             className="dialog-back"
