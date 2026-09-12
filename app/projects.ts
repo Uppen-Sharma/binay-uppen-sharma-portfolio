@@ -23,14 +23,14 @@ export const projects: Project[] = [
     summary: "From a business question to a grounded, validated answer.",
     stack: "Node.js / Express / React / Qdrant / Ollama / TypeScript (AI-assisted)",
     intro:
-      "An enterprise analytics platform that connects business questions to governed data. My contribution spans the React interface, semantic modeling, retrieval, and the backend path from a question to validated SQL.",
+      "A business question is only useful when it reaches the right data. On Accelerator AI, I contribute to the React interface and the backend steps that connect datasource schemas, business definitions, semantic retrieval and SQL validation.",
     challenge:
       "A useful answer needs more than a plausible query. The system needs the right datasource, relevant business definitions, and clear boundaries around execution.",
     contributions: [
-      "Connection validation and live schema exploration, giving the application a verified data foundation.",
-      "Semantic models and connection-scoped vector retrieval to connect business language with relevant data concepts.",
-      "Backend-owned datasource resolution and SQL validation before query execution.",
-      "Separation of routes, services, repositories, and frontend features as the platform evolved.",
+      "Validate connections and expose live schemas so modeling starts from the connected database rather than an assumed structure.",
+      "Scope vector retrieval to the selected connection so a question is matched against relevant semantic definitions.",
+      "Resolve the datasource in the backend and validate generated SQL before handing it to query execution.",
+      "Separate routes, services, repositories and frontend features as the prototype grows into a more maintainable application.",
       "Earlier autonomous-analytics and DeepAgent POCs are iterations of this same project, not separate product achievements.",
     ],
     note: "Based on personal work records and project documentation, February–September 2026. Team contribution; proprietary source and company data are not published here. The visual is an illustrative concept.",
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     intro:
       "A document-processing application that turns uploaded PDFs into structured spreadsheet data. It connects a React upload experience to text extraction, semantic retrieval, model-assisted field extraction, and Excel or CSV export.",
     challenge:
-      "Long documents hide important fields across many pages. The workflow needs to retrieve relevant context while keeping the user informed during processing.",
+      "PDF fields are scattered across pages, and extraction does not finish instantly. The application has to find relevant passages, produce structured fields, and show whether each job is running, complete or failed.",
     contributions: [
       "Text extraction, chunking, embeddings, and cosine-similarity retrieval before structured field extraction.",
       "An Azure Document Intelligence and Azure OpenAI extraction implementation behind a FastAPI service.",
@@ -68,7 +68,7 @@ export const projects: Project[] = [
     intro:
       "A task-management application with distinct manager and user workflows. Users propose work; managers review it; the application tracks assignments, task states, and remaining time across a React interface and Express API.",
     challenge:
-      "A task board needs clear ownership and consistent state. Approval rules, running timers, and authenticated sessions all have to agree between the interface and backend.",
+      "A timer in the browser is not enough. TaskFlows needs server-owned time calculations, manager approval rules and authenticated task updates to agree—even when the interface reloads.",
     contributions: [
       "Task proposals and manager approval workflows, with role-aware views and assignment checks.",
       "Server-side remaining-time calculations, start/stop timers, and baseline adjustment requests.",

@@ -272,8 +272,9 @@ export default function Home() {
             <div className="hero-intro">
               <p>
                 I’m Binay Uppen Sharma.
-                <br />I build with JavaScript, React, Node.js and MongoDB—bringing
-                thoughtful interfaces and AI-powered workflows together.
+                <br />I turn workflow problems into JavaScript applications:
+                React interfaces, Express APIs, MongoDB data models—and AI where
+                the task calls for it.
               </p>
               <a className="round-link" href="#work">
                 <span className="round-icon">
@@ -304,9 +305,9 @@ export default function Home() {
               </h2>
             </div>
             <p>
-              Across interfaces, APIs,
+              Task approvals. Document extraction.
               <br />
-              and the intelligence in between.
+              Business questions turned into queries.
             </p>
           </div>
           <article className="flagship">
@@ -321,8 +322,8 @@ export default function Home() {
                 </span>
                 <h3>Accelerator AI</h3>
                 <p>
-                  Making complex data
-                  <br />a conversation.
+                  Business questions.
+                  <br />Grounded in your data.
                 </p>
                 <span className="project-stack">
                   Node.js · React · Semantic analytics
@@ -384,7 +385,7 @@ export default function Home() {
               <div className="project-caption">
                 <div>
                   <h3>Document Intelligence</h3>
-                  <p>From dense PDFs to structured spreadsheets.</p>
+                  <p>Upload a PDF. Extract fields. Download a spreadsheet.</p>
                 </div>
                 <span>REACT / FASTAPI / AI</span>
               </div>
@@ -446,7 +447,7 @@ export default function Home() {
               <div className="project-caption">
                 <div>
                   <h3>TaskFlows</h3>
-                  <p>From proposed work to shared progress.</p>
+                  <p>Propose work. Approve it. Track time on the server.</p>
                 </div>
                 <span>REACT / NODE.JS / MONGODB</span>
               </div>
@@ -510,8 +511,9 @@ export default function Home() {
                 <span className="serif-word">Engineer by practice.</span>
               </h2>
               <p>
-                I like understanding how the whole thing works—from the first
-                interaction to the query behind it.
+                The parts I enjoy most sit between the screen and the server:
+                who can approve a task, where a timer gets its truth, and what
+                makes a generated query safe to run.
               </p>
               <p>
                 JavaScript is my foundation. At SRM Technologies, I’m focusing on
@@ -536,7 +538,7 @@ export default function Home() {
                   JavaScript <b>/</b> MongoDB <b>/</b> Express <b>/</b> React{" "}
                   <b>/</b> Node.js <b>/</b> MySQL
                 </p>
-                <p>Claude Code &amp; Codex for automation, agentic workflows and implementation.</p>
+                <p>I use Claude Code and Codex for automation and agentic implementation. The workflow still needs explicit rules, inspectable code and tests—not just generated output.</p>
               </div>
             </div>
           </div>
@@ -570,9 +572,9 @@ export default function Home() {
           </a>
           <div className="contact-bottom">
             <p>
-              Have an interesting problem?
+              Building a React interface or Node.js API?
               <br />
-              I’d love to hear about it.
+              Let’s talk about the workflow behind it.
             </p>
             <div>
               <a
