@@ -1,672 +1,673 @@
 "use client";
-
 import { useRef, useState } from "react";
 import {
+  ArrowUpRight,
   ArrowDown,
   ArrowRight,
-  ArrowUpRight,
-  Asterisk,
-  Check,
-  Database,
-  FileText,
   Code2,
+  Database,
   Layers,
-  Plus,
-  Search,
+  Braces,
+  Check,
   X,
+  Search,
+  FileText,
+  Play,
+  GitBranch,
 } from "lucide-react";
-
 import { projects } from "./projects";
-
-function AnalyticsVisual() {
-  const [view, setView] = useState("Insights");
+const github = "https://github.com/Uppen-Sharma",
+  linkedin = "https://www.linkedin.com/in/BinayUppenSharma";
+const layers = [
+  {
+    name: "Interface",
+    tech: "React",
+    icon: Layers,
+    code: "<TaskBoard tasks={tasks} />",
+    description:
+      "Make the next action clear. Components, shared state and feedback that help people move through a workflow.",
+  },
+  {
+    name: "Logic",
+    tech: "Node.js + Express",
+    icon: Braces,
+    code: "router.post('/tasks', authorize, createTask)",
+    description:
+      "Put the rules on the server. Validate requests, check permissions and keep task state consistent.",
+  },
+  {
+    name: "Data",
+    tech: "MongoDB",
+    icon: Database,
+    code: "await Task.find({ assignedTo: user.id })",
+    description:
+      "Give the interface a dependable source of truth. Model the data, scope the query and return only what is needed.",
+  },
+];
+function Workbench() {
+  const [active, setActive] = useState(0);
+  const layer = layers[active];
   return (
-    <div className="analytics-window">
-      <div className="window-top">
-        <span className="mini-brand">
-          <Asterisk size={20} /> accelerator<span>ai</span>
+    <div className="workbench">
+      <div className="bench-top">
+        <span>
+          <i className="signal" /> A little look under the hood
         </span>
-        <span className="sample-label">ILLUSTRATIVE PREVIEW</span>
+        <Code2 size={18} />
       </div>
-      <div className="analytics-body">
-        <aside className="mock-sidebar" aria-hidden="true">
-          <Layers size={18} />
-          <Database size={18} />
-          <FileText size={18} />
-          <span className="sidebar-bottom">B</span>
-        </aside>
-        <div className="analytics-main">
-          <div className="mock-heading">
-            <span>Your data. A little clearer.</span>
-            <span className="connected">
-              <i /> Connected
-            </span>
-          </div>
-          <div className="question">
-            <span>What’s the story behind this quarter?</span>
-            <span className="question-arrow">
-              <ArrowUpRight size={17} />
-            </span>
-          </div>
-          <div className="mock-tabs" aria-label="Explore the concept preview">
-            {["Insights", "Query"].map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                aria-pressed={view === tab}
-                onClick={() => setView(tab)}
-              >
-                {tab}
-              </button>
-            ))}
+      <div className="circuit" aria-label="Explore a MERN application">
+        <svg viewBox="0 0 500 230" className="wires" aria-hidden="true">
+          <path d="M95 67 V115 Q95 140 125 140 H245 Q270 140 270 170 V198" />
+          <path d="M395 67 V115 Q395 140 365 140 H270" />
+          <path
+            className="live-wire"
+            d="M95 67 V115 Q95 140 125 140 H245 Q270 140 270 170 V198"
+          />
+        </svg>
+        {layers.map((l, i) => (
+          <button
+            key={l.name}
+            className={`node node-${i} ${active === i ? "selected" : ""}`}
+            aria-pressed={active === i}
+            onClick={() => setActive(i)}
+          >
+            <l.icon size={25} />
             <span>
-              <Check size={12} /> Validated
+              {l.name}
+              <small>{l.tech}</small>
+            </span>
+            <i className="node-led" />
+          </button>
+        ))}
+        <p className="circuit-caption">
+          A click on the screen. A journey through the stack.
+        </p>
+      </div>
+      <div className="code-sample" aria-live="polite">
+        <div className="code-file">
+          {layer.tech}
+          <span>Illustrative code</span>
+        </div>
+        <code>{layer.code}</code>
+        <p>{layer.description}</p>
+      </div>
+      <div className="bench-bottom">
+        <span>
+          <Check size={13} /> JavaScript at the core
+        </span>
+        <span>Choose a layer above</span>
+      </div>
+    </div>
+  );
+}
+function AnalyticsPreview() {
+  return (
+    <div className="analytics-preview" aria-hidden="true">
+      <div className="app-top">
+        <span>
+          <GitBranch size={18} /> accelerator ai
+        </span>
+        <i className="app-dot" />
+      </div>
+      <div className="app-layout">
+        <div className="app-sidebar">
+          <Layers />
+          <Database />
+          <Code2 />
+        </div>
+        <div className="app-content">
+          <span className="preview-label">From question to context</span>
+          <div className="question">
+            How is the business performing?<span>↵</span>
+          </div>
+          <div className="pipeline">
+            <span>
+              <Check /> Schema
+            </span>
+            <span>
+              <Check /> Semantics
+            </span>
+            <span>
+              <Check /> SQL validation
             </span>
           </div>
-          {view === "Insights" ? (
-            <div className="chart-panel">
-              <div className="chart-label">
-                <span>Quarterly overview</span>
-                <span>Sample data</span>
-              </div>
-              <div
-                className="chart"
-                aria-label="Illustrative bar chart with no real business data"
-                role="img"
-              >
-                {[36, 53, 44, 65, 57, 79, 69, 93, 81, 108, 97, 126].map(
-                  (height, i) => (
-                    <span key={i} style={{ height: `${height}px` }} />
-                  ),
-                )}
-              </div>
-              <div className="chart-axis">
-                <span>JAN</span>
-                <span>FEB</span>
-                <span>MAR</span>
-              </div>
+          <div className="chart">
+            <div className="chart-copy">
+              Answer grounded
+              <br />
+              in connected data.
+              <small>Illustrative interface · not customer data</small>
             </div>
-          ) : (
-            <div className="query-panel">
-              <span className="code-comment">
-                -- Illustrative read-only query
-              </span>
-              <code>
-                <b>SELECT</b> month, SUM(revenue)
-                <br />
-                <b>FROM</b> sample_sales
-                <br />
-                <b>GROUP BY</b> month
-                <br />
-                <b>ORDER BY</b> month;
-              </code>
+            <div className="bars">
+              {[32, 49, 41, 68, 54, 80, 72, 96].map((n, i) => (
+                <i key={i} style={{ height: n + "%" }} />
+              ))}
             </div>
-          )}
-          <div className="grounding">
-            <span className="ground-dot" /> Grounded in semantics. Checked
-            before execution.
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-function ProjectCollection({ onOpen }: { onOpen: (index: number) => void }) {
-  const [filter, setFilter] = useState("All");
-  const [expanded, setExpanded] = useState(false);
-  const collection = projects
-    .map((project, index) => ({ ...project, index }))
-    .slice(3);
-  const filtered = collection.filter(
-    (project) => filter === "All" || project.category === filter,
-  );
-  const shown = expanded ? filtered : filtered.slice(0, 4);
+function DocumentPreview() {
   return (
-    <section className="project-collection" aria-labelledby="collection-title">
-      <div className="collection-heading">
-        <div>
-          <span className="eyebrow">MORE FROM THE WORKBENCH</span>
-          <h3 id="collection-title">
-            Different problems.
-            <br />
-            <span className="serif-word">Same curiosity.</span>
-          </h3>
+    <div className="document-preview" aria-hidden="true">
+      <div className="pdf-sheet">
+        <FileText size={30} />
+        <strong>
+          It starts with
+          <br />a document.
+        </strong>
+        <div className="paper-lines">
+          <i />
+          <i />
+          <i />
         </div>
-        <p>
-          Explore the thinking.
-          <br />
-          Then explore the code.
-        </p>
+        <span>PDF</span>
       </div>
-      <div
-        className="collection-filters"
-        role="group"
-        aria-label="Filter projects by discipline"
-      >
-        {["All", "AI", "Data", "Full stack", "Backend"].map((category) => (
-          <button
-            key={category}
-            aria-pressed={filter === category}
-            onClick={() => {
-              setFilter(category);
-              setExpanded(false);
-            }}
-          >
-            {category}
-            <span>
-              {category === "All"
-                ? collection.length
-                : collection.filter((project) => project.category === category)
-                    .length}
-            </span>
-          </button>
+      <span className="convert-arrow">
+        <ArrowRight />
+      </span>
+      <div className="data-sheet">
+        <span>
+          <Database size={15} /> Structured output
+        </span>
+        <div className="table-head">
+          Field <span>Value</span>
+        </div>
+        {["Document title", "Reference", "Date", "Amount"].map((s) => (
+          <div className="table-row" key={s}>
+            {s}
+            <i />
+          </div>
         ))}
+        <small>
+          <Check size={12} /> Ready for CSV or Excel
+        </small>
       </div>
-      <div className="collection-list">
-        {shown.map((project) => (
-          <article className="collection-row" key={project.name}>
-            <span className="collection-number">
-              {String(project.index + 1).padStart(2, "0")}
-            </span>
-            <button
-              className="collection-open"
-              onClick={() => onOpen(project.index)}
-              aria-label={`View ${project.name} project`}
-            >
-              <span className="collection-project-name">{project.name}</span>
-              <span className="collection-summary">{project.summary}</span>
-            </button>
-            <span className="collection-category">{project.category}</span>
-            <a
-              className="collection-source"
-              href={project.repo}
-              aria-label={`${project.name} on GitHub`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Code2 size={17} />
-              <ArrowUpRight size={14} />
-            </a>
-          </article>
-        ))}
-      </div>
-      <div className="collection-bottom">
-        <p aria-live="polite">
-          Showing {shown.length} of {filtered.length}{" "}
-          {filter === "All" ? "projects" : filter.toLowerCase() + " projects"}
-        </p>
-        {filtered.length > 4 && (
-          <button onClick={() => setExpanded(!expanded)}>
-            {expanded
-              ? "Show fewer projects"
-              : "Show all " + filtered.length + " projects"}
-            <Plus size={15} className={expanded ? "expanded-icon" : ""} />
-          </button>
-        )}
-      </div>
-    </section>
+    </div>
   );
 }
-
+function TasksPreview() {
+  return (
+    <div className="tasks-preview" aria-hidden="true">
+      <div className="task-window">
+        <div className="task-window-top">
+          <span>TaskFlows</span>
+          <span>Workspace</span>
+        </div>
+        <h4>Good work needs a clear next step.</h4>
+        <div className="task-columns">
+          <div>
+            <span>
+              Proposed <b>1</b>
+            </span>
+            <article>
+              <span className="task-tag">Needs review</span>
+              <strong>Review the API contract</strong>
+              <p>Confirm the request and response.</p>
+              <div className="avatar-group">
+                <i>B</i>
+                <i>M</i>
+              </div>
+            </article>
+          </div>
+          <div>
+            <span>
+              In progress <b>1</b>
+            </span>
+            <article>
+              <span className="task-tag green">Approved</span>
+              <strong>Build the task workflow</strong>
+              <p>Permissions checked on the server.</p>
+              <small>
+                <Play size={12} /> Timer running
+              </small>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 export default function Home() {
-  const dialog = useRef<HTMLDialogElement>(null);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(0),
+    [query, setQuery] = useState(""),
+    [category, setCategory] = useState("All"),
+    [expanded, setExpanded] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null),
+    trigger = useRef<HTMLElement | null>(null);
   const project = projects[selected];
-  function openProject(index: number) {
-    setSelected(index);
+  function openProject(i: number) {
+    trigger.current = document.activeElement as HTMLElement;
+    setSelected(i);
     dialog.current?.showModal();
   }
-
+  const archive = projects
+    .map((p, index) => ({ ...p, index }))
+    .slice(3)
+    .filter(
+      (p) =>
+        (category === "All" || p.category === category) &&
+        (p.name + " " + p.stack + " " + p.summary)
+          .toLowerCase()
+          .includes(query.toLowerCase()),
+    );
   return (
     <>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <header className="header wrap" id="top">
-        <a
-          className="wordmark"
-          href="#top"
-          aria-label="Binay Uppen Sharma home"
-        >
-          Binay Uppen Sharma
+      <header className="site-header">
+        <a href="#top" className="brand" aria-label="Binay Uppen Sharma home">
+          <span className="brand-symbol" aria-hidden="true">
+            b<span>.</span>
+          </span>
+          <span>Binay Uppen Sharma</span>
         </a>
         <nav aria-label="Main navigation">
           <a href="#work">Work</a>
           <a href="#about">About</a>
-          <a className="contact-nav" href="#contact">
-            Let’s talk <ArrowUpRight size={15} />
+          <a
+            href={github}
+            target="_blank"
+            rel="noreferrer"
+            className="nav-github"
+          >
+            GitHub <ArrowUpRight size={14} />
+          </a>
+          <a href="#contact" className="nav-contact">
+            Let’s connect <ArrowUpRight size={15} />
           </a>
         </nav>
       </header>
       <main id="main">
-        <section className="hero wrap" aria-labelledby="hero-title">
-          <div className="hero-topline">
-            <span className="eyebrow">JAVASCRIPT · MERN STACK DEVELOPER</span>
-            <span className="location">
-              <span className="status-dot" /> BASED IN CHENNAI, INDIA
-            </span>
-          </div>
-          <div className="hero-composition">
-            <div className="hero-type">
-              <h1 id="hero-title">
-                Thoughtfully
-                <br />
-                built.
-                <br />
-                <span className="serif-word">Intelligently</span>
-                <br />
-                connected<span className="blue-period">.</span>
-              </h1>
-            </div>
-            <div className="sculpture" aria-hidden="true">
-              {["one", "two", "three", "four", "five", "six", "seven"].map(
-                (n) => (
-                  <div className={`orbital o-${n}`} key={n} />
-                ),
-              )}
-              <div className="sculpture-core" />
-              <span className="sculpture-coordinate">01 / SYSTEMS IN SYNC</span>
-              <span className="sculpture-plus">+</span>
-            </div>
-            <div className="hero-intro">
-              <p>
-                I’m Binay Uppen Sharma.
-                <br />I turn workflow problems into JavaScript applications:
-                React interfaces, Express APIs, MongoDB data models—and AI where
-                the task calls for it.
+        <section className="hero" id="top">
+          <div className="hero-grid wrap">
+            <div className="hero-copy">
+              <p className="intro-line">
+                <i className="signal" /> JavaScript &amp; MERN stack developer
               </p>
-              <a className="round-link" href="#work">
-                <span className="round-icon">
-                  <ArrowDown size={18} />
-                </span>
-                Explore selected work
-              </a>
+              <h1>
+                Good ideas.
+                <br />
+                Working code.
+              </h1>
+              <p className="hero-description">
+                I’m Binay. I build the interfaces people use, the APIs behind
+                them, and the AI workflows that connect the two.
+              </p>
+              <div className="hero-actions">
+                <a className="button light" href="#work">
+                  Explore my work <ArrowDown size={17} />
+                </a>
+                <a
+                  className="text-link"
+                  href={github}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Read the code <ArrowUpRight size={17} />
+                </a>
+              </div>
+              <div className="hero-role">
+                <span className="role-mark">↳</span>
+                <p>
+                  Currently at <strong>SRM Technologies</strong>
+                  <br />
+                  <span>Programmer Analyst Trainee · Chennai, India</span>
+                </p>
+              </div>
             </div>
+            <Workbench />
           </div>
-          <div className="hero-bottom">
-            <span>CODE WITH INTENT. BUILD WITH CURIOSITY.</span>
-            <span>SELECTED WORK / 2025—26</span>
+          <div className="hero-foot wrap">
+            <span>Built with curiosity. Backed by code.</span>
+            <div>
+              <span>MongoDB</span>
+              <span>Express</span>
+              <span>React</span>
+              <span>Node.js</span>
+            </div>
           </div>
         </section>
-
-        <section
-          className="work-section wrap"
-          id="work"
-          aria-labelledby="work-title"
-        >
+        <section className="work-section wrap" id="work">
           <div className="section-heading">
-            <div>
-              <span className="eyebrow">01 / SELECTED WORK</span>
-              <h2 id="work-title">
-                A few things
-                <br />
-                <span className="serif-word">I’ve been building.</span>
-              </h2>
-            </div>
-            <p>
-              Task approvals. Document extraction.
+            <h2>
+              Less talk.
               <br />
-              Business questions turned into queries.
+              More working things.
+            </h2>
+            <p>
+              Selected work from team contributions,
+              <br />
+              internship POCs and hands-on learning.
             </p>
           </div>
-          <article className="flagship">
-            <div className="flagship-copy">
-              <div className="project-overline">
-                <span>01</span>
-                <span>FEATURED PROJECT</span>
-              </div>
+          <article className="featured-project">
+            <div className="project-visual analytics-stage">
+              <AnalyticsPreview />
+              <span className="visual-note">Concept preview</span>
+            </div>
+            <div className="featured-description">
               <div>
-                <span className="project-category">
-                  ENTERPRISE AI · TEAM PROJECT
+                <span className="context-label">
+                  SRM Technologies · Team contribution
                 </span>
                 <h3>Accelerator AI</h3>
                 <p>
-                  Business questions.
-                  <br />Grounded in your data.
+                  Turning a business question into a grounded answer takes more
+                  than an LLM. It takes the right schema, semantic context and a
+                  validated query.
                 </p>
-                <span className="project-stack">
-                  Node.js · React · Semantic analytics
-                </span>
+                <div className="tags">
+                  <span>React</span>
+                  <span>Node.js</span>
+                  <span>Semantic retrieval</span>
+                </div>
               </div>
-              <button className="project-link" onClick={() => openProject(0)}>
-                Inside the project{" "}
-                <span>
-                  <ArrowUpRight size={22} />
-                </span>
+              <button
+                className="circle-button"
+                onClick={() => openProject(0)}
+                aria-label="Explore Accelerator AI"
+              >
+                <ArrowUpRight />
               </button>
-            </div>
-            <div className="flagship-visual">
-              <div className="visual-grid" />
-              <AnalyticsVisual />
-              <span className="visual-caption">
-                QUESTION → CONTEXT → CLARITY
-              </span>
             </div>
           </article>
-          <div className="project-grid">
-            <article className="small-project">
+          <div className="project-pair">
+            <article className="project-card">
               <button
-                className="project-preview rag-preview"
-                aria-label="View Document Intelligence project"
+                className="project-visual document-stage"
                 onClick={() => openProject(1)}
+                aria-label="Explore Document Intelligence"
               >
-                <span className="preview-index">
-                  02 / DOCUMENT INTELLIGENCE
-                </span>
-                <div className="document doc-back">
-                  <FileText size={24} />
-                  <i />
-                  <i />
-                  <i />
-                  <i />
-                </div>
-                <div className="document doc-front">
-                  <span className="doc-title">
-                    From PDFs
-                    <br />
-                    to rows.
-                  </span>
-                  <span className="doc-rule" />
-                  <span className="doc-match">
-                    <Search size={13} /> Fields extracted
-                  </span>
-                  <div className="doc-lines">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                </div>
-                <span className="rag-orbit" />
-                <span className="preview-open">
-                  <ArrowUpRight size={21} />
+                <DocumentPreview />
+                <span className="visual-note">Concept preview</span>
+                <span className="floating-open">
+                  <ArrowUpRight />
                 </span>
               </button>
-              <div className="project-caption">
-                <div>
-                  <h3>Document Intelligence</h3>
-                  <p>Upload a PDF. Extract fields. Download a spreadsheet.</p>
-                </div>
-                <span>REACT / FASTAPI / AI</span>
+              <div className="card-description">
+                <span className="context-label">
+                  SRM internship · Document-processing POC
+                </span>
+                <h3>Document Intelligence</h3>
+                <p>
+                  From scattered PDF fields to a spreadsheet you can work with.
+                  Extraction, retrieval and job progress in one flow.
+                </p>
+                <span className="card-stack">React / FastAPI / Azure AI</span>
               </div>
             </article>
-            <article className="small-project">
+            <article className="project-card">
               <button
-                className="project-preview api-preview"
-                aria-label="View TaskFlows project"
+                className="project-visual task-stage"
                 onClick={() => openProject(2)}
+                aria-label="Explore TaskFlows"
               >
-                <span className="preview-index">03 / WORKFLOW ENGINEERING</span>
-                <div className="task-preview-window" aria-hidden="true">
-                  <div className="task-preview-header">
-                    <span>
-                      TaskFlows<span className="task-logo-dot">.</span>
-                    </span>
-                    <span>WORKSPACE</span>
-                  </div>
-                  <div className="task-preview-title">
-                    <span>A little more flow.</span>
-                    <span>ILLUSTRATIVE PREVIEW</span>
-                  </div>
-                  <div className="task-board">
-                    <div>
-                      <span className="task-column-title">
-                        <i />
-                        Proposed
-                      </span>
-                      <div className="task-tile">
-                        <span>Review the brief</span>
-                        <p>Ready for a fresh perspective.</p>
-                        <small>AWAITING APPROVAL</small>
-                      </div>
-                    </div>
-                    <div>
-                      <span className="task-column-title">
-                        <i />
-                        In progress
-                      </span>
-                      <div className="task-tile">
-                        <span>Build something good</span>
-                        <p>One thoughtful step at a time.</p>
-                        <small>
-                          <span className="timer-dot" />
-                          TIMER RUNNING
-                        </small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="task-preview-footer">
-                    <Check size={12} />
-                    Clear owners. Visible progress.
-                  </div>
-                </div>
-                <span className="preview-open">
-                  <ArrowUpRight size={21} />
+                <TasksPreview />
+                <span className="visual-note">Concept preview</span>
+                <span className="floating-open">
+                  <ArrowUpRight />
                 </span>
               </button>
-              <div className="project-caption">
-                <div>
-                  <h3>TaskFlows</h3>
-                  <p>Propose work. Approve it. Track time on the server.</p>
-                </div>
-                <span>REACT / NODE.JS / MONGODB</span>
+              <div className="card-description">
+                <span className="context-label">
+                  MERN application · Workflow engineering
+                </span>
+                <h3>TaskFlows</h3>
+                <p>
+                  Who approves the task? Where does the timer get its truth? A
+                  task-management app built around those details.
+                </p>
+                <span className="card-stack">
+                  MongoDB / Express / React / Node.js
+                </span>
               </div>
             </article>
           </div>
-          <ProjectCollection onOpen={openProject} />
-          <div className="work-footnote">
-            <span>
-              SRM learning, internship POCs and team contributions. Company details kept confidential.
-            </span>
-            <a
-              href="https://github.com/Uppen-Sharma"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Find me on GitHub <ArrowUpRight size={15} />
-            </a>
-          </div>
-        </section>
-
-        <section
-          className="about-section"
-          id="about"
-          aria-labelledby="about-title"
-        >
-          <div className="wrap about-grid">
-            <div className="about-left">
-              <span className="eyebrow">02 / A LITTLE ABOUT ME</span>
-              <div className="monogram-art" aria-hidden="true">
-                <span className="initials">BUS</span>
-                <Asterisk className="monogram-star" />
-                <span className="monogram-label">BINAY UPPEN SHARMA</span>
+          <section className="archive" aria-labelledby="archive-title">
+            <div className="archive-heading">
+              <div>
+                <h3 id="archive-title">The rest of the workbench.</h3>
+                <p>
+                  Smaller builds. Focused experiments. Lessons put into code.
+                </p>
               </div>
-              <div
-                className="career-notes"
-                aria-label="Experience and education"
-              >
-                <div>
-                  <span>2025 — PRESENT</span>
-                  <strong>SRM Technologies</strong>
-                  <p>Internship (7 months) → Programmer Analyst Trainee (full time)</p>
-                </div>
-                <div>
-                  <span>MAR — JUN 2025</span>
-                  <strong>Fimo Info Solutions</strong>
-                  <p>
-                    Internship · Live streaming application; messaging POC
-                  </p>
-                </div>
-                <div>
-                  <span>2023 — 2025</span>
-                  <strong>Master of Computer Applications</strong>
-                  <p>Kristu Jayanti University · 8.14 CGPA</p>
-                </div>
-              </div>
+              <label className="search-box">
+                <Search size={17} />
+                <input
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    setExpanded(true);
+                  }}
+                  placeholder="Find a project or technology"
+                  aria-label="Search projects"
+                  type="search"
+                  name="project-search"
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+              </label>
             </div>
-            <div className="about-copy">
-              <h2 id="about-title">
-                Curious by default.
+            <div
+              className="filters"
+              role="group"
+              aria-label="Project categories"
+            >
+              {["All", "AI", "Data", "Full stack", "Backend"].map((c) => (
+                <button
+                  key={c}
+                  aria-pressed={category === c}
+                  onClick={() => {
+                    setCategory(c);
+                    setExpanded(true);
+                  }}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+            <p className="sr-only" aria-live="polite">{archive.length} matching projects</p>
+            <div className="archive-list">
+              {(expanded ? archive : archive.slice(0, 4)).map((p) => (
+                <button
+                  key={p.name}
+                  className="archive-row"
+                  onClick={() => openProject(p.index)}
+                >
+                  <span>
+                    <strong>{p.name}</strong>
+                    <small>{p.summary}</small>
+                  </span>
+                  <span className="archive-category">{p.category}</span>
+                  <ArrowUpRight size={21} />
+                </button>
+              ))}
+            </div>
+            {archive.length === 0 && (
+              <p className="empty-state">
+                No matching projects. Try “React”, “API” or clear your search.
+              </p>
+            )}
+            {!expanded && archive.length > 4 && (
+              <button
+                className="archive-more"
+                onClick={() => setExpanded(true)}
+              >
+                Show all {archive.length} projects <ArrowDown size={16} />
+              </button>
+            )}
+            <p className="work-disclaimer">
+              Real work, shared responsibly. Company data stays private; related
+              POC versions are grouped together.
+            </p>
+          </section>
+        </section>
+        <section className="about-section" id="about">
+          <div className="wrap about-grid">
+            <div className="about-intro">
+              <span className="context-label">
+                A little about the person behind the code
+              </span>
+              <h2>
+                I like knowing
                 <br />
-                <span className="serif-word">Engineer by practice.</span>
+                how it works.
               </h2>
               <p>
-                The parts I enjoy most sit between the screen and the server:
-                who can approve a task, where a timer gets its truth, and what
-                makes a generated query safe to run.
+                Especially the part between a click and a database query. I’m a
+                JavaScript-first developer growing into MERN development, with a
+                practical interest in AI and data workflows.
               </p>
               <p>
-                JavaScript is my foundation. At SRM Technologies, I’m focusing on
-                MERN development alongside semantic analytics, retrieval and AI
-                proofs of concept. My TypeScript work is AI-assisted.
+                I use Claude Code and Codex to help implement and automate. The
+                important part is still understanding the rules, inspecting the
+                code and testing what happens next.
               </p>
-              <div className="about-facts">
-                <div>
-                  <span>CURRENTLY</span>
-                  <strong>Programmer Analyst Trainee</strong>
-                  <p>SRM Technologies · Chennai</p>
-                </div>
-                <div>
-                  <span>EXPLORING</span>
-                  <strong>Better data foundations</strong>
-                  <p>TypeORM · MySQL · SQL</p>
-                </div>
+              <a
+                className="text-link dark-link"
+                href={github}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Explore my GitHub <ArrowUpRight size={17} />
+              </a>
+            </div>
+            <div className="experience">
+              <div className="experience-item">
+                <span className="experience-date">Apr 2026 — Present</span>
+                <h3>Programmer Analyst Trainee</h3>
+                <p>SRM Technologies · Full time</p>
+                <span>
+                  Semantic analytics, retrieval and application workflows.
+                </span>
               </div>
-              <div className="toolkit">
-                <span>MY EVERYDAY TOOLKIT</span>
+              <div className="experience-item">
+                <span className="experience-date">Sep 2025 — Mar 2026</span>
+                <h3>Internship</h3>
+                <p>SRM Technologies · 7 months</p>
+                <span>
+                  JavaScript, MERN, AI prototypes and learning through POCs.
+                </span>
+              </div>
+              <div className="experience-item">
+                <span className="experience-date">Mar — Jun 2025</span>
+                <h3>Internship</h3>
+                <p>Fimo Info Solutions</p>
+                <span>
+                  Live streaming as the main project; messaging as a separate
+                  POC.
+                </span>
+              </div>
+              <div className="learning-note">
+                <GitBranch size={21} />
                 <p>
-                  JavaScript <b>/</b> MongoDB <b>/</b> Express <b>/</b> React{" "}
-                  <b>/</b> Node.js <b>/</b> MySQL
+                  <strong>Still learning. Always building.</strong>
+                  <br />
+                  TypeORM with MySQL and SQL optimization. TypeScript
+                  implementation with AI assistance.
                 </p>
-                <p>I use Claude Code and Codex for automation and agentic implementation. The workflow still needs explicit rules, inspectable code and tests—not just generated output.</p>
               </div>
             </div>
           </div>
         </section>
-
-        <section
-          className="contact-section wrap"
-          id="contact"
-          aria-labelledby="contact-title"
-        >
-          <div className="contact-top">
-            <span className="eyebrow">03 / WHAT’S NEXT?</span>
-            <span className="contact-note">
-              GOOD WORK STARTS WITH A CONVERSATION.
-            </span>
-          </div>
+        <section className="contact-section wrap" id="contact">
+          <p>Have a workflow worth building?</p>
           <a
-            className="contact-title"
-            href="https://www.linkedin.com/in/BinayUppenSharma"
+            className="contact-heading"
+            href={linkedin}
             target="_blank"
             rel="noreferrer"
           >
-            <h2 id="contact-title">
-              Let’s build
+            <h2>
+              Let’s make
               <br />
-              <span className="serif-word">something good.</span>
+              it work.
             </h2>
-            <span className="contact-arrow">
-              <ArrowUpRight strokeWidth={1.2} />
+            <span>
+              <ArrowUpRight />
             </span>
           </a>
           <div className="contact-bottom">
             <p>
-              Building a React interface or Node.js API?
+              JavaScript, MERN and thoughtfully applied AI.
               <br />
-              Let’s talk about the workflow behind it.
+              Let’s start with the problem you’re solving.
             </p>
             <div>
-              <a
-                href="https://www.linkedin.com/in/BinayUppenSharma"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={linkedin} target="_blank" rel="noreferrer">
                 LinkedIn <ArrowUpRight size={16} />
               </a>
-              <a
-                href="https://github.com/Uppen-Sharma"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Code2 size={16} /> GitHub <ArrowUpRight size={16} />
+              <a href={github} target="_blank" rel="noreferrer">
+                GitHub <ArrowUpRight size={16} />
               </a>
             </div>
           </div>
         </section>
       </main>
-      <footer className="footer wrap">
-        <a className="wordmark" href="#top" aria-label="Back to top">
-          Binay Uppen Sharma
-        </a>
-        <span>© {new Date().getFullYear()} BINAY UPPEN SHARMA</span>
+      <footer className="wrap footer">
+        <span>© {new Date().getFullYear()} Binay Uppen Sharma</span>
         <a href="#top">
-          BACK TO TOP <ArrowUpRight size={14} />
+          Back to top <ArrowUpRight size={15} />
         </a>
       </footer>
-
       <dialog
         ref={dialog}
         className="project-dialog"
         aria-labelledby="dialog-title"
-        onClick={(event) => {
-          if (event.target === event.currentTarget) dialog.current?.close();
+        onClose={() => trigger.current?.focus()}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) dialog.current?.close();
         }}
       >
         <div className="dialog-inner">
           <div className="dialog-top">
-            <span className="eyebrow">
-              PROJECT NOTES / {String(selected + 1).padStart(2, "0")}
-            </span>
+            <span>{project.type}</span>
             <button
               className="close-button"
-              aria-label="Close project details"
               onClick={() => dialog.current?.close()}
+              aria-label="Close project details"
               autoFocus
             >
-              <X size={22} />
+              <X />
             </button>
           </div>
-          <span className="project-category">{project.type}</span>
           <h2 id="dialog-title">{project.name}</h2>
           <p className="dialog-intro">{project.intro}</p>
           <div className="dialog-section">
-            <h3>The problem</h3>
+            <h3>The engineering problem</h3>
             <p>{project.challenge}</p>
           </div>
           <div className="dialog-section">
-            <h3>My focus</h3>
+            <h3>What I worked on</h3>
             <ul>
-              {project.contributions.map((item) => (
-                <li key={item}>
-                  <Plus size={16} />
-                  <span>{item}</span>
-                </li>
+              {project.contributions.map((s) => (
+                <li key={s}>{s}</li>
               ))}
             </ul>
           </div>
           <p className="dialog-stack">{project.stack}</p>
           {project.repo && (
             <div className="project-sources">
-              <a href={project.repo} target="_blank" rel="noreferrer">
-                <Code2 size={16} /> Explore repository{" "}
-                <ArrowUpRight size={16} />
+              <a
+                className="button navy"
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View repository <ArrowUpRight size={16} />
               </a>
               {project.evidence && (
                 <a href={project.evidence.url} target="_blank" rel="noreferrer">
-                  {project.evidence.label}
-                  <ArrowUpRight size={14} />
+                  {project.evidence.label} <ArrowUpRight size={16} />
                 </a>
               )}
             </div>
           )}
           <p className="dialog-note">{project.note}</p>
-          <button
-            className="dialog-back"
-            onClick={() => dialog.current?.close()}
-          >
-            Back to selected work <ArrowRight size={16} />
-          </button>
         </div>
       </dialog>
     </>
