@@ -22,6 +22,7 @@ npm run build
 - `app/projects.ts` contains the project summaries, expanded notes, categories, repository links, and implementation references. The first three entries are the featured projects; the rest appear in the filterable collection.
 - `app/page.tsx` contains the page layout, illustrative previews, experience, and full-name branding.
 - `app/globals.css` contains the responsive design and reduced-motion support.
+- `app/motion-ui.tsx` contains the Motion for React primitives; `app/motion-features.ts` loads animation features separately. The request trace and animated case-study state are in `app/page.tsx`.
 - `public/fonts` contains self-hosted Manrope fonts and the SIL Open Font License.
 - `DESIGN.md` records the design direction and inspiration sources. Project visuals are illustrative, not customer screenshots or production measurements.
 

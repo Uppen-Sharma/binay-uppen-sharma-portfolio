@@ -1,5 +1,21 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  LayoutGroup,
+  m,
+  useReducedMotion,
+} from "motion/react";
+import {
+  Entrance,
+  MagneticLink,
+  MotionRoot,
+  ReadingProgress,
+  Reveal,
+  ScrollScene,
+  Tilt,
+  settle,
+} from "./motion-ui";
 import {
   ArrowUpRight,
   ArrowDown,
@@ -46,9 +62,34 @@ const layers = [
 ];
 function Workbench() {
   const [active, setActive] = useState(0);
+  const reduced = useReducedMotion();
+  const [tracing, setTracing] = useState(false);
+  const [traceCount, setTraceCount] = useState(0);
+  const traceTimers = useRef<number[]>([]);
+  useEffect(() => () => traceTimers.current.forEach(window.clearTimeout), []);
+  function selectLayer(index: number) {
+    traceTimers.current.forEach(window.clearTimeout);
+    setTracing(false);
+    setActive(index);
+  }
+  function traceRequest() {
+    traceTimers.current.forEach(window.clearTimeout);
+    setTraceCount((count) => count + 1);
+    if (reduced) {
+      setActive(2);
+      return;
+    }
+    setTracing(true);
+    setActive(0);
+    traceTimers.current = [
+      window.setTimeout(() => setActive(1), 800),
+      window.setTimeout(() => setActive(2), 1600),
+      window.setTimeout(() => setTracing(false), 2400),
+    ];
+  }
   const layer = layers[active];
   return (
-    <div className="workbench">
+    <Tilt className="workbench">
       <div className="bench-top">
         <span>
           <i className="signal" /> A little look under the hood
@@ -59,17 +100,29 @@ function Workbench() {
         <svg viewBox="0 0 500 230" className="wires" aria-hidden="true">
           <path d="M95 67 V115 Q95 140 125 140 H245 Q270 140 270 170 V198" />
           <path d="M395 67 V115 Q395 140 365 140 H270" />
-          <path
+          <m.path
+            key={`${active}-${traceCount}`}
             className="live-wire"
-            d="M95 67 V115 Q95 140 125 140 H245 Q270 140 270 170 V198"
+            d={
+              active === 1
+                ? "M395 67 V115 Q395 140 365 140 H270 V198"
+                : "M95 67 V115 Q95 140 125 140 H245 Q270 140 270 170 V198"
+            }
+            initial={reduced ? false : { pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: reduced ? 0.7 : [0, 1, 0.3] }}
+            transition={{ duration: reduced ? 0 : 0.8, ease: "easeInOut" }}
           />
         </svg>
         {layers.map((l, i) => (
-          <button
+          <m.button
             key={l.name}
             className={`node node-${i} ${active === i ? "selected" : ""}`}
             aria-pressed={active === i}
-            onClick={() => setActive(i)}
+            onClick={() => selectLayer(i)}
+            animate={{ y: reduced ? 0 : active === i ? -5 : 0 }}
+            whileHover={reduced ? undefined : { y: -5 }}
+            whileTap={reduced ? undefined : { scale: 0.96 }}
+            transition={settle}
           >
             <l.icon size={25} />
             <span>
@@ -77,27 +130,45 @@ function Workbench() {
               <small>{l.tech}</small>
             </span>
             <i className="node-led" />
-          </button>
+          </m.button>
         ))}
         <p className="circuit-caption">
           A click on the screen. A journey through the stack.
         </p>
       </div>
       <div className="code-sample" aria-live="polite">
-        <div className="code-file">
-          {layer.tech}
-          <span>Illustrative code</span>
-        </div>
-        <code>{layer.code}</code>
-        <p>{layer.description}</p>
+        <AnimatePresence mode="wait" initial={false}>
+          <m.div
+            key={active}
+            initial={{ opacity: 0, y: reduced ? 0 : 7 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: reduced ? 0 : -5 }}
+            transition={{ duration: reduced ? 0 : 0.14 }}
+          >
+            <div className="code-file">
+              {layer.tech}
+              <span>Illustrative code</span>
+            </div>
+            <code>{layer.code}</code>
+            <p>{layer.description}</p>
+          </m.div>
+        </AnimatePresence>
       </div>
       <div className="bench-bottom">
         <span>
           <Check size={13} /> JavaScript at the core
         </span>
-        <span>Choose a layer above</span>
+        <m.button
+          className="trace-request"
+          onClick={traceRequest}
+          disabled={tracing}
+          whileTap={reduced ? undefined : { scale: 0.95 }}
+        >
+          <Play size={11} aria-hidden="true" />
+          {tracing ? "Tracing…" : "Trace a request"}
+        </m.button>
       </div>
-    </div>
+    </Tilt>
   );
 }
 function AnalyticsPreview() {
@@ -231,6 +302,16 @@ function TasksPreview() {
   );
 }
 export default function Home() {
+  return (
+    <MotionRoot>
+      <Portfolio />
+    </MotionRoot>
+  );
+}
+
+function Portfolio() {
+  const reduced = useReducedMotion();
+  const [dialogVisible, setDialogVisible] = useState(false);
   const [selected, setSelected] = useState(0),
     [query, setQuery] = useState(""),
     [category, setCategory] = useState("All"),
@@ -241,7 +322,11 @@ export default function Home() {
   function openProject(i: number) {
     trigger.current = document.activeElement as HTMLElement;
     setSelected(i);
+    setDialogVisible(true);
     dialog.current?.showModal();
+  }
+  function closeProject() {
+    setDialogVisible(false);
   }
   const archive = projects
     .map((p, index) => ({ ...p, index }))
@@ -255,6 +340,7 @@ export default function Home() {
     );
   return (
     <>
+      <ReadingProgress />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -289,18 +375,21 @@ export default function Home() {
                 <i className="signal" /> JavaScript &amp; MERN stack developer
               </p>
               <h1>
-                Good ideas.
-                <br />
-                Working code.
+                <Entrance as="span" className="headline-line">
+                  Good ideas.
+                </Entrance>
+                <Entrance as="span" className="headline-line" delay={0.09}>
+                  Working code.
+                </Entrance>
               </h1>
               <p className="hero-description">
                 I’m Binay. I build the interfaces people use, the APIs behind
                 them, and the AI workflows that connect the two.
               </p>
               <div className="hero-actions">
-                <a className="button light" href="#work">
+                <MagneticLink className="button light" href="#work">
                   Explore my work <ArrowDown size={17} />
-                </a>
+                </MagneticLink>
                 <a
                   className="text-link"
                   href={github}
@@ -319,7 +408,9 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <Workbench />
+            <Entrance delay={0.16}>
+              <Workbench />
+            </Entrance>
           </div>
           <div className="hero-foot wrap">
             <span>Built with curiosity. Backed by code.</span>
@@ -344,88 +435,104 @@ export default function Home() {
               internship POCs and hands-on learning.
             </p>
           </div>
-          <article className="featured-project">
-            <div className="project-visual analytics-stage">
-              <AnalyticsPreview />
-              <span className="visual-note">Concept preview</span>
-            </div>
-            <div className="featured-description">
-              <div>
-                <span className="context-label">
-                  SRM Technologies · Team contribution
-                </span>
-                <h3>Accelerator AI</h3>
-                <p>
-                  Turning a business question into a grounded answer takes more
-                  than an LLM. It takes the right schema, semantic context and a
-                  validated query.
-                </p>
-                <div className="tags">
-                  <span>React</span>
-                  <span>Node.js</span>
-                  <span>Semantic retrieval</span>
+          <Reveal>
+            <article className="featured-project">
+              <div className="project-visual analytics-stage">
+                <ScrollScene>
+                  <Tilt className="preview-surface">
+                    <AnalyticsPreview />
+                  </Tilt>
+                </ScrollScene>
+                <span className="visual-note">Concept preview</span>
+              </div>
+              <div className="featured-description">
+                <div>
+                  <span className="context-label">
+                    SRM Technologies · Team contribution
+                  </span>
+                  <h3>Accelerator AI</h3>
+                  <p>
+                    Turning a business question into a grounded answer takes
+                    more than an LLM. It takes the right schema, semantic
+                    context and a validated query.
+                  </p>
+                  <div className="tags">
+                    <span>React</span>
+                    <span>Node.js</span>
+                    <span>Semantic retrieval</span>
+                  </div>
                 </div>
+                <m.button
+                  className="circle-button"
+                  whileHover={reduced ? undefined : { rotate: 45, scale: 1.06 }}
+                  whileTap={reduced ? undefined : { scale: 0.94 }}
+                  onClick={() => openProject(0)}
+                  aria-label="Explore Accelerator AI"
+                >
+                  <ArrowUpRight />
+                </m.button>
               </div>
-              <button
-                className="circle-button"
-                onClick={() => openProject(0)}
-                aria-label="Explore Accelerator AI"
-              >
-                <ArrowUpRight />
-              </button>
-            </div>
-          </article>
+            </article>
+          </Reveal>
           <div className="project-pair">
-            <article className="project-card">
-              <button
-                className="project-visual document-stage"
-                onClick={() => openProject(1)}
-                aria-label="Explore Document Intelligence"
-              >
-                <DocumentPreview />
-                <span className="visual-note">Concept preview</span>
-                <span className="floating-open">
-                  <ArrowUpRight />
-                </span>
-              </button>
-              <div className="card-description">
-                <span className="context-label">
-                  SRM internship · Document-processing POC
-                </span>
-                <h3>Document Intelligence</h3>
-                <p>
-                  From scattered PDF fields to a spreadsheet you can work with.
-                  Extraction, retrieval and job progress in one flow.
-                </p>
-                <span className="card-stack">React / FastAPI / Azure AI</span>
-              </div>
-            </article>
-            <article className="project-card">
-              <button
-                className="project-visual task-stage"
-                onClick={() => openProject(2)}
-                aria-label="Explore TaskFlows"
-              >
-                <TasksPreview />
-                <span className="visual-note">Concept preview</span>
-                <span className="floating-open">
-                  <ArrowUpRight />
-                </span>
-              </button>
-              <div className="card-description">
-                <span className="context-label">
-                  MERN application · Workflow engineering
-                </span>
-                <h3>TaskFlows</h3>
-                <p>
-                  Who approves the task? Where does the timer get its truth? A
-                  task-management app built around those details.
-                </p>
-                <span className="card-stack">
-                  MongoDB / Express / React / Node.js
-                </span>
-              </div>
-            </article>
+            <Reveal className="project-reveal">
+              <article className="project-card">
+                <button
+                  className="project-visual document-stage"
+                  onClick={() => openProject(1)}
+                  aria-label="Explore Document Intelligence"
+                >
+                  <Tilt className="preview-surface">
+                    <DocumentPreview />
+                  </Tilt>
+                  <span className="visual-note">Concept preview</span>
+                  <span className="floating-open">
+                    <ArrowUpRight />
+                  </span>
+                </button>
+                <div className="card-description">
+                  <span className="context-label">
+                    SRM internship · Document-processing POC
+                  </span>
+                  <h3>Document Intelligence</h3>
+                  <p>
+                    From scattered PDF fields to a spreadsheet you can work
+                    with. Extraction, retrieval and job progress in one flow.
+                  </p>
+                  <span className="card-stack">React / FastAPI / Azure AI</span>
+                </div>
+              </article>
+            </Reveal>
+            <Reveal className="project-reveal">
+              <article className="project-card">
+                <button
+                  className="project-visual task-stage"
+                  onClick={() => openProject(2)}
+                  aria-label="Explore TaskFlows"
+                >
+                  <Tilt className="preview-surface">
+                    <TasksPreview />
+                  </Tilt>
+                  <span className="visual-note">Concept preview</span>
+                  <span className="floating-open">
+                    <ArrowUpRight />
+                  </span>
+                </button>
+                <div className="card-description">
+                  <span className="context-label">
+                    MERN application · Workflow engineering
+                  </span>
+                  <h3>TaskFlows</h3>
+                  <p>
+                    Who approves the task? Where does the timer get its truth? A
+                    task-management app built around those details.
+                  </p>
+                  <span className="card-stack">
+                    MongoDB / Express / React / Node.js
+                  </span>
+                </div>
+              </article>
+            </Reveal>
           </div>
           <section className="archive" aria-labelledby="archive-title">
             <div className="archive-heading">
@@ -452,30 +559,44 @@ export default function Home() {
                 />
               </label>
             </div>
-            <div
-              className="filters"
-              role="group"
-              aria-label="Project categories"
-            >
-              {["All", "AI", "Data", "Full stack", "Backend"].map((c) => (
-                <button
-                  key={c}
-                  aria-pressed={category === c}
-                  onClick={() => {
-                    setCategory(c);
-                    setExpanded(true);
-                  }}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-            <p className="sr-only" aria-live="polite">{archive.length} matching projects</p>
+            <LayoutGroup id="project-categories">
+              <div
+                className="filters"
+                role="group"
+                aria-label="Project categories"
+              >
+                {["All", "AI", "Data", "Full stack", "Backend"].map((c) => (
+                  <m.button
+                    key={c}
+                    aria-pressed={category === c}
+                    onClick={() => {
+                      setCategory(c);
+                      setExpanded(true);
+                    }}
+                  >
+                    {category === c && (
+                      <m.span
+                        className="filter-active"
+                        layoutId="active-category"
+                        transition={reduced ? { duration: 0 } : settle}
+                      />
+                    )}
+                    <span className="filter-label">{c}</span>
+                  </m.button>
+                ))}
+              </div>
+            </LayoutGroup>
+            <p className="sr-only" aria-live="polite">
+              {archive.length} matching projects
+            </p>
             <div className="archive-list">
               {(expanded ? archive : archive.slice(0, 4)).map((p) => (
-                <button
+                <m.button
                   key={p.name}
                   className="archive-row"
+                  layout={reduced ? false : "position"}
+                  initial={false}
+                  whileHover={reduced ? undefined : { x: 7 }}
                   onClick={() => openProject(p.index)}
                 >
                   <span>
@@ -484,7 +605,7 @@ export default function Home() {
                   </span>
                   <span className="archive-category">{p.category}</span>
                   <ArrowUpRight size={21} />
-                </button>
+                </m.button>
               ))}
             </div>
             {archive.length === 0 && (
@@ -576,7 +697,7 @@ export default function Home() {
         </section>
         <section className="contact-section wrap" id="contact">
           <p>Have a workflow worth building?</p>
-          <a
+          <MagneticLink
             className="contact-heading"
             href={linkedin}
             target="_blank"
@@ -590,7 +711,7 @@ export default function Home() {
             <span>
               <ArrowUpRight />
             </span>
-          </a>
+          </MagneticLink>
           <div className="contact-bottom">
             <p>
               JavaScript, MERN and thoughtfully applied AI.
@@ -618,57 +739,95 @@ export default function Home() {
         ref={dialog}
         className="project-dialog"
         aria-labelledby="dialog-title"
-        onClose={() => trigger.current?.focus()}
+        onClose={() => {
+          setDialogVisible(false);
+          trigger.current?.focus();
+        }}
+        onCancel={(event) => {
+          event.preventDefault();
+          closeProject();
+        }}
         onClick={(e) => {
-          if (e.target === e.currentTarget) dialog.current?.close();
+          if (e.target === e.currentTarget) closeProject();
         }}
       >
-        <div className="dialog-inner">
-          <div className="dialog-top">
-            <span>{project.type}</span>
-            <button
-              className="close-button"
-              onClick={() => dialog.current?.close()}
-              aria-label="Close project details"
-              autoFocus
+        <AnimatePresence
+          initial={false}
+          onExitComplete={() => {
+            if (!dialogVisible) dialog.current?.close();
+          }}
+        >
+          {dialogVisible && (
+            <m.div
+              key={project.name}
+              className="dialog-inner"
+              initial={{
+                opacity: 0,
+                scale: reduced ? 1 : 0.97,
+                y: reduced ? 0 : 16,
+              }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{
+                opacity: 0,
+                scale: reduced ? 1 : 0.98,
+                y: reduced ? 0 : 8,
+              }}
+              transition={{
+                duration: reduced ? 0 : 0.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
-              <X />
-            </button>
-          </div>
-          <h2 id="dialog-title">{project.name}</h2>
-          <p className="dialog-intro">{project.intro}</p>
-          <div className="dialog-section">
-            <h3>The engineering problem</h3>
-            <p>{project.challenge}</p>
-          </div>
-          <div className="dialog-section">
-            <h3>What I worked on</h3>
-            <ul>
-              {project.contributions.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-          </div>
-          <p className="dialog-stack">{project.stack}</p>
-          {project.repo && (
-            <div className="project-sources">
-              <a
-                className="button navy"
-                href={project.repo}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View repository <ArrowUpRight size={16} />
-              </a>
-              {project.evidence && (
-                <a href={project.evidence.url} target="_blank" rel="noreferrer">
-                  {project.evidence.label} <ArrowUpRight size={16} />
-                </a>
+              <div className="dialog-top">
+                <span>{project.type}</span>
+                <button
+                  className="close-button"
+                  onClick={closeProject}
+                  aria-label="Close project details"
+                  autoFocus
+                >
+                  <X />
+                </button>
+              </div>
+              <h2 id="dialog-title">{project.name}</h2>
+              <p className="dialog-intro">{project.intro}</p>
+              <div className="dialog-section">
+                <h3>The engineering problem</h3>
+                <p>{project.challenge}</p>
+              </div>
+              <div className="dialog-section">
+                <h3>What I worked on</h3>
+                <ul>
+                  {project.contributions.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ul>
+              </div>
+              <p className="dialog-stack">{project.stack}</p>
+              {project.repo && (
+                <div className="project-sources">
+                  <a
+                    className="button navy"
+                    href={project.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View repository <ArrowUpRight size={16} />
+                  </a>
+                  {project.evidence && (
+                    <a
+                      href={project.evidence.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {project.evidence.label} <ArrowUpRight size={16} />
+                    </a>
+                  )}
+                </div>
               )}
-            </div>
+              <p className="dialog-note">{project.note}</p>
+            </m.div>
           )}
-          <p className="dialog-note">{project.note}</p>
-        </div>
+        </AnimatePresence>
       </dialog>
     </>
   );

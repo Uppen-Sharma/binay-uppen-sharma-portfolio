@@ -10,3 +10,11 @@ Review: rejected the previous cream/serif/orbital direction and avoided replacin
 References reviewed: [Dennis Snellenberg (Awwwards)](https://www.awwwards.com/sites/dennis-snellenberg), [Rauno Freiberg](https://rauno.me), [Niklas Peterson's Wall of Portfolios listing](https://www.wallofportfolios.in/portfolios/niklas-peterson/); [21st.dev card catalog](https://21st.dev/community/components/s/card). These inform hierarchy and responsive interaction, not copied artwork or code. The frontend-design skill from anthropics/skills was found through skills.sh and installed/read; Vercel's web-design-guidelines skill was used for the UI review.
 
 Quality: native links/buttons/dialog, keyboard close and focus return, reduced motion, no scroll hijacking, no autoplay video, responsive 320–1920px, evidence-backed project details retained in app/projects.ts.
+
+## Motion update — 13 October 2026
+
+The signature interaction is a request travelling through the MERN stack. “Trace a request” plays one short, user-triggered sequence; choosing a layer interrupts it. A small SVG path draws toward the selected layer while the code explanation crossfades. There are no perpetual background loops.
+
+Motion for React (formerly Framer Motion) supplies lazy-loaded animation features, spring pointer tilt, magnetic links, a shared filter indicator, archive position transitions, native-dialog entrance/exit, a reading-progress line, and a small scroll-linked illustration offset. The headline entrance uses full transform strings and keeps text visible in the initial HTML. React state is not updated on each pointer or scroll frame.
+
+References: [Motion examples](https://motion.dev/examples?platform=react), [reduced motion](https://motion.dev/docs/react-accessibility), and [bundle-size guidance](https://motion.dev/docs/react-reduce-bundle-size). `find-skills` was installed and used to discover `emilkowalski/skills/animation-performance`; its transform/opacity and frame-budget guidance informed this implementation. Reduced-motion preferences disable tilt, parallax, spatial transitions and the timed trace. Native scrolling, keyboard controls and touch taps remain available.
