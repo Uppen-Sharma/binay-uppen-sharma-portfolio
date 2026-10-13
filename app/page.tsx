@@ -1,11 +1,25 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   AnimatePresence,
   LayoutGroup,
   m,
   useReducedMotion,
 } from "motion/react";
+import {
+  ArrowUpRight,
+  ArrowDown,
+  Code2,
+  Layers,
+  Database,
+  Check,
+  X,
+  Search,
+  FileText,
+  Sparkles,
+  GitBranch,
+} from "lucide-react";
+import { projects } from "./projects";
 import {
   Entrance,
   MagneticLink,
@@ -16,291 +30,257 @@ import {
   Tilt,
   settle,
 } from "./motion-ui";
-import {
-  ArrowUpRight,
-  ArrowDown,
-  ArrowRight,
-  Code2,
-  Database,
-  Layers,
-  Braces,
-  Check,
-  X,
-  Search,
-  FileText,
-  Play,
-  GitBranch,
-} from "lucide-react";
-import { projects } from "./projects";
 const github = "https://github.com/Uppen-Sharma",
   linkedin = "https://www.linkedin.com/in/BinayUppenSharma";
-const layers = [
-  {
-    name: "Interface",
-    tech: "React",
-    icon: Layers,
-    code: "<TaskBoard tasks={tasks} />",
-    description:
-      "Make the next action clear. Components, shared state and feedback that help people move through a workflow.",
-  },
-  {
-    name: "Logic",
-    tech: "Node.js + Express",
-    icon: Braces,
-    code: "router.post('/tasks', authorize, createTask)",
-    description:
-      "Put the rules on the server. Validate requests, check permissions and keep task state consistent.",
-  },
-  {
-    name: "Data",
-    tech: "MongoDB",
-    icon: Database,
-    code: "await Task.find({ assignedTo: user.id })",
-    description:
-      "Give the interface a dependable source of truth. Model the data, scope the query and return only what is needed.",
-  },
-];
-function Workbench() {
-  const [active, setActive] = useState(0);
+
+function HeroArt() {
   const reduced = useReducedMotion();
-  const [tracing, setTracing] = useState(false);
-  const [traceCount, setTraceCount] = useState(0);
-  const traceTimers = useRef<number[]>([]);
-  useEffect(() => () => traceTimers.current.forEach(window.clearTimeout), []);
-  function selectLayer(index: number) {
-    traceTimers.current.forEach(window.clearTimeout);
-    setTracing(false);
-    setActive(index);
-  }
-  function traceRequest() {
-    traceTimers.current.forEach(window.clearTimeout);
-    setTraceCount((count) => count + 1);
-    if (reduced) {
-      setActive(2);
-      return;
-    }
-    setTracing(true);
-    setActive(0);
-    traceTimers.current = [
-      window.setTimeout(() => setActive(1), 800),
-      window.setTimeout(() => setActive(2), 1600),
-      window.setTimeout(() => setTracing(false), 2400),
-    ];
-  }
-  const layer = layers[active];
+  const [mode, setMode] = useState("Build");
   return (
-    <Tilt className="workbench">
-      <div className="bench-top">
-        <span>
-          <i className="signal" /> A little look under the hood
-        </span>
-        <Code2 size={18} />
+    <Tilt className="hero-art">
+      <div className="art-orbit" aria-hidden="true" />
+      <div className="code-emblem" aria-hidden="true">
+        <span>{"{"}</span>
+        <span>{"}"}</span>
       </div>
-      <div className="circuit" aria-label="Explore a MERN application">
-        <svg viewBox="0 0 500 230" className="wires" aria-hidden="true">
-          <path d="M95 67 V115 Q95 140 125 140 H245 Q270 140 270 170 V198" />
-          <path d="M395 67 V115 Q395 140 365 140 H270" />
-          <m.path
-            key={`${active}-${traceCount}`}
-            className="live-wire"
-            d={
-              active === 1
-                ? "M395 67 V115 Q395 140 365 140 H270 V198"
-                : "M95 67 V115 Q95 140 125 140 H245 Q270 140 270 170 V198"
-            }
-            initial={reduced ? false : { pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: reduced ? 0.7 : [0, 1, 0.3] }}
-            transition={{ duration: reduced ? 0 : 0.8, ease: "easeInOut" }}
-          />
-        </svg>
-        {layers.map((l, i) => (
-          <m.button
-            key={l.name}
-            className={`node node-${i} ${active === i ? "selected" : ""}`}
-            aria-pressed={active === i}
-            onClick={() => selectLayer(i)}
-            animate={{ y: reduced ? 0 : active === i ? -5 : 0 }}
-            whileHover={reduced ? undefined : { y: -5 }}
-            whileTap={reduced ? undefined : { scale: 0.96 }}
-            transition={settle}
-          >
-            <l.icon size={25} />
-            <span>
-              {l.name}
-              <small>{l.tech}</small>
+      <m.div
+        className="hero-window"
+        animate={{ rotate: mode === "Build" ? -7 : -3 }}
+        transition={reduced ? { duration: 0 } : settle}
+      >
+        <div className="window-chrome">
+          <span>
+            <i />
+            <i />
+            <i />
+          </span>
+          <small>binay / playground</small>
+          <Code2 size={14} />
+        </div>
+        <div className="hero-window-body">
+          <span className="file-name">a little bit of JavaScript</span>
+          <div className="hero-code">
+            <span className="code-purple">const</span> idea ={" "}
+            <span className="code-green">&quot;What if?&quot;</span>;<br />
+            <span className="code-purple">const</span> result ={" "}
+            <span className="code-purple">await</span> build(idea);
+            <br />
+            <br />
+            <span className="code-grey">
+              {"// Give curiosity somewhere to go."}
             </span>
-            <i className="node-led" />
-          </m.button>
-        ))}
-        <p className="circuit-caption">
-          A click on the screen. A journey through the stack.
-        </p>
-      </div>
-      <div className="code-sample" aria-live="polite">
-        <AnimatePresence mode="wait" initial={false}>
-          <m.div
-            key={active}
-            initial={{ opacity: 0, y: reduced ? 0 : 7 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: reduced ? 0 : -5 }}
-            transition={{ duration: reduced ? 0 : 0.14 }}
+            <br />
+            result.<span className="code-purple">makeItWork</span>();
+          </div>
+          <div
+            className="art-tabs"
+            role="group"
+            aria-label="Playground preview"
           >
-            <div className="code-file">
-              {layer.tech}
-              <span>Illustrative code</span>
-            </div>
-            <code>{layer.code}</code>
-            <p>{layer.description}</p>
-          </m.div>
-        </AnimatePresence>
-      </div>
-      <div className="bench-bottom">
-        <span>
-          <Check size={13} /> JavaScript at the core
+            <button
+              aria-pressed={mode === "Build"}
+              onClick={() => setMode("Build")}
+            >
+              Build <Code2 size={12} />
+            </button>
+            <button
+              aria-pressed={mode === "Connect"}
+              onClick={() => setMode("Connect")}
+            >
+              Connect <GitBranch size={12} />
+            </button>
+          </div>
+        </div>
+      </m.div>
+      <m.div
+        className="status-card"
+        animate={{
+          y: mode === "Connect" ? -10 : 0,
+          rotate: mode === "Connect" ? 3 : 7,
+        }}
+        transition={reduced ? { duration: 0 } : settle}
+      >
+        <span className="status-icon">
+          <Check size={20} />
         </span>
-        <m.button
-          className="trace-request"
-          onClick={traceRequest}
-          disabled={tracing}
-          whileTap={reduced ? undefined : { scale: 0.95 }}
-        >
-          <Play size={11} aria-hidden="true" />
-          {tracing ? "Tracing…" : "Trace a request"}
-        </m.button>
-      </div>
+        <div>
+          <strong>
+            {mode === "Build"
+              ? "From idea to interface."
+              : "Now, connect the pieces."}
+          </strong>
+          <span>
+            {mode === "Build"
+              ? "One thoughtful step at a time."
+              : "UI → API → data"}
+          </span>
+        </div>
+      </m.div>
+      <span className="art-caption">An interactive sketch of how I think.</span>
     </Tilt>
   );
 }
-function AnalyticsPreview() {
+
+const stages = [
+  {
+    name: "Context",
+    title: "Find the right context.",
+    copy: "Start with the connected schema and relevant semantic definitions.",
+    code: "question → schema → semantic model",
+  },
+  {
+    name: "SQL",
+    title: "Check the query first.",
+    copy: "Resolve the datasource and validate generated SQL before execution.",
+    code: "resolveDatasource() → validateSQL()",
+  },
+  {
+    name: "Answer",
+    title: "Bring the result into focus.",
+    copy: "Connect returned data with an analytical response and a clear interface.",
+    code: "data → analysis → response",
+  },
+];
+function AnalyticsArt() {
+  const [stage, setStage] = useState(0);
+  const reduced = useReducedMotion();
   return (
-    <div className="analytics-preview" aria-hidden="true">
-      <div className="app-top">
-        <span>
-          <GitBranch size={18} /> accelerator ai
-        </span>
-        <i className="app-dot" />
-      </div>
-      <div className="app-layout">
-        <div className="app-sidebar">
-          <Layers />
-          <Database />
-          <Code2 />
+    <div className="analytics-art">
+      <div className="analytics-window">
+        <div className="window-chrome">
+          <span className="mini-brand">
+            <Sparkles size={15} /> accelerator ai
+          </span>
+          <small>Concept preview</small>
         </div>
-        <div className="app-content">
-          <span className="preview-label">From question to context</span>
-          <div className="question">
-            How is the business performing?<span>↵</span>
+        <div className="analytics-body">
+          <div className="analytics-sidebar" aria-hidden="true">
+            <Layers />
+            <Database />
+            <Code2 />
           </div>
-          <div className="pipeline">
-            <span>
-              <Check /> Schema
-            </span>
-            <span>
-              <Check /> Semantics
-            </span>
-            <span>
-              <Check /> SQL validation
-            </span>
-          </div>
-          <div className="chart">
-            <div className="chart-copy">
-              Answer grounded
-              <br />
-              in connected data.
-              <small>Illustrative interface · not customer data</small>
+          <div className="analytics-main">
+            <div className="question-box">
+              What is happening in my data?<span>↵</span>
             </div>
-            <div className="bars">
-              {[32, 49, 41, 68, 54, 80, 72, 96].map((n, i) => (
-                <i key={i} style={{ height: n + "%" }} />
+            <div
+              className="stage-tabs"
+              role="group"
+              aria-label="Explore analytics workflow"
+            >
+              {stages.map((s, i) => (
+                <button
+                  key={s.name}
+                  onClick={() => setStage(i)}
+                  aria-pressed={stage === i}
+                >
+                  {s.name}
+                </button>
               ))}
             </div>
+            <AnimatePresence mode="wait" initial={false}>
+              <m.div
+                key={stage}
+                initial={{ opacity: 0, y: reduced ? 0 : 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: reduced ? 0 : -5 }}
+                transition={{ duration: reduced ? 0 : 0.15 }}
+                className="stage-content"
+                aria-live="polite"
+              >
+                <span className="stage-heading">{stages[stage].title}</span>
+                <p>{stages[stage].copy}</p>
+                <code>{stages[stage].code}</code>
+                <div className="mini-chart" aria-hidden="true">
+                  {[35, 55, 42, 72, 61, 83, 70, 96].map((h, i) => (
+                    <i style={{ height: h + "%" }} key={i} />
+                  ))}
+                </div>
+              </m.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
     </div>
   );
 }
-function DocumentPreview() {
+function DocumentArt() {
   return (
-    <div className="document-preview" aria-hidden="true">
-      <div className="pdf-sheet">
-        <FileText size={30} />
+    <Tilt className="document-art">
+      <div className="document-paper" aria-hidden="true">
+        <FileText size={28} />
         <strong>
-          It starts with
-          <br />a document.
+          There’s useful
+          <br />
+          data in here.
         </strong>
         <div className="paper-lines">
           <i />
           <i />
           <i />
+          <i />
         </div>
-        <span>PDF</span>
+        <span>document.pdf</span>
       </div>
-      <span className="convert-arrow">
-        <ArrowRight />
-      </span>
-      <div className="data-sheet">
+      <div className="extraction-card" aria-hidden="true">
         <span>
-          <Database size={15} /> Structured output
+          <Sparkles size={14} /> From pages to fields
         </span>
-        <div className="table-head">
-          Field <span>Value</span>
-        </div>
-        {["Document title", "Reference", "Date", "Amount"].map((s) => (
-          <div className="table-row" key={s}>
+        {["Reference", "Date", "Amount"].map((s) => (
+          <div key={s}>
             {s}
             <i />
           </div>
         ))}
         <small>
-          <Check size={12} /> Ready for CSV or Excel
+          <Check size={12} /> CSV &amp; Excel export
         </small>
       </div>
-    </div>
+    </Tilt>
   );
 }
-function TasksPreview() {
+function TaskArt() {
   return (
-    <div className="tasks-preview" aria-hidden="true">
-      <div className="task-window">
-        <div className="task-window-top">
-          <span>TaskFlows</span>
-          <span>Workspace</span>
+    <Tilt className="task-art">
+      <div className="task-window" aria-hidden="true">
+        <div className="task-top">
+          <strong>
+            TaskFlows<span>.</span>
+          </strong>
+          <small>Team workspace</small>
         </div>
-        <h4>Good work needs a clear next step.</h4>
-        <div className="task-columns">
+        <h4>
+          Less chasing.
+          <br />
+          More progress.
+        </h4>
+        <div className="task-board">
           <div>
-            <span>
-              Proposed <b>1</b>
-            </span>
+            <span>Proposed</span>
             <article>
-              <span className="task-tag">Needs review</span>
+              <small>Needs approval</small>
               <strong>Review the API contract</strong>
-              <p>Confirm the request and response.</p>
-              <div className="avatar-group">
-                <i>B</i>
-                <i>M</i>
-              </div>
+              <p>Clear expectations, before the work starts.</p>
+              <i>BU</i>
             </article>
           </div>
           <div>
-            <span>
-              In progress <b>1</b>
-            </span>
+            <span>In progress</span>
             <article>
-              <span className="task-tag green">Approved</span>
+              <small>Approved</small>
               <strong>Build the task workflow</strong>
-              <p>Permissions checked on the server.</p>
-              <small>
-                <Play size={12} /> Timer running
-              </small>
+              <p>Time tracked on the server.</p>
+              <span className="timer">
+                <i /> Timer running
+              </span>
             </article>
           </div>
         </div>
       </div>
-    </div>
+    </Tilt>
   );
 }
+
 export default function Home() {
   return (
     <MotionRoot>
@@ -308,87 +288,81 @@ export default function Home() {
     </MotionRoot>
   );
 }
-
 function Portfolio() {
   const reduced = useReducedMotion();
-  const [dialogVisible, setDialogVisible] = useState(false);
   const [selected, setSelected] = useState(0),
+    [visible, setVisible] = useState(false),
+    [filter, setFilter] = useState("All"),
     [query, setQuery] = useState(""),
-    [category, setCategory] = useState("All"),
     [expanded, setExpanded] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null),
     trigger = useRef<HTMLElement | null>(null);
   const project = projects[selected];
-  function openProject(i: number) {
-    trigger.current = document.activeElement as HTMLElement;
-    setSelected(i);
-    setDialogVisible(true);
-    dialog.current?.showModal();
-  }
-  function closeProject() {
-    setDialogVisible(false);
-  }
   const archive = projects
     .map((p, index) => ({ ...p, index }))
     .slice(3)
     .filter(
       (p) =>
-        (category === "All" || p.category === category) &&
+        (filter === "All" || p.category === filter) &&
         (p.name + " " + p.stack + " " + p.summary)
           .toLowerCase()
           .includes(query.toLowerCase()),
     );
+  function open(i: number) {
+    trigger.current = document.activeElement as HTMLElement;
+    setSelected(i);
+    setVisible(true);
+    dialog.current?.showModal();
+  }
+  function close() {
+    setVisible(false);
+  }
   return (
     <>
       <ReadingProgress />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <header className="site-header">
-        <a href="#top" className="brand" aria-label="Binay Uppen Sharma home">
-          <span className="brand-symbol" aria-hidden="true">
-            b<span>.</span>
+      <header className="site-header wrap">
+        <a className="brand" href="#top" aria-label="Binay Uppen Sharma home">
+          <span className="brand-mark">
+            bu<span>.</span>
           </span>
           <span>Binay Uppen Sharma</span>
         </a>
         <nav aria-label="Main navigation">
           <a href="#work">Work</a>
           <a href="#about">About</a>
-          <a
-            href={github}
-            target="_blank"
-            rel="noreferrer"
-            className="nav-github"
-          >
-            GitHub <ArrowUpRight size={14} />
-          </a>
-          <a href="#contact" className="nav-contact">
-            Let’s connect <ArrowUpRight size={15} />
+          <a className="nav-contact" href="#contact">
+            Say hello <ArrowUpRight size={15} />
           </a>
         </nav>
       </header>
       <main id="main">
-        <section className="hero" id="top">
-          <div className="hero-grid wrap">
+        <section className="hero wrap" id="top">
+          <div className="hero-top">
+            <span>
+              <i /> JavaScript &amp; MERN developer
+            </span>
+            <span>Based in Chennai, India</span>
+          </div>
+          <div className="hero-grid">
             <div className="hero-copy">
-              <p className="intro-line">
-                <i className="signal" /> JavaScript &amp; MERN stack developer
-              </p>
               <h1>
                 <Entrance as="span" className="headline-line">
-                  Good ideas.
+                  Ideas in.
                 </Entrance>
-                <Entrance as="span" className="headline-line" delay={0.09}>
-                  Working code.
+                <Entrance as="span" className="headline-line" delay={0.1}>
+                  Code out.
                 </Entrance>
               </h1>
-              <p className="hero-description">
-                I’m Binay. I build the interfaces people use, the APIs behind
-                them, and the AI workflows that connect the two.
+              <p>
+                Hey, I’m Binay. I build web applications, connect the pieces
+                behind them, and explore what AI can help us make.
               </p>
               <div className="hero-actions">
-                <MagneticLink className="button light" href="#work">
-                  Explore my work <ArrowDown size={17} />
+                <MagneticLink href="#work" className="button primary">
+                  Take a look around <ArrowDown size={18} />
                 </MagneticLink>
                 <a
                   className="text-link"
@@ -396,343 +370,367 @@ function Portfolio() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Read the code <ArrowUpRight size={17} />
+                  GitHub <ArrowUpRight size={16} />
                 </a>
               </div>
-              <div className="hero-role">
-                <span className="role-mark">↳</span>
-                <p>
-                  Currently at <strong>SRM Technologies</strong>
-                  <br />
-                  <span>Programmer Analyst Trainee · Chennai, India</span>
-                </p>
-              </div>
             </div>
-            <Entrance delay={0.16}>
-              <Workbench />
+            <Entrance delay={0.18}>
+              <HeroArt />
             </Entrance>
           </div>
-          <div className="hero-foot wrap">
-            <span>Built with curiosity. Backed by code.</span>
-            <div>
-              <span>MongoDB</span>
-              <span>Express</span>
+          <div className="hero-bottom">
+            <p>
+              Currently building at <strong>SRM Technologies</strong>
+              <br />
+              <span>Programmer Analyst Trainee</span>
+            </p>
+            <div className="stack-stamps">
+              <span>JavaScript</span>
               <span>React</span>
               <span>Node.js</span>
+              <span>MongoDB</span>
             </div>
+            <a
+              href="#work"
+              className="scroll-cue"
+              aria-label="Scroll to selected work"
+            >
+              <ArrowDown size={19} />
+            </a>
           </div>
         </section>
-        <section className="work-section wrap" id="work">
-          <div className="section-heading">
-            <h2>
-              Less talk.
-              <br />
-              More working things.
-            </h2>
-            <p>
-              Selected work from team contributions,
-              <br />
-              internship POCs and hands-on learning.
-            </p>
-          </div>
-          <Reveal>
-            <article className="featured-project">
-              <div className="project-visual analytics-stage">
-                <ScrollScene>
-                  <Tilt className="preview-surface">
-                    <AnalyticsPreview />
-                  </Tilt>
-                </ScrollScene>
-                <span className="visual-note">Concept preview</span>
+        <section className="work-section" id="work">
+          <div className="wrap">
+            <div className="section-heading">
+              <div>
+                <span className="section-kicker">
+                  A few things I’ve been building
+                </span>
+                <h2>
+                  Curiosity,
+                  <br />
+                  put to work.
+                </h2>
               </div>
-              <div className="featured-description">
-                <div>
-                  <span className="context-label">
+              <p>
+                Team contributions, internship POCs
+                <br />
+                and lessons turned into working code.
+              </p>
+            </div>
+            <Reveal>
+              <article className="flagship">
+                <div className="flagship-copy">
+                  <span className="project-kind">
                     SRM Technologies · Team contribution
                   </span>
-                  <h3>Accelerator AI</h3>
+                  <h3>
+                    Accelerator
+                    <br />
+                    AI.
+                  </h3>
                   <p>
-                    Turning a business question into a grounded answer takes
-                    more than an LLM. It takes the right schema, semantic
-                    context and a validated query.
+                    A business question is just the beginning. Connecting it to
+                    the right schema, context and query is where the engineering
+                    happens.
                   </p>
-                  <div className="tags">
+                  <div className="project-tags">
                     <span>React</span>
                     <span>Node.js</span>
                     <span>Semantic retrieval</span>
                   </div>
-                </div>
-                <m.button
-                  className="circle-button"
-                  whileHover={reduced ? undefined : { rotate: 45, scale: 1.06 }}
-                  whileTap={reduced ? undefined : { scale: 0.94 }}
-                  onClick={() => openProject(0)}
-                  aria-label="Explore Accelerator AI"
-                >
-                  <ArrowUpRight />
-                </m.button>
-              </div>
-            </article>
-          </Reveal>
-          <div className="project-pair">
-            <Reveal className="project-reveal">
-              <article className="project-card">
-                <button
-                  className="project-visual document-stage"
-                  onClick={() => openProject(1)}
-                  aria-label="Explore Document Intelligence"
-                >
-                  <Tilt className="preview-surface">
-                    <DocumentPreview />
-                  </Tilt>
-                  <span className="visual-note">Concept preview</span>
-                  <span className="floating-open">
-                    <ArrowUpRight />
-                  </span>
-                </button>
-                <div className="card-description">
-                  <span className="context-label">
-                    SRM internship · Document-processing POC
-                  </span>
-                  <h3>Document Intelligence</h3>
-                  <p>
-                    From scattered PDF fields to a spreadsheet you can work
-                    with. Extraction, retrieval and job progress in one flow.
-                  </p>
-                  <span className="card-stack">React / FastAPI / Azure AI</span>
-                </div>
-              </article>
-            </Reveal>
-            <Reveal className="project-reveal">
-              <article className="project-card">
-                <button
-                  className="project-visual task-stage"
-                  onClick={() => openProject(2)}
-                  aria-label="Explore TaskFlows"
-                >
-                  <Tilt className="preview-surface">
-                    <TasksPreview />
-                  </Tilt>
-                  <span className="visual-note">Concept preview</span>
-                  <span className="floating-open">
-                    <ArrowUpRight />
-                  </span>
-                </button>
-                <div className="card-description">
-                  <span className="context-label">
-                    MERN application · Workflow engineering
-                  </span>
-                  <h3>TaskFlows</h3>
-                  <p>
-                    Who approves the task? Where does the timer get its truth? A
-                    task-management app built around those details.
-                  </p>
-                  <span className="card-stack">
-                    MongoDB / Express / React / Node.js
-                  </span>
-                </div>
-              </article>
-            </Reveal>
-          </div>
-          <section className="archive" aria-labelledby="archive-title">
-            <div className="archive-heading">
-              <div>
-                <h3 id="archive-title">The rest of the workbench.</h3>
-                <p>
-                  Smaller builds. Focused experiments. Lessons put into code.
-                </p>
-              </div>
-              <label className="search-box">
-                <Search size={17} />
-                <input
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    setExpanded(true);
-                  }}
-                  placeholder="Find a project or technology"
-                  aria-label="Search projects"
-                  type="search"
-                  name="project-search"
-                  autoComplete="off"
-                  spellCheck={false}
-                />
-              </label>
-            </div>
-            <LayoutGroup id="project-categories">
-              <div
-                className="filters"
-                role="group"
-                aria-label="Project categories"
-              >
-                {["All", "AI", "Data", "Full stack", "Backend"].map((c) => (
                   <m.button
-                    key={c}
-                    aria-pressed={category === c}
-                    onClick={() => {
-                      setCategory(c);
+                    className="button ink"
+                    onClick={() => open(0)}
+                    whileHover={reduced ? undefined : { x: 5 }}
+                    whileTap={reduced ? undefined : { scale: 0.97 }}
+                    aria-label="Explore Accelerator AI"
+                  >
+                    Explore the project <ArrowUpRight size={17} />
+                  </m.button>
+                </div>
+                <div className="flagship-stage">
+                  <ScrollScene>
+                    <AnalyticsArt />
+                  </ScrollScene>
+                  <span className="preview-note">
+                    Illustrative UI · no customer data
+                  </span>
+                </div>
+              </article>
+            </Reveal>
+            <div className="project-pair">
+              <Reveal>
+                <article className="project-card doc-card">
+                  <button
+                    className="card-visual"
+                    onClick={() => open(1)}
+                    aria-label="Explore Document Intelligence"
+                  >
+                    <DocumentArt />
+                    <span className="open-disc">
+                      <ArrowUpRight />
+                    </span>
+                    <span className="preview-note">Concept preview</span>
+                  </button>
+                  <div className="card-copy">
+                    <span className="project-kind">
+                      SRM internship · Document-processing POC
+                    </span>
+                    <h3>Document Intelligence</h3>
+                    <p>
+                      Find the fields hiding across a PDF. Retrieve the context.
+                      Turn the result into a spreadsheet.
+                    </p>
+                    <span className="card-stack">
+                      React / FastAPI / Azure AI
+                    </span>
+                  </div>
+                </article>
+              </Reveal>
+              <Reveal>
+                <article className="project-card task-card">
+                  <button
+                    className="card-visual"
+                    onClick={() => open(2)}
+                    aria-label="Explore TaskFlows"
+                  >
+                    <TaskArt />
+                    <span className="open-disc">
+                      <ArrowUpRight />
+                    </span>
+                    <span className="preview-note">Concept preview</span>
+                  </button>
+                  <div className="card-copy">
+                    <span className="project-kind">
+                      MERN application · Workflow engineering
+                    </span>
+                    <h3>TaskFlows</h3>
+                    <p>
+                      Propose it. Approve it. Get to work. A task application
+                      with clear permissions and server-owned time tracking.
+                    </p>
+                    <span className="card-stack">
+                      MongoDB / Express / React / Node.js
+                    </span>
+                  </div>
+                </article>
+              </Reveal>
+            </div>
+            <section className="archive" aria-labelledby="archive-title">
+              <div className="archive-heading">
+                <div>
+                  <h3 id="archive-title">More from the playground.</h3>
+                  <p>Small experiments can teach you big things.</p>
+                </div>
+                <label className="search-box">
+                  <Search size={17} />
+                  <input
+                    type="search"
+                    name="projects"
+                    autoComplete="off"
+                    spellCheck={false}
+                    aria-label="Search projects"
+                    placeholder="Try React, AI or an API…"
+                    value={query}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
                       setExpanded(true);
                     }}
+                  />
+                </label>
+              </div>
+              <LayoutGroup id="archive-filter">
+                <div
+                  className="filters"
+                  role="group"
+                  aria-label="Project categories"
+                >
+                  {["All", "AI", "Data", "Full stack", "Backend"].map((c) => (
+                    <m.button
+                      key={c}
+                      aria-pressed={filter === c}
+                      onClick={() => {
+                        setFilter(c);
+                        setExpanded(true);
+                      }}
+                    >
+                      {filter === c && (
+                        <m.span
+                          layoutId="selected-filter"
+                          className="filter-highlight"
+                          transition={reduced ? { duration: 0 } : settle}
+                        />
+                      )}
+                      <span>{c}</span>
+                    </m.button>
+                  ))}
+                </div>
+              </LayoutGroup>
+              <p className="sr-only" aria-live="polite">
+                {archive.length} matching projects
+              </p>
+              <div className="archive-list">
+                {(expanded ? archive : archive.slice(0, 4)).map((p) => (
+                  <m.button
+                    layout={reduced ? false : "position"}
+                    initial={false}
+                    key={p.name}
+                    className="archive-row"
+                    onClick={() => open(p.index)}
+                    whileHover={reduced ? undefined : { x: 5 }}
                   >
-                    {category === c && (
-                      <m.span
-                        className="filter-active"
-                        layoutId="active-category"
-                        transition={reduced ? { duration: 0 } : settle}
-                      />
-                    )}
-                    <span className="filter-label">{c}</span>
+                    <span>
+                      <strong>{p.name}</strong>
+                      <small>{p.summary}</small>
+                    </span>
+                    <span className="archive-category">{p.category}</span>
+                    <ArrowUpRight size={20} />
                   </m.button>
                 ))}
               </div>
-            </LayoutGroup>
-            <p className="sr-only" aria-live="polite">
-              {archive.length} matching projects
-            </p>
-            <div className="archive-list">
-              {(expanded ? archive : archive.slice(0, 4)).map((p) => (
-                <m.button
-                  key={p.name}
-                  className="archive-row"
-                  layout={reduced ? false : "position"}
-                  initial={false}
-                  whileHover={reduced ? undefined : { x: 7 }}
-                  onClick={() => openProject(p.index)}
-                >
-                  <span>
-                    <strong>{p.name}</strong>
-                    <small>{p.summary}</small>
-                  </span>
-                  <span className="archive-category">{p.category}</span>
-                  <ArrowUpRight size={21} />
-                </m.button>
-              ))}
-            </div>
-            {archive.length === 0 && (
-              <p className="empty-state">
-                No matching projects. Try “React”, “API” or clear your search.
-              </p>
-            )}
-            {!expanded && archive.length > 4 && (
-              <button
-                className="archive-more"
-                onClick={() => setExpanded(true)}
-              >
-                Show all {archive.length} projects <ArrowDown size={16} />
-              </button>
-            )}
-            <p className="work-disclaimer">
-              Real work, shared responsibly. Company data stays private; related
-              POC versions are grouped together.
-            </p>
-          </section>
-        </section>
-        <section className="about-section" id="about">
-          <div className="wrap about-grid">
-            <div className="about-intro">
-              <span className="context-label">
-                A little about the person behind the code
-              </span>
-              <h2>
-                I like knowing
-                <br />
-                how it works.
-              </h2>
-              <p>
-                Especially the part between a click and a database query. I’m a
-                JavaScript-first developer growing into MERN development, with a
-                practical interest in AI and data workflows.
-              </p>
-              <p>
-                I use Claude Code and Codex to help implement and automate. The
-                important part is still understanding the rules, inspecting the
-                code and testing what happens next.
-              </p>
-              <a
-                className="text-link dark-link"
-                href={github}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Explore my GitHub <ArrowUpRight size={17} />
-              </a>
-            </div>
-            <div className="experience">
-              <div className="experience-item">
-                <span className="experience-date">Apr 2026 — Present</span>
-                <h3>Programmer Analyst Trainee</h3>
-                <p>SRM Technologies · Full time</p>
-                <span>
-                  Semantic analytics, retrieval and application workflows.
-                </span>
-              </div>
-              <div className="experience-item">
-                <span className="experience-date">Sep 2025 — Mar 2026</span>
-                <h3>Internship</h3>
-                <p>SRM Technologies · 7 months</p>
-                <span>
-                  JavaScript, MERN, AI prototypes and learning through POCs.
-                </span>
-              </div>
-              <div className="experience-item">
-                <span className="experience-date">Mar — Jun 2025</span>
-                <h3>Internship</h3>
-                <p>Fimo Info Solutions</p>
-                <span>
-                  Live streaming as the main project; messaging as a separate
-                  POC.
-                </span>
-              </div>
-              <div className="learning-note">
-                <GitBranch size={21} />
-                <p>
-                  <strong>Still learning. Always building.</strong>
-                  <br />
-                  TypeORM with MySQL and SQL optimization. TypeScript
-                  implementation with AI assistance.
+              {archive.length === 0 && (
+                <p className="empty-state">
+                  No projects found. Try “React”, “API” or clear your search.
                 </p>
+              )}
+              {!expanded && archive.length > 4 && (
+                <button className="show-more" onClick={() => setExpanded(true)}>
+                  Show all {archive.length} projects <ArrowDown size={16} />
+                </button>
+              )}
+              <p className="work-note">
+                Company data stays private. Related POC versions are grouped
+                together.
+              </p>
+            </section>
+          </div>
+        </section>
+        <section className="about-section wrap" id="about">
+          <div className="about-art">
+            <Tilt className="identity-card">
+              <span className="identity-top">
+                A little about me <Sparkles size={16} />
+              </span>
+              <div className="identity-monogram" aria-hidden="true">
+                bu.
               </div>
+              <h3>
+                Binay
+                <br />
+                Uppen Sharma
+              </h3>
+              <p>
+                Curious developer.
+                <br />
+                Work in progress.
+              </p>
+              <div className="identity-bottom">
+                <span>Chennai, India</span>
+                <Code2 size={21} />
+              </div>
+            </Tilt>
+            <span className="about-sticker" aria-hidden="true">
+              Always
+              <br />
+              figuring it out.
+            </span>
+          </div>
+          <div className="about-copy">
+            <span className="section-kicker">
+              The person behind the pull requests
+            </span>
+            <h2>
+              Big on curiosity.
+              <br />
+              Hands on the code.
+            </h2>
+            <p>
+              I like understanding the whole journey—from the first click to the
+              database query. JavaScript is my foundation, and MERN is where I’m
+              growing.
+            </p>
+            <p>
+              Along the way, I’ve built AI and data POCs at SRM, explored
+              semantic analytics on Accelerator AI, and developed a
+              live-streaming application during my Fimo internship.
+            </p>
+            <p>
+              I use Claude Code and Codex for implementation and automation.
+              Understanding the rules, inspecting the result and testing what
+              happens next are part of the work.
+            </p>
+            <div className="career">
+              <div>
+                <span>Apr 2026 — Present</span>
+                <strong>Programmer Analyst Trainee</strong>
+                <p>SRM Technologies · Full time</p>
+              </div>
+              <div>
+                <span>Sep 2025 — Mar 2026</span>
+                <strong>Internship · 7 months</strong>
+                <p>SRM Technologies</p>
+              </div>
+              <div>
+                <span>Mar — Jun 2025</span>
+                <strong>Internship</strong>
+                <p>Fimo Info Solutions · Live streaming; messaging POC</p>
+              </div>
+            </div>
+            <div className="learning">
+              <GitBranch size={18} />
+              <p>
+                <strong>Currently exploring</strong>
+                <br />
+                TypeORM with MySQL, SQL optimization, and TypeScript
+                implementation with AI assistance.
+              </p>
             </div>
           </div>
         </section>
-        <section className="contact-section wrap" id="contact">
-          <p>Have a workflow worth building?</p>
-          <MagneticLink
-            className="contact-heading"
-            href={linkedin}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <h2>
-              Let’s make
-              <br />
-              it work.
-            </h2>
-            <span>
-              <ArrowUpRight />
-            </span>
-          </MagneticLink>
-          <div className="contact-bottom">
-            <p>
-              JavaScript, MERN and thoughtfully applied AI.
-              <br />
-              Let’s start with the problem you’re solving.
-            </p>
-            <div>
-              <a href={linkedin} target="_blank" rel="noreferrer">
-                LinkedIn <ArrowUpRight size={16} />
-              </a>
-              <a href={github} target="_blank" rel="noreferrer">
-                GitHub <ArrowUpRight size={16} />
-              </a>
+        <section className="contact-section" id="contact">
+          <div className="wrap">
+            <div className="contact-top">
+              <span>Got something in mind?</span>
+              <span>Let’s connect the dots.</span>
+            </div>
+            <MagneticLink
+              className="contact-heading"
+              href={linkedin}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <h2>
+                Let’s build
+                <br />
+                something good.
+              </h2>
+              <span className="contact-arrow">
+                <ArrowUpRight />
+              </span>
+            </MagneticLink>
+            <div className="contact-bottom">
+              <p>
+                JavaScript, MERN and a healthy amount of curiosity.
+                <br />
+                Start with a hello. See where it goes.
+              </p>
+              <div>
+                <a href={linkedin} target="_blank" rel="noreferrer">
+                  LinkedIn <ArrowUpRight size={16} />
+                </a>
+                <a href={github} target="_blank" rel="noreferrer">
+                  GitHub <ArrowUpRight size={16} />
+                </a>
+              </div>
             </div>
           </div>
         </section>
       </main>
-      <footer className="wrap footer">
+      <footer className="footer wrap">
         <span>© {new Date().getFullYear()} Binay Uppen Sharma</span>
         <a href="#top">
-          Back to top <ArrowUpRight size={15} />
+          Back to the top <ArrowUpRight size={14} />
         </a>
       </footer>
       <dialog
@@ -740,48 +738,45 @@ function Portfolio() {
         className="project-dialog"
         aria-labelledby="dialog-title"
         onClose={() => {
-          setDialogVisible(false);
+          setVisible(false);
           trigger.current?.focus();
         }}
-        onCancel={(event) => {
-          event.preventDefault();
-          closeProject();
+        onCancel={(e) => {
+          e.preventDefault();
+          close();
         }}
         onClick={(e) => {
-          if (e.target === e.currentTarget) closeProject();
+          if (e.target === e.currentTarget) close();
         }}
       >
         <AnimatePresence
           initial={false}
           onExitComplete={() => {
-            if (!dialogVisible) dialog.current?.close();
+            if (!visible) dialog.current?.close();
           }}
         >
-          {dialogVisible && (
+          {visible && (
             <m.div
               key={project.name}
               className="dialog-inner"
               initial={{
                 opacity: 0,
-                scale: reduced ? 1 : 0.97,
-                y: reduced ? 0 : 16,
+                y: reduced ? 0 : 18,
+                scale: reduced ? 1 : 0.98,
               }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{
                 opacity: 0,
+                y: reduced ? 0 : 10,
                 scale: reduced ? 1 : 0.98,
-                y: reduced ? 0 : 8,
               }}
-              transition={{
-                duration: reduced ? 0 : 0.2,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+              transition={{ duration: reduced ? 0 : 0.2 }}
             >
               <div className="dialog-top">
                 <span>{project.type}</span>
                 <button
+                  onClick={close}
                   className="close-button"
-                  onClick={closeProject}
                   aria-label="Close project details"
                   autoFocus
                 >
@@ -806,7 +801,7 @@ function Portfolio() {
               {project.repo && (
                 <div className="project-sources">
                   <a
-                    className="button navy"
+                    className="button primary"
                     href={project.repo}
                     target="_blank"
                     rel="noreferrer"
@@ -819,7 +814,7 @@ function Portfolio() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {project.evidence.label} <ArrowUpRight size={16} />
+                      {project.evidence.label} <ArrowUpRight size={14} />
                     </a>
                   )}
                 </div>

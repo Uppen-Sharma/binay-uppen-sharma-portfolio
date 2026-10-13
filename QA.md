@@ -23,3 +23,14 @@ These are bounded automated and visual checks, not a guarantee across every brow
 - No browser errors, no detected WCAG 2/2.1 A/AA violations in desktop/mobile/dialog scans, and no page-level overflow across the eight tested widths from 320 to 1920px.
 - Desktop/mobile screenshots and case-study layout visually reviewed. Physical-device GPU/frame-rate behavior has not been measured.
 - Local mobile Lighthouse run: Performance 91, Accessibility 100, Best Practices 100, SEO 100; LCP 3.1s, TBT 120ms, CLS 0. Scores are a lab snapshot of the animated build.
+
+## Complete software-playground revamp — 13 October 2026
+
+The entire page and stylesheet were replaced with the direction recorded in `REVAMP.md`: Syne/Manrope typography, violet/lavender/ink palette, custom browser artwork, distinct project surfaces, profile card and violet contact section.
+
+- Production build, TypeScript and targeted ESLint pass.
+- Normal-motion and reduced-motion browser suites pass: hero Build/Connect interaction, analytics Context/SQL/Answer previews, all 12 dialogs, Escape/close/focus return, archive filters, search, no-results and clearing search.
+- Eight viewport sizes, 320–1920px: no page-level overflow. Very narrow typography and profile-grid sizing were corrected during review.
+- Desktop/mobile/dialog axe WCAG 2/2.1 A/AA scans report no violations after correcting the new palette’s secondary-label contrast.
+- Desktop and mobile screenshots reviewed, including project artwork and native dialogs. Physical-device GPU behavior remains unmeasured.
+- Final local mobile Lighthouse lab snapshot: Performance 91, Accessibility 100, Best Practices 100, SEO 100; LCP 2.9s, TBT 210ms, CLS 0.

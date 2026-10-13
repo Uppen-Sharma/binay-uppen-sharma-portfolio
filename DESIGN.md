@@ -1,5 +1,7 @@
 # Portfolio redesign — September 2026
 
+The October 2026 complete visual rebuild supersedes this blue workbench design. See `REVAMP.md` for the current palette, typography, structure and design rationale.
+
 ## Direction: the developer's workbench
 An interactive system diagram is the signature element: visitors can explore how interface, API and data fit together. Real project explanations supply the content; no invented impact metrics, decorative dashboards implying customer results, or third-party tracking.
 

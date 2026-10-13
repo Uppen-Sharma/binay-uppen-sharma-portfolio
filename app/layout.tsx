@@ -6,7 +6,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     title: "Binay Uppen Sharma | JavaScript & MERN Developer",
-    description: "Interfaces, APIs and AI workflows. Explore the work behind the code.",
+    description:
+      "Interfaces, APIs and AI workflows. Explore the work behind the code.",
     url: "/",
     type: "website",
   },
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: "#123c59" };
+export const viewport: Viewport = { themeColor: "#5445e8" };
 
 export default function RootLayout({
   children,
@@ -29,8 +30,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preload" href="/fonts/manrope-regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/manrope-bold.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          href="/fonts/syne-display.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/manrope-regular.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/manrope-bold.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="antialiased">{children}</body>
     </html>
