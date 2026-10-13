@@ -34,93 +34,101 @@ const github = "https://github.com/Uppen-Sharma",
   linkedin = "https://www.linkedin.com/in/BinayUppenSharma";
 
 function HeroArt() {
-  const reduced = useReducedMotion();
-  const [mode, setMode] = useState("Build");
   return (
-    <Tilt className="hero-art">
-      <div className="art-orbit" aria-hidden="true" />
-      <div className="code-emblem" aria-hidden="true">
-        <span>{"{"}</span>
-        <span>{"}"}</span>
-      </div>
-      <m.div
-        className="hero-window"
-        animate={{ rotate: mode === "Build" ? -7 : -3 }}
-        transition={reduced ? { duration: 0 } : settle}
-      >
-        <div className="window-chrome">
-          <span>
-            <i />
-            <i />
-            <i />
-          </span>
-          <small>binay / playground</small>
-          <Code2 size={14} />
-        </div>
-        <div className="hero-window-body">
-          <span className="file-name">a little bit of JavaScript</span>
-          <div className="hero-code">
-            <span className="code-purple">const</span> idea ={" "}
-            <span className="code-green">&quot;What if?&quot;</span>;<br />
-            <span className="code-purple">const</span> result ={" "}
-            <span className="code-purple">await</span> build(idea);
-            <br />
-            <br />
-            <span className="code-grey">
-              {"// Give curiosity somewhere to go."}
-            </span>
-            <br />
-            result.<span className="code-purple">makeItWork</span>();
-          </div>
-          <div
-            className="art-tabs"
-            role="group"
-            aria-label="Playground preview"
+    <div className="space-art" aria-hidden="true">
+      <svg viewBox="0 0 620 570" fill="none">
+        <defs>
+          <radialGradient id="planetSurface" cx=".25" cy=".2" r=".82">
+            <stop stopColor="#c5e7f2" />
+            <stop offset=".32" stopColor="#608ba9" />
+            <stop offset=".63" stopColor="#253d58" />
+            <stop offset="1" stopColor="#080f1d" />
+          </radialGradient>
+          <linearGradient
+            id="orbitalRing"
+            x1="70"
+            y1="200"
+            x2="550"
+            y2="380"
+            gradientUnits="userSpaceOnUse"
           >
-            <button
-              aria-pressed={mode === "Build"}
-              onClick={() => setMode("Build")}
-            >
-              Build <Code2 size={12} />
-            </button>
-            <button
-              aria-pressed={mode === "Connect"}
-              onClick={() => setMode("Connect")}
-            >
-              Connect <GitBranch size={12} />
-            </button>
-          </div>
-        </div>
-      </m.div>
-      <m.div
-        className="status-card"
-        animate={{
-          y: mode === "Connect" ? -10 : 0,
-          rotate: mode === "Connect" ? 3 : 7,
-        }}
-        transition={reduced ? { duration: 0 } : settle}
-      >
-        <span className="status-icon">
-          <Check size={20} />
-        </span>
-        <div>
-          <strong>
-            {mode === "Build"
-              ? "From idea to interface."
-              : "Now, connect the pieces."}
-          </strong>
-          <span>
-            {mode === "Build"
-              ? "One thoughtful step at a time."
-              : "UI → API → data"}
-          </span>
-        </div>
-      </m.div>
-      <span className="art-caption">An interactive sketch of how I think.</span>
-    </Tilt>
+            <stop stopColor="#b9e4f1" stopOpacity=".1" />
+            <stop offset=".5" stopColor="#b9e4f1" />
+            <stop offset="1" stopColor="#e7ba89" stopOpacity=".5" />
+          </linearGradient>
+          <radialGradient id="planetGlow">
+            <stop stopColor="#668aaf" stopOpacity=".25" />
+            <stop offset="1" stopColor="#668aaf" stopOpacity="0" />
+          </radialGradient>
+          <clipPath id="planetClip">
+            <circle cx="310" cy="270" r="147" />
+          </clipPath>
+        </defs>
+        <circle cx="310" cy="270" r="250" fill="url(#planetGlow)" />
+        <ellipse
+          cx="310"
+          cy="280"
+          rx="274"
+          ry="106"
+          transform="rotate(-28 310 280)"
+          stroke="#526781"
+          strokeOpacity=".35"
+          strokeDasharray="2 9"
+        />
+        <ellipse
+          cx="310"
+          cy="280"
+          rx="239"
+          ry="69"
+          transform="rotate(-28 310 280)"
+          stroke="url(#orbitalRing)"
+          strokeWidth="2"
+        />
+        <circle cx="310" cy="270" r="147" fill="url(#planetSurface)" />
+        <g clipPath="url(#planetClip)" stroke="#b1d6e7" strokeOpacity=".07">
+          <path
+            d="M120 185 Q285 250 490 170 M120 202 Q285 267 490 187 M120 223 Q285 288 490 208 M120 248 Q285 313 490 233 M120 280 Q285 345 490 265 M120 315 Q285 380 490 300 M120 347 Q285 412 490 332"
+            strokeWidth="7"
+          />
+          <circle cx="300" cy="275" r="139" strokeOpacity=".12" />
+        </g>
+        <path
+          d="M101 368 C137 414 303 366 435 296 C503 259 542 224 519 191"
+          stroke="url(#orbitalRing)"
+          strokeWidth="3"
+        />
+        <circle cx="158" cy="385" r="5" fill="#e7ba89" />
+        <circle
+          cx="480"
+          cy="119"
+          r="15"
+          fill="#15243a"
+          stroke="#7097b7"
+          strokeOpacity=".6"
+        />
+        <path
+          d="M101 137h12m-6-6v12M503 392h10m-5-5v10M356 66h8m-4-4v8"
+          stroke="#a1bfd6"
+        />
+        <g fill="#aac8dd">
+          <circle cx="61" cy="264" r="1.5" />
+          <circle cx="173" cy="77" r="1" />
+          <circle cx="536" cy="283" r="1.5" />
+          <circle cx="423" cy="447" r="1" />
+          <circle cx="215" cy="480" r="1.5" />
+          <circle cx="557" cy="80" r="1" />
+          <circle cx="72" cy="436" r="1" />
+          <circle cx="286" cy="103" r="1" />
+        </g>
+      </svg>
+      <span className="space-caption">
+        Curiosity is the starting point.
+        <br />
+        <strong>Engineering is the journey.</strong>
+      </span>
+    </div>
   );
 }
-
 const stages = [
   {
     name: "Context",
@@ -163,6 +171,9 @@ function AnalyticsArt() {
             <div className="question-box">
               What is happening in my data?<span>↵</span>
             </div>
+            <p className="workflow-label">
+              Preview the workflow — choose a step
+            </p>
             <div
               className="stage-tabs"
               role="group"
@@ -331,10 +342,10 @@ function Portfolio() {
           <span>Binay Uppen Sharma</span>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#work">Work</a>
+          <a href="#work">Projects</a>
           <a href="#about">About</a>
           <a className="nav-contact" href="#contact">
-            Say hello <ArrowUpRight size={15} />
+            Contact <ArrowUpRight size={15} />
           </a>
         </nav>
       </header>
@@ -350,19 +361,20 @@ function Portfolio() {
             <div className="hero-copy">
               <h1>
                 <Entrance as="span" className="headline-line">
-                  Ideas in.
+                  Binay Uppen
                 </Entrance>
                 <Entrance as="span" className="headline-line" delay={0.1}>
-                  Code out.
+                  Sharma.
                 </Entrance>
               </h1>
               <p>
-                Hey, I’m Binay. I build web applications, connect the pieces
-                behind them, and explore what AI can help us make.
+                JavaScript-first developer building interfaces, APIs and AI
+                workflows. From MERN applications to semantic analytics, here’s
+                the work behind the code.
               </p>
               <div className="hero-actions">
                 <MagneticLink href="#work" className="button primary">
-                  Take a look around <ArrowDown size={18} />
+                  View projects <ArrowDown size={18} />
                 </MagneticLink>
                 <a
                   className="text-link"
@@ -370,7 +382,7 @@ function Portfolio() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  GitHub <ArrowUpRight size={16} />
+                  GitHub profile <ArrowUpRight size={16} />
                 </a>
               </div>
             </div>
@@ -404,18 +416,18 @@ function Portfolio() {
             <div className="section-heading">
               <div>
                 <span className="section-kicker">
-                  A few things I’ve been building
+                  Selected projects · 01—03
                 </span>
                 <h2>
-                  Curiosity,
+                  Built to solve.
                   <br />
-                  put to work.
+                  Designed to work.
                 </h2>
               </div>
               <p>
-                Team contributions, internship POCs
+                Explore the engineering behind each project.
                 <br />
-                and lessons turned into working code.
+                Open a case study for my role, approach and code.
               </p>
             </div>
             <Reveal>
@@ -444,9 +456,9 @@ function Portfolio() {
                     onClick={() => open(0)}
                     whileHover={reduced ? undefined : { x: 5 }}
                     whileTap={reduced ? undefined : { scale: 0.97 }}
-                    aria-label="Explore Accelerator AI"
+                    aria-label="View Accelerator AI case study"
                   >
-                    Explore the project <ArrowUpRight size={17} />
+                    View case study <ArrowUpRight size={17} />
                   </m.button>
                 </div>
                 <div className="flagship-stage">
@@ -462,17 +474,12 @@ function Portfolio() {
             <div className="project-pair">
               <Reveal>
                 <article className="project-card doc-card">
-                  <button
-                    className="card-visual"
-                    onClick={() => open(1)}
-                    aria-label="Explore Document Intelligence"
-                  >
+                  <div className="card-visual" aria-hidden="true">
                     <DocumentArt />
-                    <span className="open-disc">
-                      <ArrowUpRight />
+                    <span className="preview-note">
+                      Concept preview · illustrative UI
                     </span>
-                    <span className="preview-note">Concept preview</span>
-                  </button>
+                  </div>
                   <div className="card-copy">
                     <span className="project-kind">
                       SRM internship · Document-processing POC
@@ -485,22 +492,24 @@ function Portfolio() {
                     <span className="card-stack">
                       React / FastAPI / Azure AI
                     </span>
+                    <button
+                      className="button case-study-button"
+                      onClick={() => open(1)}
+                      aria-label="View Document Intelligence case study"
+                    >
+                      View case study <ArrowUpRight size={17} />
+                    </button>
                   </div>
                 </article>
               </Reveal>
               <Reveal>
                 <article className="project-card task-card">
-                  <button
-                    className="card-visual"
-                    onClick={() => open(2)}
-                    aria-label="Explore TaskFlows"
-                  >
+                  <div className="card-visual" aria-hidden="true">
                     <TaskArt />
-                    <span className="open-disc">
-                      <ArrowUpRight />
+                    <span className="preview-note">
+                      Concept preview · illustrative UI
                     </span>
-                    <span className="preview-note">Concept preview</span>
-                  </button>
+                  </div>
                   <div className="card-copy">
                     <span className="project-kind">
                       MERN application · Workflow engineering
@@ -513,6 +522,13 @@ function Portfolio() {
                     <span className="card-stack">
                       MongoDB / Express / React / Node.js
                     </span>
+                    <button
+                      className="button case-study-button"
+                      onClick={() => open(2)}
+                      aria-label="View TaskFlows case study"
+                    >
+                      View case study <ArrowUpRight size={17} />
+                    </button>
                   </div>
                 </article>
               </Reveal>
@@ -520,8 +536,10 @@ function Portfolio() {
             <section className="archive" aria-labelledby="archive-title">
               <div className="archive-heading">
                 <div>
-                  <h3 id="archive-title">More from the playground.</h3>
-                  <p>Small experiments can teach you big things.</p>
+                  <h3 id="archive-title">More projects. Same curiosity.</h3>
+                  <p>
+                    Browse the archive. Select a project to see its case study.
+                  </p>
                 </div>
                 <label className="search-box">
                   <Search size={17} />
@@ -585,7 +603,9 @@ function Portfolio() {
                       <small>{p.summary}</small>
                     </span>
                     <span className="archive-category">{p.category}</span>
-                    <ArrowUpRight size={20} />
+                    <span className="archive-action">
+                      View details <ArrowUpRight size={16} />
+                    </span>
                   </m.button>
                 ))}
               </div>
@@ -608,7 +628,7 @@ function Portfolio() {
         </section>
         <section className="about-section wrap" id="about">
           <div className="about-art">
-            <Tilt className="identity-card">
+            <div className="identity-card">
               <span className="identity-top">
                 A little about me <Sparkles size={16} />
               </span>
@@ -629,7 +649,7 @@ function Portfolio() {
                 <span>Chennai, India</span>
                 <Code2 size={21} />
               </div>
-            </Tilt>
+            </div>
             <span className="about-sticker" aria-hidden="true">
               Always
               <br />
@@ -694,21 +714,13 @@ function Portfolio() {
               <span>Got something in mind?</span>
               <span>Let’s connect the dots.</span>
             </div>
-            <MagneticLink
-              className="contact-heading"
-              href={linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <div className="contact-heading">
               <h2>
                 Let’s build
                 <br />
                 something good.
               </h2>
-              <span className="contact-arrow">
-                <ArrowUpRight />
-              </span>
-            </MagneticLink>
+            </div>
             <div className="contact-bottom">
               <p>
                 JavaScript, MERN and a healthy amount of curiosity.
@@ -717,7 +729,7 @@ function Portfolio() {
               </p>
               <div>
                 <a href={linkedin} target="_blank" rel="noreferrer">
-                  LinkedIn <ArrowUpRight size={16} />
+                  Contact on LinkedIn <ArrowUpRight size={16} />
                 </a>
                 <a href={github} target="_blank" rel="noreferrer">
                   GitHub <ArrowUpRight size={16} />

@@ -34,3 +34,16 @@ The entire page and stylesheet were replaced with the direction recorded in `REV
 - Desktop/mobile/dialog axe WCAG 2/2.1 A/AA scans report no violations after correcting the new palette’s secondary-label contrast.
 - Desktop and mobile screenshots reviewed, including project artwork and native dialogs. Physical-device GPU behavior remains unmeasured.
 - Final local mobile Lighthouse lab snapshot: Performance 91, Accessibility 100, Best Practices 100, SEO 100; LCP 2.9s, TBT 210ms, CLS 0.
+
+## Deep-space theme and clear actions — 13 October 2026
+
+- Production build and TypeScript pass. Targeted ESLint passes for page, layout and motion helpers.
+- Verified in Edge with normal and reduced motion: the three analytics steps, all 12 project dialogs, Escape and close buttons, focus return, archive expansion, four category counts, search, no-results and search clearing.
+- Desktop/mobile/dialog axe-core WCAG 2/2.1 A/AA scans: no detected violations. Preview-label backgrounds were corrected after the first scan.
+- No browser page errors and no page-level horizontal overflow across 320, 390, 540, 768, 820, 1024, 1440 and 1920px widths. Contact navigation stays visible at every tested width.
+- Desktop/phone screenshots reviewed. Flagship and profile title bounds checked at six widths after correcting narrow-screen type sizes.
+- Decorative hero and project thumbnails have no buttons or pointer reaction. Featured actions say View case study; archive actions say View details. Actual analytics controls have 44px minimum targets and selected states.
+- Final local mobile Lighthouse lab snapshot: Performance 92, Accessibility 100, Best Practices 100, SEO 100; LCP 3.0s, TBT 180ms, CLS 0. This is a lab result, not a guarantee of field performance.
+- No new tracking, remote font dependency, autoplay or WebGL runtime. Case-study facts and confidential-data boundaries are unchanged.
+
+These are bounded automated and visual checks, not a guarantee across all devices or assistive technology.
