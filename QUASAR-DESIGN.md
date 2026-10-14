@@ -18,6 +18,8 @@ Select → icon intake → native dialog case study → close/Escape → quasar 
 
 Intake is 620 ms; return is 700 ms. Motion uses full transform strings and opacity, with no per-frame React state updates, animated layout sizes or animated inherited CSS variables. State completion uses cleaned-up bounded timers independently of animation-frame callbacks. The native dialog has an additional bounded close path.
 
+The reader and its close control stay stationary on entrance. Only the project travels; the reader can fade on exit. This avoids an early-click race with a moving close target.
+
 The OS reduced-motion preference and the collection's “Read without motion” control skip portal travel and reader entrance motion. All project content remains available. There is no perpetual animation. Real-device GPU/frame-time testing has not been performed.
 
 ## Content and spacing

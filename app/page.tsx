@@ -533,14 +533,10 @@ function Portfolio() {
               className="dialog-inner"
               initial={{
                 opacity: 1,
-                y: readerReduced ? 0 : 18,
-                scale: readerReduced ? 1 : 0.98,
               }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
+              animate={{ opacity: 1 }}
               exit={{
                 opacity: 0,
-                y: readerReduced ? 0 : 10,
-                scale: readerReduced ? 1 : 0.98,
               }}
               transition={{ duration: readerReduced ? 0 : 0.2 }}
             >
