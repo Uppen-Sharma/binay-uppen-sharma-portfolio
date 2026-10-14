@@ -47,3 +47,13 @@ The entire page and stylesheet were replaced with the direction recorded in `REV
 - No new tracking, remote font dependency, autoplay or WebGL runtime. Case-study facts and confidential-data boundaries are unchanged.
 
 These are bounded automated and visual checks, not a guarantee across all devices or assistive technology.
+
+## Light/dark layout and SRM journey — completed 14 October 2026
+
+- The saved production build and TypeScript checks passed after the final sticky-header correction. Targeted ESLint was rerun successfully on the page, layout, projects, experience data and new controls.
+- Before the pause, browser checks covered all 14 monthly chapters, all 12 expanded case studies, work-period expansion, related-project links, category counts, search, empty states and clearing search. Those unaffected checks are reused.
+- On resumption, verified the final sticky header, section-aware navigation, representative first/current/full-time chapters, work-period expansion, theme switching and persistence after reload, chart/data/SQL preview views, native-dialog Escape handling and focus return.
+- Fresh responsive checks at 320, 390, 540, 640, 768, 820, 1100, 1440 and 1920px: no page-level horizontal overflow; header and section navigation remain available. No browser console errors were reported in the resumed preview.
+- Desktop and mobile layouts were visually reviewed in both themes. Light-theme tag contrast and visible-label/accessibility-name mismatches were corrected before the pause. The post-fix Lighthouse accessible-label audit passes.
+- Latest local mobile Lighthouse snapshot (13 October): Performance 98, Accessibility 100, Best Practices 100, SEO 100; LCP 2.0s, TBT 150ms, CLS 0. Scores describe that lab run, not real-user guarantees. The only later UI change was making the already-sticky mobile header sticky on desktop too; its position and layout were verified on resumption.
+- Source boundaries are recorded in WORK-JOURNEY.md. The original tracker, résumé, internal screenshots, customer values and credentials are not in public assets or the pending source commit. The timeline intentionally stops at 13 October, the latest populated source date.

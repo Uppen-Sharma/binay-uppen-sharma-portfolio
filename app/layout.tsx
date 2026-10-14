@@ -28,14 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <link
-          rel="preload"
-          href="/fonts/syne-display.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('portfolio-theme');document.documentElement.dataset.theme=t==='light'||t==='dark'?t:matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}`,
+          }}
         />
         <link
           rel="preload"

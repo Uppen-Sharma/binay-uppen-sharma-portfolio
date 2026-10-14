@@ -20,9 +20,10 @@ import {
   GitBranch,
 } from "lucide-react";
 import { projects } from "./projects";
+import { SectionRail, ThemeToggle } from "./site-controls";
+import { WorkJourney } from "./work-journey";
 import {
   Entrance,
-  MagneticLink,
   MotionRoot,
   ReadingProgress,
   Reveal,
@@ -129,86 +130,109 @@ function HeroArt() {
     </div>
   );
 }
-const stages = [
-  {
-    name: "Context",
-    title: "Find the right context.",
-    copy: "Start with the connected schema and relevant semantic definitions.",
-    code: "question → schema → semantic model",
-  },
-  {
-    name: "SQL",
-    title: "Check the query first.",
-    copy: "Resolve the datasource and validate generated SQL before execution.",
-    code: "resolveDatasource() → validateSQL()",
-  },
-  {
-    name: "Answer",
-    title: "Bring the result into focus.",
-    copy: "Connect returned data with an analytical response and a clear interface.",
-    code: "data → analysis → response",
-  },
-];
 function AnalyticsArt() {
-  const [stage, setStage] = useState(0);
+  const [view, setView] = useState("Chart");
   const reduced = useReducedMotion();
   return (
     <div className="analytics-art">
       <div className="analytics-window">
         <div className="window-chrome">
           <span className="mini-brand">
-            <Sparkles size={15} /> accelerator ai
+            <Sparkles size={15} /> Accelerator AI
           </span>
-          <small>Concept preview</small>
+          <small>Sanitized concept</small>
         </div>
         <div className="analytics-body">
           <div className="analytics-sidebar" aria-hidden="true">
+            <Sparkles />
             <Layers />
             <Database />
-            <Code2 />
           </div>
           <div className="analytics-main">
-            <div className="question-box">
-              What is happening in my data?<span>↵</span>
+            <div className="preview-composer">
+              <small>Example question</small>
+              <strong>How do weekly totals compare?</strong>
+              <div className="example-prompts" aria-hidden="true">
+                <span>Weekly trends</span>
+                <span>Category breakdown</span>
+              </div>
             </div>
-            <p className="workflow-label">
-              Preview the workflow — choose a step
-            </p>
-            <div
-              className="stage-tabs"
-              role="group"
-              aria-label="Explore analytics workflow"
-            >
-              {stages.map((s, i) => (
-                <button
-                  key={s.name}
-                  onClick={() => setStage(i)}
-                  aria-pressed={stage === i}
-                >
-                  {s.name}
-                </button>
-              ))}
-            </div>
-            <AnimatePresence mode="wait" initial={false}>
-              <m.div
-                key={stage}
-                initial={{ opacity: 0, y: reduced ? 0 : 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: reduced ? 0 : -5 }}
-                transition={{ duration: reduced ? 0 : 0.15 }}
-                className="stage-content"
-                aria-live="polite"
+            <div className="pinned-preview">
+              <span className="pinned-label">
+                Pinned result <small>Fictional example</small>
+              </span>
+              <p className="workflow-label">Choose a result view</p>
+              <div
+                className="stage-tabs"
+                role="group"
+                aria-label="Preview result views"
               >
-                <span className="stage-heading">{stages[stage].title}</span>
-                <p>{stages[stage].copy}</p>
-                <code>{stages[stage].code}</code>
-                <div className="mini-chart" aria-hidden="true">
-                  {[35, 55, 42, 72, 61, 83, 70, 96].map((h, i) => (
-                    <i style={{ height: h + "%" }} key={i} />
-                  ))}
-                </div>
-              </m.div>
-            </AnimatePresence>
+                {["Chart", "Data", "SQL"].map((name) => (
+                  <button
+                    key={name}
+                    aria-pressed={view === name}
+                    onClick={() => setView(name)}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+              <AnimatePresence mode="wait" initial={false}>
+                <m.div
+                  key={view}
+                  initial={{ opacity: 0, y: reduced ? 0 : 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: reduced ? 0 : 0.15 }}
+                  className="stage-content"
+                  aria-live="polite"
+                >
+                  {view === "Chart" ? (
+                    <>
+                      <span className="stage-heading">
+                        Illustrative weekly totals
+                      </span>
+                      <div className="mini-chart" aria-hidden="true">
+                        {[40, 65, 85].map((h, i) => (
+                          <i key={i} style={{ height: h + "%" }} />
+                        ))}
+                      </div>
+                      <p>Week 1 · Week 2 · Week 3</p>
+                    </>
+                  ) : view === "Data" ? (
+                    <table className="preview-data">
+                      <caption>Fictional sample data</caption>
+                      <thead>
+                        <tr>
+                          <th>Period</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[40, 65, 85].map((n, i) => (
+                          <tr key={i}>
+                            <td>Week {i + 1}</td>
+                            <td>{n}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <>
+                      <span className="stage-heading">Example query</span>
+                      <pre className="preview-sql">
+                        <code>
+                          {
+                            "SELECT week, SUM(value)\nFROM example_data\nGROUP BY week;"
+                          }
+                        </code>
+                      </pre>
+                      <p>Illustrative SQL, not a live query.</p>
+                    </>
+                  )}
+                </m.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
@@ -331,6 +355,7 @@ function Portfolio() {
   return (
     <>
       <ReadingProgress />
+      <SectionRail />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -341,13 +366,16 @@ function Portfolio() {
           </span>
           <span>Binay Uppen Sharma</span>
         </a>
-        <nav aria-label="Main navigation">
-          <a href="#work">Projects</a>
-          <a href="#about">About</a>
-          <a className="nav-contact" href="#contact">
-            Contact <ArrowUpRight size={15} />
-          </a>
-        </nav>
+        <div className="header-actions">
+          <nav aria-label="Main navigation">
+            <a href="#work">Projects</a>
+            <a href="#journey">SRM journey</a>
+            <a className="nav-contact" href="#contact">
+              Contact <ArrowUpRight size={15} />
+            </a>
+          </nav>
+          <ThemeToggle />
+        </div>
       </header>
       <main id="main">
         <section className="hero wrap" id="top">
@@ -373,9 +401,9 @@ function Portfolio() {
                 the work behind the code.
               </p>
               <div className="hero-actions">
-                <MagneticLink href="#work" className="button primary">
+                <a href="#work" className="button primary">
                   View projects <ArrowDown size={18} />
-                </MagneticLink>
+                </a>
                 <a
                   className="text-link"
                   href={github}
@@ -391,33 +419,35 @@ function Portfolio() {
             </Entrance>
           </div>
           <div className="hero-bottom">
-            <p>
-              Currently building at <strong>SRM Technologies</strong>
-              <br />
-              <span>Programmer Analyst Trainee</span>
-            </p>
-            <div className="stack-stamps">
-              <span>JavaScript</span>
-              <span>React</span>
-              <span>Node.js</span>
-              <span>MongoDB</span>
+            <div className="current-role">
+              <span className="section-kicker">
+                Currently at SRM Technologies
+              </span>
+              <h2>Programmer Analyst Trainee</h2>
+              <p>Full time · April 2026 — present</p>
             </div>
-            <a
-              href="#work"
-              className="scroll-cue"
-              aria-label="Scroll to selected work"
-            >
-              <ArrowDown size={19} />
-            </a>
+            <div className="current-focus">
+              <p>
+                Contributing to Accelerator AI across React interfaces, Node.js
+                services and semantic analytics.
+              </p>
+              <div className="stack-stamps">
+                <span>JavaScript</span>
+                <span>React</span>
+                <span>Node.js</span>
+                <span>MySQL</span>
+              </div>
+              <a className="text-link" href="#journey">
+                Explore my SRM journey <ArrowDown size={16} />
+              </a>
+            </div>
           </div>
         </section>
         <section className="work-section" id="work">
           <div className="wrap">
             <div className="section-heading">
               <div>
-                <span className="section-kicker">
-                  Selected projects · 01—03
-                </span>
+                <span className="section-kicker">Selected projects</span>
                 <h2>
                   Built to solve.
                   <br />
@@ -454,9 +484,9 @@ function Portfolio() {
                   <m.button
                     className="button ink"
                     onClick={() => open(0)}
-                    whileHover={reduced ? undefined : { x: 5 }}
+                    whileHover={reduced ? undefined : { x: 2 }}
                     whileTap={reduced ? undefined : { scale: 0.97 }}
-                    aria-label="View Accelerator AI case study"
+                    aria-label="View case study: Accelerator AI"
                   >
                     View case study <ArrowUpRight size={17} />
                   </m.button>
@@ -466,7 +496,7 @@ function Portfolio() {
                     <AnalyticsArt />
                   </ScrollScene>
                   <span className="preview-note">
-                    Illustrative UI · no customer data
+                    UI-inspired concept · fictional data
                   </span>
                 </div>
               </article>
@@ -482,7 +512,7 @@ function Portfolio() {
                   </div>
                   <div className="card-copy">
                     <span className="project-kind">
-                      SRM internship · Document-processing POC
+                      SRM · Document-processing POC
                     </span>
                     <h3>Document Intelligence</h3>
                     <p>
@@ -495,7 +525,7 @@ function Portfolio() {
                     <button
                       className="button case-study-button"
                       onClick={() => open(1)}
-                      aria-label="View Document Intelligence case study"
+                      aria-label="View case study: Document Intelligence"
                     >
                       View case study <ArrowUpRight size={17} />
                     </button>
@@ -525,7 +555,7 @@ function Portfolio() {
                     <button
                       className="button case-study-button"
                       onClick={() => open(2)}
-                      aria-label="View TaskFlows case study"
+                      aria-label="View case study: TaskFlows"
                     >
                       View case study <ArrowUpRight size={17} />
                     </button>
@@ -626,6 +656,7 @@ function Portfolio() {
             </section>
           </div>
         </section>
+        <WorkJourney onOpen={open} />
         <section className="about-section wrap" id="about">
           <div className="about-art">
             <div className="identity-card">
@@ -810,6 +841,40 @@ function Portfolio() {
                 </ul>
               </div>
               <p className="dialog-stack">{project.stack}</p>
+              {project.interface && (
+                <div className="dialog-section">
+                  <h3>Interface at a glance</h3>
+                  <ul>
+                    {project.interface.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {project.workflow && (
+                <div className="dialog-section">
+                  <h3>How the pieces connect</h3>
+                  <ol className="implementation-flow">
+                    {project.workflow.map((item, i) => (
+                      <li key={item}>
+                        <span aria-hidden="true">{i + 1}</span>
+                        <p>{item}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+              {project.decisions && (
+                <div className="dialog-section">
+                  <h3>Engineering considerations</h3>
+                  <ul>
+                    {project.decisions.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {project.repo && (
                 <div className="project-sources">
                   <a
