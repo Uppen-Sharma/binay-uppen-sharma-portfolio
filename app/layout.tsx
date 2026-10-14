@@ -5,15 +5,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://binay-uppen-sharma-portfolio.vercel.app"),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Binay Uppen Sharma | JavaScript & MERN Developer",
+    title: "Binay Uppen Sharma | Applied AI, MERN & Integrations",
     description:
-      "Interfaces, APIs and AI workflows. Explore the work behind the code.",
+      "Complex workflows, useful software. Explore SRM projects, AI analytics and JavaScript-led integrations.",
     url: "/",
     type: "website",
   },
-  title: "Binay Uppen Sharma | JavaScript & MERN Stack Developer",
+  title: "Binay Uppen Sharma | Applied AI, MERN & Integrations",
   description:
-    "JavaScript-first MERN stack developer. Explore SRM learning projects, proofs of concept, Accelerator AI contributions, and AI-assisted development workflows.",
+    "JavaScript and MERN foundations, growing toward forward-deployed engineering. Explore Accelerator AI team contributions, SRM proofs of concept, integrations and tested AI workflows.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -37,16 +37,16 @@ export default function RootLayout({
         />
         <link
           rel="preload"
-          href="/fonts/manrope-regular.ttf"
+          href="/fonts/manrope-regular.woff2"
           as="font"
-          type="font/ttf"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
         <link
           rel="preload"
-          href="/fonts/manrope-bold.ttf"
+          href="/fonts/manrope-bold.woff2"
           as="font"
-          type="font/ttf"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
       </head>

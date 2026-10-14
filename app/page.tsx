@@ -20,6 +20,8 @@ import {
   GitBranch,
 } from "lucide-react";
 import { projects } from "./projects";
+import { BlackHole } from "./black-hole";
+import { SocialIcon } from "./social-icon";
 import { SectionRail, ThemeToggle } from "./site-controls";
 import { WorkJourney } from "./work-journey";
 import {
@@ -34,102 +36,6 @@ import {
 const github = "https://github.com/Uppen-Sharma",
   linkedin = "https://www.linkedin.com/in/BinayUppenSharma";
 
-function HeroArt() {
-  return (
-    <div className="space-art" aria-hidden="true">
-      <svg viewBox="0 0 620 570" fill="none">
-        <defs>
-          <radialGradient id="planetSurface" cx=".25" cy=".2" r=".82">
-            <stop stopColor="#c5e7f2" />
-            <stop offset=".32" stopColor="#608ba9" />
-            <stop offset=".63" stopColor="#253d58" />
-            <stop offset="1" stopColor="#080f1d" />
-          </radialGradient>
-          <linearGradient
-            id="orbitalRing"
-            x1="70"
-            y1="200"
-            x2="550"
-            y2="380"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#b9e4f1" stopOpacity=".1" />
-            <stop offset=".5" stopColor="#b9e4f1" />
-            <stop offset="1" stopColor="#e7ba89" stopOpacity=".5" />
-          </linearGradient>
-          <radialGradient id="planetGlow">
-            <stop stopColor="#668aaf" stopOpacity=".25" />
-            <stop offset="1" stopColor="#668aaf" stopOpacity="0" />
-          </radialGradient>
-          <clipPath id="planetClip">
-            <circle cx="310" cy="270" r="147" />
-          </clipPath>
-        </defs>
-        <circle cx="310" cy="270" r="250" fill="url(#planetGlow)" />
-        <ellipse
-          cx="310"
-          cy="280"
-          rx="274"
-          ry="106"
-          transform="rotate(-28 310 280)"
-          stroke="#526781"
-          strokeOpacity=".35"
-          strokeDasharray="2 9"
-        />
-        <ellipse
-          cx="310"
-          cy="280"
-          rx="239"
-          ry="69"
-          transform="rotate(-28 310 280)"
-          stroke="url(#orbitalRing)"
-          strokeWidth="2"
-        />
-        <circle cx="310" cy="270" r="147" fill="url(#planetSurface)" />
-        <g clipPath="url(#planetClip)" stroke="#b1d6e7" strokeOpacity=".07">
-          <path
-            d="M120 185 Q285 250 490 170 M120 202 Q285 267 490 187 M120 223 Q285 288 490 208 M120 248 Q285 313 490 233 M120 280 Q285 345 490 265 M120 315 Q285 380 490 300 M120 347 Q285 412 490 332"
-            strokeWidth="7"
-          />
-          <circle cx="300" cy="275" r="139" strokeOpacity=".12" />
-        </g>
-        <path
-          d="M101 368 C137 414 303 366 435 296 C503 259 542 224 519 191"
-          stroke="url(#orbitalRing)"
-          strokeWidth="3"
-        />
-        <circle cx="158" cy="385" r="5" fill="#e7ba89" />
-        <circle
-          cx="480"
-          cy="119"
-          r="15"
-          fill="#15243a"
-          stroke="#7097b7"
-          strokeOpacity=".6"
-        />
-        <path
-          d="M101 137h12m-6-6v12M503 392h10m-5-5v10M356 66h8m-4-4v8"
-          stroke="#a1bfd6"
-        />
-        <g fill="#aac8dd">
-          <circle cx="61" cy="264" r="1.5" />
-          <circle cx="173" cy="77" r="1" />
-          <circle cx="536" cy="283" r="1.5" />
-          <circle cx="423" cy="447" r="1" />
-          <circle cx="215" cy="480" r="1.5" />
-          <circle cx="557" cy="80" r="1" />
-          <circle cx="72" cy="436" r="1" />
-          <circle cx="286" cy="103" r="1" />
-        </g>
-      </svg>
-      <span className="space-caption">
-        Curiosity is the starting point.
-        <br />
-        <strong>Engineering is the journey.</strong>
-      </span>
-    </div>
-  );
-}
 function AnalyticsArt() {
   const [view, setView] = useState("Chart");
   const reduced = useReducedMotion();
@@ -359,29 +265,17 @@ function Portfolio() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <header className="site-header wrap">
+      <header className="site-header">
         <a className="brand" href="#top" aria-label="Binay Uppen Sharma home">
-          <span className="brand-mark">
-            bu<span>.</span>
-          </span>
-          <span>Binay Uppen Sharma</span>
+          Binay Uppen Sharma<span aria-hidden="true">.</span>
         </a>
-        <div className="header-actions">
-          <nav aria-label="Main navigation">
-            <a href="#work">Projects</a>
-            <a href="#journey">SRM journey</a>
-            <a className="nav-contact" href="#contact">
-              Contact <ArrowUpRight size={15} />
-            </a>
-          </nav>
-          <ThemeToggle />
-        </div>
+        <ThemeToggle />
       </header>
       <main id="main">
         <section className="hero wrap" id="top">
           <div className="hero-top">
             <span>
-              <i /> JavaScript &amp; MERN developer
+              <i /> Applied AI · MERN · Integrations
             </span>
             <span>Based in Chennai, India</span>
           </div>
@@ -396,9 +290,8 @@ function Portfolio() {
                 </Entrance>
               </h1>
               <p>
-                JavaScript-first developer building interfaces, APIs and AI
-                workflows. From MERN applications to semantic analytics, here’s
-                the work behind the code.
+                I turn complex workflows into useful software. Connecting
+                interfaces, data and AI—with JavaScript at the foundation.
               </p>
               <div className="hero-actions">
                 <a href="#work" className="button primary">
@@ -410,12 +303,12 @@ function Portfolio() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  GitHub profile <ArrowUpRight size={16} />
+                  <SocialIcon kind="github" /> GitHub <ArrowUpRight size={16} />
                 </a>
               </div>
             </div>
             <Entrance delay={0.18}>
-              <HeroArt />
+              <BlackHole />
             </Entrance>
           </div>
           <div className="hero-bottom">
@@ -428,14 +321,16 @@ function Portfolio() {
             </div>
             <div className="current-focus">
               <p>
-                Contributing to Accelerator AI across React interfaces, Node.js
-                services and semantic analytics.
+                From a business question to a usable answer. My SRM work spans
+                React experiences, backend services and AI-powered analytics.
               </p>
               <div className="stack-stamps">
                 <span>JavaScript</span>
                 <span>React</span>
                 <span>Node.js</span>
                 <span>MySQL</span>
+                <span>Redux Toolkit</span>
+                <span>RAG</span>
               </div>
               <a className="text-link" href="#journey">
                 Explore my SRM journey <ArrowDown size={16} />
@@ -443,21 +338,25 @@ function Portfolio() {
             </div>
           </div>
         </section>
-        <section className="work-section" id="work">
+        <section
+          className="work-section"
+          data-section="work"
+          aria-labelledby="work-title"
+        >
           <div className="wrap">
-            <div className="section-heading">
+            <div className="section-heading" id="work" tabIndex={-1}>
               <div>
                 <span className="section-kicker">Selected projects</span>
-                <h2>
-                  Built to solve.
+                <h2 id="work-title">
+                  Real problems.
                   <br />
-                  Designed to work.
+                  Working answers.
                 </h2>
               </div>
               <p>
-                Explore the engineering behind each project.
+                The problem. My part. The approach.
                 <br />
-                Open a case study for my role, approach and code.
+                Open a case study to go beyond the preview.
               </p>
             </div>
             <Reveal>
@@ -472,9 +371,8 @@ function Portfolio() {
                     AI.
                   </h3>
                   <p>
-                    A business question is just the beginning. Connecting it to
-                    the right schema, context and query is where the engineering
-                    happens.
+                    Ask a question. Find the right context. Validate the query.
+                    Turn the result into something a team can use.
                   </p>
                   <div className="project-tags">
                     <span>React</span>
@@ -657,7 +555,11 @@ function Portfolio() {
           </div>
         </section>
         <WorkJourney onOpen={open} />
-        <section className="about-section wrap" id="about">
+        <section
+          className="about-section wrap"
+          data-section="about"
+          aria-labelledby="about-title"
+        >
           <div className="about-art">
             <div className="identity-card">
               <span className="identity-top">
@@ -672,9 +574,9 @@ function Portfolio() {
                 Uppen Sharma
               </h3>
               <p>
-                Curious developer.
+                Curious by default.
                 <br />
-                Work in progress.
+                Practical by design.
               </p>
               <div className="identity-bottom">
                 <span>Chennai, India</span>
@@ -687,30 +589,50 @@ function Portfolio() {
               figuring it out.
             </span>
           </div>
-          <div className="about-copy">
-            <span className="section-kicker">
-              The person behind the pull requests
-            </span>
-            <h2>
-              Big on curiosity.
+          <div className="about-copy" id="about" tabIndex={-1}>
+            <span className="section-kicker">How I work</span>
+            <h2 id="about-title">
+              Close to the problem.
               <br />
-              Hands on the code.
+              Through to the solution.
             </h2>
             <p>
-              I like understanding the whole journey—from the first click to the
-              database query. JavaScript is my foundation, and MERN is where I’m
-              growing.
+              I’m building toward forward-deployed engineering: understanding a
+              real workflow, connecting the systems around it and testing
+              whether the result actually helps. JavaScript and MERN are my
+              foundation.
             </p>
             <p>
-              Along the way, I’ve built AI and data POCs at SRM, explored
-              semantic analytics on Accelerator AI, and developed a
-              live-streaming application during my Fimo internship.
+              At SRM, that means AI and data POCs, semantic analytics and
+              frontend-to-backend integration. At Fimo, my main project was a
+              live-streaming application; messaging was a separate POC.
             </p>
             <p>
-              I use Claude Code and Codex for implementation and automation.
-              Understanding the rules, inspecting the result and testing what
-              happens next are part of the work.
+              Claude Code and Codex help me implement, automate and explore
+              agentic workflows. I stay responsible for the requirements, review
+              and tests.
             </p>
+            <div
+              className="capability-grid"
+              aria-label="SRM tools and developing skills"
+            >
+              <div>
+                <h3>Interfaces &amp; state</h3>
+                <p>React · Redux Toolkit · Vite · Tailwind CSS</p>
+              </div>
+              <div>
+                <h3>Services &amp; data</h3>
+                <p>Node.js · Express · FastAPI · MongoDB · MySQL</p>
+              </div>
+              <div>
+                <h3>AI &amp; verification</h3>
+                <p>RAG · Qdrant · Ollama · LangGraph · Vitest · Pytest</p>
+              </div>
+              <div>
+                <h3>Currently exploring</h3>
+                <p>TanStack Query · TypeORM + MySQL · SQL optimization</p>
+              </div>
+            </div>
             <div className="career">
               <div>
                 <span>Apr 2026 — Present</span>
@@ -733,20 +655,25 @@ function Portfolio() {
               <p>
                 <strong>Currently exploring</strong>
                 <br />
-                TypeORM with MySQL, SQL optimization, and TypeScript
-                implementation with AI assistance.
+                Deeper integration and delivery skills for an FDE path.
+                TypeScript implementation is AI-assisted; JavaScript remains my
+                primary language.
               </p>
             </div>
           </div>
         </section>
-        <section className="contact-section" id="contact">
+        <section
+          className="contact-section"
+          data-section="contact"
+          aria-labelledby="contact-title"
+        >
           <div className="wrap">
             <div className="contact-top">
               <span>Got something in mind?</span>
               <span>Let’s connect the dots.</span>
             </div>
-            <div className="contact-heading">
-              <h2>
+            <div className="contact-heading" id="contact" tabIndex={-1}>
+              <h2 id="contact-title">
                 Let’s build
                 <br />
                 something good.
@@ -754,16 +681,17 @@ function Portfolio() {
             </div>
             <div className="contact-bottom">
               <p>
-                JavaScript, MERN and a healthy amount of curiosity.
+                A workflow to untangle? An idea to test?
                 <br />
-                Start with a hello. See where it goes.
+                Let’s start with the problem.
               </p>
               <div>
                 <a href={linkedin} target="_blank" rel="noreferrer">
-                  Contact on LinkedIn <ArrowUpRight size={16} />
+                  <SocialIcon kind="linkedin" /> LinkedIn{" "}
+                  <ArrowUpRight size={16} />
                 </a>
                 <a href={github} target="_blank" rel="noreferrer">
-                  GitHub <ArrowUpRight size={16} />
+                  <SocialIcon kind="github" /> GitHub <ArrowUpRight size={16} />
                 </a>
               </div>
             </div>

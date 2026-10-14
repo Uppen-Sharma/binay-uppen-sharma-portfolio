@@ -1,6 +1,6 @@
 # Binay Uppen Sharma — Portfolio
 
-A JavaScript-first MERN portfolio with light/dark space themes, clean Manrope typography, a segmented section navigator, expanded case studies and a curated monthly SRM work journey.
+A JavaScript-led portfolio focused on applied AI, MERN and integrations, with an honest forward-deployed engineering development path. Includes theme-aware black-hole artwork, Manrope typography, heading-aligned section navigation, case studies and a curated monthly SRM work journey.
 
 The public case-study copy is intentionally sanitized: it documents engineering themes and dated personal work milestones without exposing customer data, credentials, internal identifiers, or proprietary source code.
 
@@ -23,6 +23,7 @@ npm run build
 - `app/page.tsx` contains the page layout, illustrative previews, experience, and full-name branding.
 - `app/globals.css` contains the responsive design and reduced-motion support.
 - `app/site-controls.tsx` contains persistent theme selection and section-aware navigation.
+- `app/black-hole.tsx` contains the original SVG gravity scene. Its theme-specific cargo animates for at most 4.8 seconds, can be replayed, and stays static with reduced motion. `app/social-icon.tsx` uses current-color brand icons.
 - `app/experience.ts` contains sanitized monthly work chapters; `app/work-journey.tsx` renders their selectable detail and dated highlights. The raw tracker is not published.
 - `app/motion-ui.tsx` contains the Motion for React primitives; `app/motion-features.ts` loads animation features separately. The analytics preview and animated case-study state are in `app/page.tsx`.
 - `public/fonts` contains self-hosted Manrope fonts and the SIL Open Font License.

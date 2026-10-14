@@ -7,9 +7,9 @@
   },
   "scripts": {
     "install:ci": "node scripts/install-ci.mjs",
-    "dev": "next dev --port 5173",
+    "dev": "next dev --port 5174",
     "build": "next build",
-    "start": "next start --port 5173",
+    "start": "next start --port 5174",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate"
   },

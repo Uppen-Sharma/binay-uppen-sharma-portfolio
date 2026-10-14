@@ -1,6 +1,6 @@
 # Readable themes and an evidence-backed work journey
 
-Updated 13 October 2026.
+Updated 14 October 2026; work-log coverage remains through 13 October.
 
 ## Visual system
 
@@ -10,7 +10,21 @@ Dark: midnight #090e1c, slate #16243a, ice #b9e4f1, text #edf2fb.
 Light: lunar #f4f8fc, white #ffffff, blue #245f7f, text #18263b.
 Shared structural tokens drive surfaces, text, borders and states. Initial appearance follows the device preference unless an explicit local theme choice exists. The toggle remembers only the theme preference, not application or work-log data. Browser theme color and native color-scheme follow it.
 
-Navigation uses ordinary anchors, section-aware highlighting and subtle hover feedback. No magnetic navigation movement, scroll hijacking, new heavy graphics dependency or ongoing decorative animation.
+Navigation uses ordinary anchors on heading blocks with a shared responsive header offset. Active-section tracking uses those same targets. The fixed header contains only the full name and theme toggle; the rail remains the sole section navigation. On wide screens the rail stays beside the bounded content column.
+
+The original SVG black hole uses warm orange in dark mode and blue in light mode, with contrasting stars in both. Theme-specific code/workflow or document/chart glyphs spiral inward using only transform and opacity, for a maximum of 4.8 seconds. A labelled replay control is available; reduced motion disables the animation. No perpetual decorative animation or added graphics dependency.
+
+The owner describes an FDE skills direction, not a current FDE employment title. Copy reflects a path toward forward-deployed engineering while keeping Programmer Analyst Trainee unchanged. The capability groups distinguish SRM project tools from current TanStack Query and TypeORM/MySQL learning. TypeScript remains AI-assisted.
+
+The same licensed Manrope font files are compressed to WOFF2 for delivery: 60,936 bytes combined instead of 189,900 bytes of TTF (about 68% less). Both used weights are preloaded. Original font assets and licenses remain available in the repository.
+
+## 14 October verification
+
+- Production build and targeted ESLint checks pass.
+- Tested effective viewport widths 320, 640, 820, 1280, 1440, 1920 and 3840 pixels; no horizontal page overflow. These are viewport checks, not a claim of exhaustive browser-zoom testing.
+- Projects, journey, About and Contact anchor blocks settle 24 pixels below the fixed header on tested mobile/desktop layouts; active navigation follows the same blocks.
+- Tested persistent themes, matching external-icon colors, result-view tabs, live-streaming project search, native modal dismissal and focus return. No browser warnings/errors in the final local production check.
+- Local mobile Lighthouse after font compression: performance 88, accessibility 100, best practices 100, SEO 100; LCP 2.8 seconds, TBT 340 ms, CLS 0. Lab measurements vary with machine load and do not guarantee field performance.
 
 ## Source boundaries
 

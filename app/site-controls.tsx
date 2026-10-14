@@ -29,8 +29,11 @@ function subscribeTheme(callback: () => void) {
 function getTheme() {
   return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
+export function usePortfolioTheme() {
+  return useSyncExternalStore(subscribeTheme, getTheme, () => "dark");
+}
 export function ThemeToggle() {
-  const theme = useSyncExternalStore(subscribeTheme, getTheme, () => "dark");
+  const theme = usePortfolioTheme();
   useEffect(() => {
     document
       .querySelector('meta[name="theme-color"]')
@@ -60,18 +63,32 @@ export function ThemeToggle() {
 export function SectionRail() {
   const [active, setActive] = useState("top");
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries)
-          if (entry.isIntersecting) setActive(entry.target.id);
-      },
-      { rootMargin: "-25% 0px -65% 0px", threshold: 0 },
-    );
-    for (const { id } of sections) {
-      const section = document.getElementById(id);
-      if (section) observer.observe(section);
+    let scheduled = 0;
+    function measure() {
+      scheduled = 0;
+      const line =
+        (document.querySelector("header")?.getBoundingClientRect().bottom ??
+          76) + 48;
+      let current = "top";
+      for (const { id } of sections) {
+        const target = document.getElementById(id);
+        if (target && target.getBoundingClientRect().top <= line) current = id;
+      }
+      setActive((previous) => (previous === current ? previous : current));
     }
-    return () => observer.disconnect();
+    function update() {
+      if (!scheduled) scheduled = window.requestAnimationFrame(measure);
+    }
+    measure();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    window.addEventListener("hashchange", update);
+    return () => {
+      window.cancelAnimationFrame(scheduled);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("hashchange", update);
+    };
   }, []);
   return (
     <nav className="section-rail" aria-label="Page sections">

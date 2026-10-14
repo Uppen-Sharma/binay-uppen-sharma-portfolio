@@ -9,11 +9,15 @@ export function WorkJourney({ onOpen }: { onOpen: (index: number) => void }) {
   return (
     <section
       className="journey-section"
-      id="journey"
+      data-section="journey"
       aria-labelledby="journey-title"
     >
       <div className="wrap">
-        <div className="section-heading journey-heading">
+        <div
+          className="section-heading journey-heading"
+          id="journey"
+          tabIndex={-1}
+        >
           <div>
             <span className="section-kicker">Work at SRM Technologies</span>
             <h2 id="journey-title">
