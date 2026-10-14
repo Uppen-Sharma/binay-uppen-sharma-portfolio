@@ -20,7 +20,7 @@ import {
 import { SocialIcon } from "./social-icon";
 import { SectionRail, ThemeToggle } from "./site-controls";
 import { WorkJourney } from "./work-journey";
-import { Entrance, MotionRoot, ReadingProgress, Tilt } from "./motion-ui";
+import { MotionRoot, ReadingProgress, Tilt } from "./motion-ui";
 const github = "https://github.com/Uppen-Sharma",
   linkedin = "https://www.linkedin.com/in/BinayUppenSharma";
 
@@ -266,83 +266,59 @@ function Portfolio() {
         <ThemeToggle />
       </header>
       <main id="main">
-        <section className="hero wrap" id="top">
-          <div className="hero-top">
-            <span>
-              <i /> Applied AI · MERN · Integrations
-            </span>
-            <span>Based in Chennai, India</span>
+        <section
+          className="opening-identity wrap"
+          id="top"
+          aria-labelledby="identity-title"
+        >
+          <div>
+            <h1 id="identity-title">Binay Uppen Sharma</h1>
+            <p>Applied AI · MERN · Integrations</p>
           </div>
-          <div className="hero-grid">
-            <div className="hero-copy">
-              <h1>
-                <Entrance as="span" className="headline-line">
-                  Binay Uppen
-                </Entrance>
-                <Entrance as="span" className="headline-line" delay={0.1}>
-                  Sharma.
-                </Entrance>
-              </h1>
-              <p>
-                I turn complex workflows into useful software. Connecting
-                interfaces, data and AI—with JavaScript at the foundation.
-              </p>
-              <div className="hero-actions">
-                <a
-                  className="text-link"
-                  href={github}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <SocialIcon kind="github" /> GitHub <ArrowUpRight size={16} />
-                </a>
-              </div>
-            </div>
-            <Entrance delay={0.18} className="hero-toolbox">
-              <span className="section-kicker">My working toolkit</span>
-              <div className="toolbox-languages">
-                <strong>JavaScript</strong>
-                <span>React · Node.js · Vite</span>
-              </div>
-              <p>
-                Interfaces, APIs and connected data. AI when it earns its place.
-              </p>
-              <div className="toolbox-methods">
-                <span>Redux Toolkit</span>
-                <span>Express</span>
-                <span>MySQL</span>
-                <span>RAG</span>
-                <span>Vitest</span>
-                <span>Claude Code + Codex</span>
-              </div>
-              <small>TypeScript implementation is AI-assisted.</small>
-            </Entrance>
-          </div>
-          <div className="hero-bottom">
-            <div className="current-role">
-              <span className="section-kicker">
-                Currently at SRM Technologies
-              </span>
-              <h2>Programmer Analyst Trainee</h2>
-              <p>Full time · April 2026 — present</p>
-            </div>
-            <div className="current-focus">
-              <p>
-                From a business question to a usable answer. My SRM work spans
-                React experiences, backend services and AI-powered analytics.
-              </p>
-              <div className="stack-stamps">
-                <span>JavaScript</span>
-                <span>React</span>
-                <span>Node.js</span>
-                <span>MySQL</span>
-                <span>Redux Toolkit</span>
-                <span>RAG</span>
-              </div>
-            </div>
-          </div>
+          <span>Chennai, India</span>
         </section>
         <ProjectUniverse ref={universe} onOpen={open} />
+        <section
+          className="work-context wrap"
+          aria-label="Current role and working toolkit"
+        >
+          <div className="work-context-role">
+            <span className="section-kicker">
+              Currently at SRM Technologies
+            </span>
+            <h2>Programmer Analyst Trainee</h2>
+            <p className="role-date">Full time · April 2026 — present</p>
+            <p>
+              I connect interfaces, data and AI—with JavaScript at the
+              foundation. At SRM, I contribute to React experiences, backend
+              services and semantic analytics.
+            </p>
+            <a
+              className="text-link"
+              href={github}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <SocialIcon kind="github" /> GitHub <ArrowUpRight size={16} />
+            </a>
+          </div>
+          <div className="context-toolbox">
+            <h2>My working toolkit</h2>
+            <div className="toolbox-languages">
+              <strong>JavaScript</strong>
+              <span>React · Node.js · Vite</span>
+            </div>
+            <div className="toolbox-methods">
+              <span>Redux Toolkit</span>
+              <span>Express</span>
+              <span>MySQL</span>
+              <span>RAG</span>
+              <span>Vitest</span>
+              <span>Claude Code + Codex</span>
+            </div>
+            <small>TypeScript implementation is AI-assisted.</small>
+          </div>
+        </section>
         <WorkJourney onOpen={open} />
         <section
           className="about-section wrap"

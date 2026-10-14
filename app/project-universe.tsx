@@ -188,14 +188,9 @@ export const ProjectUniverse = forwardRef<
           tabIndex={-1}
         >
           <div>
-            <span className="section-kicker">Projects in orbit</span>
-            <h2 id="work-title">Follow your curiosity.</h2>
+            <h2 id="work-title">Explore my project universe.</h2>
           </div>
-          <p>
-            Select a project. Enter its story.
-            <br />
-            Close it to send it back into orbit.
-          </p>
+          <p>Select a project. Close it to return to orbit.</p>
         </div>
         <div className="universe-tools">
           <div

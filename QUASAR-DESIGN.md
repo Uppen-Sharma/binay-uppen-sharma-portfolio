@@ -10,6 +10,8 @@ Palette: midnight #090e1c, lunar #f4f8fc, text #edf2fb, slate #3e5471, gravity o
 
 Desktop composition: project objects / black hole / project objects. Mobile: portal above a compact two-column object set. If a selected object has scrolled beyond the main portal, a small viewport-local portal joins the transition; the page is not forcibly scrolled.
 
+Opening refinement: the full name and a short focus line sit above the project universe. The current SRM role and working toolkit follow the constellation, before the monthly work journey. The sidebar and project intake/return behavior are unchanged. Desktop project rows are compact enough to show the collection in a normal 1280 × 720 opening viewport; narrow screens retain readable touch targets and natural scrolling.
+
 The design concentrates motion in one visitor-driven interaction rather than decorative autoplay. The header divider and redundant project/journey/top navigation links are removed; the section rail remains.
 
 ## Interaction
@@ -27,7 +29,7 @@ The OS reduced-motion preference and the collection's “Read without motion” 
 - JavaScript stays primary; React, Vite, Node.js, Redux Toolkit, Express, MySQL, RAG, Vitest and AI-assisted tooling are visible in the working toolkit.
 - TypeScript stays identified as AI-assisted implementation; TanStack Query and TypeORM/MySQL remain learning rather than unsupported production claims.
 - Methods include existing semantic retrieval/SQL validation, JWT/RBAC, producer/evaluator feedback and current Repository/QueryBuilder learning.
-- The hero is shorter, the career timeline fills the previous empty profile column, and section padding is tighter.
+- The opening is project-first, the career timeline fills the previous empty profile column, and section padding is tighter.
 - Contact no longer forces a viewport height. The native end-of-page anchor can stop at the scroll limit; the rail correctly marks Contact at the bottom without adding blank space.
 - Accelerator, document and TaskFlows concept previews remain inside their readers; fictional data and confidentiality labels stay explicit.
 
@@ -42,3 +44,10 @@ The OS reduced-motion preference and the collection's “Read without motion” 
 - Local mobile Lighthouse: performance 85, accessibility 100, best practices 100, SEO 100; LCP 2.0 seconds, TBT 560 ms, CLS 0. These are machine-dependent lab results, not field guarantees.
 
 The private tracker, résumé, credentials and internal screenshots remain outside Git and public assets.
+
+## Opening refinement checks
+
+- Verified the name → black hole/projects → role/toolkit order in dark and light modes.
+- Checked effective widths of 320, 390, 1280, 1920 and 3840 pixels without horizontal overflow; on mobile, the black hole sits above the project objects.
+- Rechecked the Accelerator AI reader's mouse-close/return path: the dialog closed, no objects stayed hidden, and focus returned to its project button.
+- The Projects rail link lands approximately 24 pixels below the fixed header.
