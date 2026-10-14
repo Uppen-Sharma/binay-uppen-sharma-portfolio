@@ -23,10 +23,11 @@ npm run build
 - `app/page.tsx` contains the page layout, illustrative previews, experience, and full-name branding.
 - `app/globals.css` contains the responsive design and reduced-motion support.
 - `app/site-controls.tsx` contains persistent theme selection and section-aware navigation.
-- `app/black-hole.tsx` contains the original SVG gravity scene. Its theme-specific cargo animates for at most 4.8 seconds, can be replayed, and stays static with reduced motion. `app/social-icon.tsx` uses current-color brand icons.
+- `app/project-universe.tsx` and `app/project-universe.css` own the searchable, filtered project constellation and its intake/read/quasar-return loop. The collection uses the original SVG in `app/black-hole.tsx`; `app/social-icon.tsx` uses current-color brand icons.
 - `app/experience.ts` contains sanitized monthly work chapters; `app/work-journey.tsx` renders their selectable detail and dated highlights. The raw tracker is not published.
 - `app/motion-ui.tsx` contains the Motion for React primitives; `app/motion-features.ts` loads animation features separately. The analytics preview and animated case-study state are in `app/page.tsx`.
 - `public/fonts` contains self-hosted Manrope fonts and the SIL Open Font License.
+- `QUASAR-DESIGN.md` records the current interaction, spacing changes and verification boundaries. The older design notes are historical.
 - `WORK-JOURNEY.md` records the current layout, theme and source boundaries; `SPACE-DESIGN.md`, `REVAMP.md` and `DESIGN.md` preserve earlier design notes. Project visuals are illustrative, not customer screenshots or production measurements.
 
 Project descriptions were reviewed against public GitHub documentation and relevant source files in September 2026, with experience and education drawn from the owner's résumé. MySQL is the owner's confirmed database experience; the PostgreSQL entry in older records was incorrect. Course exercises and team contributions are identified separately. Entertainment recap projects are excluded.

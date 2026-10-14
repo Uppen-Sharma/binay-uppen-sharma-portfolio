@@ -1,1 +1,1 @@
-export { domMax as default } from "motion/react";
+export { domAnimation as default } from "motion/react";

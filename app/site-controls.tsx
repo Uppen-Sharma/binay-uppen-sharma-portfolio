@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 
 const sections = [
@@ -62,6 +62,7 @@ export function ThemeToggle() {
 }
 export function SectionRail() {
   const [active, setActive] = useState("top");
+  const activeSection = useRef("top");
   useEffect(() => {
     let scheduled = 0;
     function measure() {
@@ -74,7 +75,17 @@ export function SectionRail() {
         const target = document.getElementById(id);
         if (target && target.getBoundingClientRect().top <= line) current = id;
       }
-      setActive((previous) => (previous === current ? previous : current));
+      if (
+        window.scrollY > 0 &&
+        document.documentElement.scrollHeight -
+          (window.scrollY + window.innerHeight) <
+          4
+      )
+        current = "contact";
+      if (activeSection.current !== current) {
+        activeSection.current = current;
+        setActive(current);
+      }
     }
     function update() {
       if (!scheduled) scheduled = window.requestAnimationFrame(measure);

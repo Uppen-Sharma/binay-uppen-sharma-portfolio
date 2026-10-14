@@ -1,8 +1,4 @@
-"use client";
-import { useState } from "react";
-import { RotateCcw } from "lucide-react";
-import { usePortfolioTheme } from "./site-controls";
-
+import { useId } from "react";
 const stars = [
   [42, 90, 2],
   [86, 190, 1.5],
@@ -23,25 +19,23 @@ const stars = [
   [485, 455, 1.3],
 ];
 export function BlackHole() {
-  const theme = usePortfolioTheme();
-  const [replay, setReplay] = useState(0);
+  const id = useId();
   return (
     <div className="black-hole-scene">
       <svg
-        key={theme + replay}
         className="black-hole"
         viewBox="0 0 620 500"
         fill="none"
         aria-hidden="true"
       >
         <defs>
-          <radialGradient id="gravity-halo">
+          <radialGradient id={id + "-halo"}>
             <stop stopColor="var(--gravity)" stopOpacity=".23" />
             <stop offset=".6" stopColor="var(--gravity)" stopOpacity=".08" />
             <stop offset="1" stopColor="var(--gravity)" stopOpacity="0" />
           </radialGradient>
           <linearGradient
-            id="accretion"
+            id={id + "-disk"}
             x1="80"
             y1="205"
             x2="530"
@@ -65,7 +59,7 @@ export function BlackHole() {
             strokeWidth="1.3"
           />
         </g>
-        <circle cx="310" cy="245" r="230" fill="url(#gravity-halo)" />
+        <circle cx="310" cy="245" r="230" fill={`url(#${id}-halo)`} />
         <g transform="rotate(-18 310 245)">
           <ellipse
             cx="310"
@@ -81,7 +75,7 @@ export function BlackHole() {
             cy="245"
             rx="205"
             ry="48"
-            stroke="url(#accretion)"
+            stroke={`url(#${id}-disk)`}
             strokeWidth="13"
             opacity=".12"
           />
@@ -90,7 +84,7 @@ export function BlackHole() {
             cy="245"
             rx="199"
             ry="43"
-            stroke="url(#accretion)"
+            stroke={`url(#${id}-disk)`}
             strokeWidth="2"
           />
           <ellipse
@@ -98,7 +92,7 @@ export function BlackHole() {
             cy="245"
             rx="176"
             ry="35"
-            stroke="url(#accretion)"
+            stroke={`url(#${id}-disk)`}
             strokeWidth="5"
           />
           <path
@@ -109,7 +103,7 @@ export function BlackHole() {
           />
           <path
             d="M227 245c0-124 166-124 166 0"
-            stroke="url(#accretion)"
+            stroke={`url(#${id}-disk)`}
             strokeWidth="3"
           />
           <circle
@@ -129,13 +123,13 @@ export function BlackHole() {
           />
           <path
             d="M111 245c0 57 398 57 398 0"
-            stroke="url(#accretion)"
+            stroke={`url(#${id}-disk)`}
             strokeWidth="7"
             opacity=".15"
           />
           <path
             d="M111 245c0 51 398 51 398 0"
-            stroke="url(#accretion)"
+            stroke={`url(#${id}-disk)`}
             strokeWidth="3"
           />
           <path
@@ -145,58 +139,7 @@ export function BlackHole() {
             opacity=".8"
           />
         </g>
-        <g className="infall">
-          <g className="infall-item infall-one">
-            <g transform="translate(115 130)">
-              <rect x="-17" y="-14" width="34" height="28" rx="6" />
-              <text className="dark-cargo" textAnchor="middle" y="5">
-                {"{ }"}
-              </text>
-              <path className="light-cargo" d="M-8-4h16M-8 1h10M-8 6h13" />
-            </g>
-          </g>
-          <g className="infall-item infall-two">
-            <g transform="translate(520 162)">
-              <ellipse rx="15" ry="6" />
-              <path d="M-15 0v16c0 8 30 8 30 0V0M-15 8c0 8 30 8 30 0" />
-            </g>
-          </g>
-          <g className="infall-item infall-three">
-            <g transform="translate(450 380)">
-              <path
-                className="dark-cargo"
-                d="m-15 0 8-8 8 8-8 8ZM2-8h14M2 0h18M2 8h11"
-              />
-              <path
-                className="light-cargo"
-                d="M-13-12h26v24h-26ZM-7 5v-6M0 5V-5M7 5V-9"
-              />
-            </g>
-          </g>
-          <g className="infall-item infall-four">
-            <g transform="translate(139 366)">
-              <circle r="14" />
-              <path className="dark-cargo" d="m-7 0 5 5 9-10" />
-              <path
-                className="light-cargo"
-                d="M-6-3c0-8 14-8 12 0-1 3-6 2-6 7M0 8v1"
-              />
-            </g>
-          </g>
-        </g>
       </svg>
-      <div className="gravity-caption">
-        <span>
-          Complexity in. <strong>Clarity out.</strong>
-        </span>
-        <button
-          className="orbit-replay"
-          onClick={() => setReplay(replay + 1)}
-          aria-label="Replay black hole animation"
-        >
-          <RotateCcw size={14} />
-        </button>
-      </div>
     </div>
   );
 }

@@ -1,44 +1,35 @@
 "use client";
-import { useRef, useState } from "react";
-import {
-  AnimatePresence,
-  LayoutGroup,
-  m,
-  useReducedMotion,
-} from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
 import {
   ArrowUpRight,
-  ArrowDown,
   Code2,
   Layers,
   Database,
   Check,
   X,
-  Search,
   FileText,
   Sparkles,
   GitBranch,
 } from "lucide-react";
 import { projects } from "./projects";
-import { BlackHole } from "./black-hole";
+import {
+  ProjectUniverse,
+  type ProjectUniverseHandle,
+} from "./project-universe";
 import { SocialIcon } from "./social-icon";
 import { SectionRail, ThemeToggle } from "./site-controls";
 import { WorkJourney } from "./work-journey";
-import {
-  Entrance,
-  MotionRoot,
-  ReadingProgress,
-  Reveal,
-  ScrollScene,
-  Tilt,
-  settle,
-} from "./motion-ui";
+import { Entrance, MotionRoot, ReadingProgress, Tilt } from "./motion-ui";
 const github = "https://github.com/Uppen-Sharma",
   linkedin = "https://www.linkedin.com/in/BinayUppenSharma";
 
-function AnalyticsArt() {
+function AnalyticsArt({
+  withoutMotion = false,
+}: { withoutMotion?: boolean } = {}) {
   const [view, setView] = useState("Chart");
-  const reduced = useReducedMotion();
+  const systemReduced = useReducedMotion();
+  const reduced = systemReduced || withoutMotion;
   return (
     <div className="analytics-art">
       <div className="analytics-window">
@@ -86,7 +77,7 @@ function AnalyticsArt() {
               <AnimatePresence mode="wait" initial={false}>
                 <m.div
                   key={view}
-                  initial={{ opacity: 0, y: reduced ? 0 : 5 }}
+                  initial={{ opacity: 1, y: reduced ? 0 : 5 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: reduced ? 0 : 0.15 }}
@@ -232,31 +223,34 @@ export default function Home() {
 function Portfolio() {
   const reduced = useReducedMotion();
   const [selected, setSelected] = useState(0),
-    [visible, setVisible] = useState(false),
-    [filter, setFilter] = useState("All"),
-    [query, setQuery] = useState(""),
-    [expanded, setExpanded] = useState(false);
+    [visible, setVisible] = useState(false);
+  const [readerStatic, setReaderStatic] = useState(false);
+  const readerReduced = reduced || readerStatic;
+  const universe = useRef<ProjectUniverseHandle>(null);
+  const closeTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
   const dialog = useRef<HTMLDialogElement>(null),
     trigger = useRef<HTMLElement | null>(null);
   const project = projects[selected];
-  const archive = projects
-    .map((p, index) => ({ ...p, index }))
-    .slice(3)
-    .filter(
-      (p) =>
-        (filter === "All" || p.category === filter) &&
-        (p.name + " " + p.stack + " " + p.summary)
-          .toLowerCase()
-          .includes(query.toLowerCase()),
-    );
-  function open(i: number) {
+  function open(i: number, withoutMotion = false) {
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = undefined;
     trigger.current = document.activeElement as HTMLElement;
     setSelected(i);
+    setReaderStatic(withoutMotion);
     setVisible(true);
     dialog.current?.showModal();
   }
   function close() {
     setVisible(false);
+    if (closeTimer.current !== undefined) return;
+    closeTimer.current = window.setTimeout(
+      () => {
+        closeTimer.current = undefined;
+        if (dialog.current?.open) dialog.current.close();
+      },
+      readerReduced ? 0 : 220,
+    );
   }
   return (
     <>
@@ -294,9 +288,6 @@ function Portfolio() {
                 interfaces, data and AI—with JavaScript at the foundation.
               </p>
               <div className="hero-actions">
-                <a href="#work" className="button primary">
-                  View projects <ArrowDown size={18} />
-                </a>
                 <a
                   className="text-link"
                   href={github}
@@ -307,8 +298,24 @@ function Portfolio() {
                 </a>
               </div>
             </div>
-            <Entrance delay={0.18}>
-              <BlackHole />
+            <Entrance delay={0.18} className="hero-toolbox">
+              <span className="section-kicker">My working toolkit</span>
+              <div className="toolbox-languages">
+                <strong>JavaScript</strong>
+                <span>React · Node.js · Vite</span>
+              </div>
+              <p>
+                Interfaces, APIs and connected data. AI when it earns its place.
+              </p>
+              <div className="toolbox-methods">
+                <span>Redux Toolkit</span>
+                <span>Express</span>
+                <span>MySQL</span>
+                <span>RAG</span>
+                <span>Vitest</span>
+                <span>Claude Code + Codex</span>
+              </div>
+              <small>TypeScript implementation is AI-assisted.</small>
             </Entrance>
           </div>
           <div className="hero-bottom">
@@ -332,228 +339,10 @@ function Portfolio() {
                 <span>Redux Toolkit</span>
                 <span>RAG</span>
               </div>
-              <a className="text-link" href="#journey">
-                Explore my SRM journey <ArrowDown size={16} />
-              </a>
             </div>
           </div>
         </section>
-        <section
-          className="work-section"
-          data-section="work"
-          aria-labelledby="work-title"
-        >
-          <div className="wrap">
-            <div className="section-heading" id="work" tabIndex={-1}>
-              <div>
-                <span className="section-kicker">Selected projects</span>
-                <h2 id="work-title">
-                  Real problems.
-                  <br />
-                  Working answers.
-                </h2>
-              </div>
-              <p>
-                The problem. My part. The approach.
-                <br />
-                Open a case study to go beyond the preview.
-              </p>
-            </div>
-            <Reveal>
-              <article className="flagship">
-                <div className="flagship-copy">
-                  <span className="project-kind">
-                    SRM Technologies · Team contribution
-                  </span>
-                  <h3>
-                    Accelerator
-                    <br />
-                    AI.
-                  </h3>
-                  <p>
-                    Ask a question. Find the right context. Validate the query.
-                    Turn the result into something a team can use.
-                  </p>
-                  <div className="project-tags">
-                    <span>React</span>
-                    <span>Node.js</span>
-                    <span>Semantic retrieval</span>
-                  </div>
-                  <m.button
-                    className="button ink"
-                    onClick={() => open(0)}
-                    whileHover={reduced ? undefined : { x: 2 }}
-                    whileTap={reduced ? undefined : { scale: 0.97 }}
-                    aria-label="View case study: Accelerator AI"
-                  >
-                    View case study <ArrowUpRight size={17} />
-                  </m.button>
-                </div>
-                <div className="flagship-stage">
-                  <ScrollScene>
-                    <AnalyticsArt />
-                  </ScrollScene>
-                  <span className="preview-note">
-                    UI-inspired concept · fictional data
-                  </span>
-                </div>
-              </article>
-            </Reveal>
-            <div className="project-pair">
-              <Reveal>
-                <article className="project-card doc-card">
-                  <div className="card-visual" aria-hidden="true">
-                    <DocumentArt />
-                    <span className="preview-note">
-                      Concept preview · illustrative UI
-                    </span>
-                  </div>
-                  <div className="card-copy">
-                    <span className="project-kind">
-                      SRM · Document-processing POC
-                    </span>
-                    <h3>Document Intelligence</h3>
-                    <p>
-                      Find the fields hiding across a PDF. Retrieve the context.
-                      Turn the result into a spreadsheet.
-                    </p>
-                    <span className="card-stack">
-                      React / FastAPI / Azure AI
-                    </span>
-                    <button
-                      className="button case-study-button"
-                      onClick={() => open(1)}
-                      aria-label="View case study: Document Intelligence"
-                    >
-                      View case study <ArrowUpRight size={17} />
-                    </button>
-                  </div>
-                </article>
-              </Reveal>
-              <Reveal>
-                <article className="project-card task-card">
-                  <div className="card-visual" aria-hidden="true">
-                    <TaskArt />
-                    <span className="preview-note">
-                      Concept preview · illustrative UI
-                    </span>
-                  </div>
-                  <div className="card-copy">
-                    <span className="project-kind">
-                      MERN application · Workflow engineering
-                    </span>
-                    <h3>TaskFlows</h3>
-                    <p>
-                      Propose it. Approve it. Get to work. A task application
-                      with clear permissions and server-owned time tracking.
-                    </p>
-                    <span className="card-stack">
-                      MongoDB / Express / React / Node.js
-                    </span>
-                    <button
-                      className="button case-study-button"
-                      onClick={() => open(2)}
-                      aria-label="View case study: TaskFlows"
-                    >
-                      View case study <ArrowUpRight size={17} />
-                    </button>
-                  </div>
-                </article>
-              </Reveal>
-            </div>
-            <section className="archive" aria-labelledby="archive-title">
-              <div className="archive-heading">
-                <div>
-                  <h3 id="archive-title">More projects. Same curiosity.</h3>
-                  <p>
-                    Browse the archive. Select a project to see its case study.
-                  </p>
-                </div>
-                <label className="search-box">
-                  <Search size={17} />
-                  <input
-                    type="search"
-                    name="projects"
-                    autoComplete="off"
-                    spellCheck={false}
-                    aria-label="Search projects"
-                    placeholder="Try React, AI or an API…"
-                    value={query}
-                    onChange={(e) => {
-                      setQuery(e.target.value);
-                      setExpanded(true);
-                    }}
-                  />
-                </label>
-              </div>
-              <LayoutGroup id="archive-filter">
-                <div
-                  className="filters"
-                  role="group"
-                  aria-label="Project categories"
-                >
-                  {["All", "AI", "Data", "Full stack", "Backend"].map((c) => (
-                    <m.button
-                      key={c}
-                      aria-pressed={filter === c}
-                      onClick={() => {
-                        setFilter(c);
-                        setExpanded(true);
-                      }}
-                    >
-                      {filter === c && (
-                        <m.span
-                          layoutId="selected-filter"
-                          className="filter-highlight"
-                          transition={reduced ? { duration: 0 } : settle}
-                        />
-                      )}
-                      <span>{c}</span>
-                    </m.button>
-                  ))}
-                </div>
-              </LayoutGroup>
-              <p className="sr-only" aria-live="polite">
-                {archive.length} matching projects
-              </p>
-              <div className="archive-list">
-                {(expanded ? archive : archive.slice(0, 4)).map((p) => (
-                  <m.button
-                    layout={reduced ? false : "position"}
-                    initial={false}
-                    key={p.name}
-                    className="archive-row"
-                    onClick={() => open(p.index)}
-                    whileHover={reduced ? undefined : { x: 5 }}
-                  >
-                    <span>
-                      <strong>{p.name}</strong>
-                      <small>{p.summary}</small>
-                    </span>
-                    <span className="archive-category">{p.category}</span>
-                    <span className="archive-action">
-                      View details <ArrowUpRight size={16} />
-                    </span>
-                  </m.button>
-                ))}
-              </div>
-              {archive.length === 0 && (
-                <p className="empty-state">
-                  No projects found. Try “React”, “API” or clear your search.
-                </p>
-              )}
-              {!expanded && archive.length > 4 && (
-                <button className="show-more" onClick={() => setExpanded(true)}>
-                  Show all {archive.length} projects <ArrowDown size={16} />
-                </button>
-              )}
-              <p className="work-note">
-                Company data stays private. Related POC versions are grouped
-                together.
-              </p>
-            </section>
-          </div>
-        </section>
+        <ProjectUniverse ref={universe} onOpen={open} />
         <WorkJourney onOpen={open} />
         <section
           className="about-section wrap"
@@ -581,6 +370,23 @@ function Portfolio() {
               <div className="identity-bottom">
                 <span>Chennai, India</span>
                 <Code2 size={21} />
+              </div>
+            </div>
+            <div className="career">
+              <div>
+                <span>Apr 2026 — Present</span>
+                <strong>Programmer Analyst Trainee</strong>
+                <p>SRM Technologies · Full time</p>
+              </div>
+              <div>
+                <span>Sep 2025 — Mar 2026</span>
+                <strong>Internship · 7 months</strong>
+                <p>SRM Technologies</p>
+              </div>
+              <div>
+                <span>Mar — Jun 2025</span>
+                <strong>Internship</strong>
+                <p>Fimo Info Solutions · Live streaming; messaging POC</p>
               </div>
             </div>
             <span className="about-sticker" aria-hidden="true">
@@ -626,29 +432,23 @@ function Portfolio() {
               </div>
               <div>
                 <h3>AI &amp; verification</h3>
-                <p>RAG · Qdrant · Ollama · LangGraph · Vitest · Pytest</p>
+                <p>
+                  RAG · Qdrant · Chroma · Ollama · LangChain · LangGraph ·
+                  Vitest · Pytest
+                </p>
               </div>
               <div>
                 <h3>Currently exploring</h3>
                 <p>TanStack Query · TypeORM + MySQL · SQL optimization</p>
               </div>
             </div>
-            <div className="career">
-              <div>
-                <span>Apr 2026 — Present</span>
-                <strong>Programmer Analyst Trainee</strong>
-                <p>SRM Technologies · Full time</p>
-              </div>
-              <div>
-                <span>Sep 2025 — Mar 2026</span>
-                <strong>Internship · 7 months</strong>
-                <p>SRM Technologies</p>
-              </div>
-              <div>
-                <span>Mar — Jun 2025</span>
-                <strong>Internship</strong>
-                <p>Fimo Info Solutions · Live streaming; messaging POC</p>
-              </div>
+            <div className="working-methods">
+              <h3>Methods behind the tools</h3>
+              <p>
+                Semantic retrieval and SQL validation. JWT/RBAC for permissions.
+                Producer/evaluator feedback for AI workflows. Repository and
+                QueryBuilder patterns in my current TypeORM learning.
+              </p>
             </div>
             <div className="learning">
               <GitBranch size={18} />
@@ -700,17 +500,18 @@ function Portfolio() {
       </main>
       <footer className="footer wrap">
         <span>© {new Date().getFullYear()} Binay Uppen Sharma</span>
-        <a href="#top">
-          Back to the top <ArrowUpRight size={14} />
-        </a>
+        <span>JavaScript-led. Problem-first.</span>
       </footer>
       <dialog
         ref={dialog}
         className="project-dialog"
         aria-labelledby="dialog-title"
         onClose={() => {
+          window.clearTimeout(closeTimer.current);
+          closeTimer.current = undefined;
           setVisible(false);
-          trigger.current?.focus();
+          universe.current?.release(selected);
+          trigger.current?.focus({ preventScroll: true });
         }}
         onCancel={(e) => {
           e.preventDefault();
@@ -731,17 +532,17 @@ function Portfolio() {
               key={project.name}
               className="dialog-inner"
               initial={{
-                opacity: 0,
-                y: reduced ? 0 : 18,
-                scale: reduced ? 1 : 0.98,
+                opacity: 1,
+                y: readerReduced ? 0 : 18,
+                scale: readerReduced ? 1 : 0.98,
               }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{
                 opacity: 0,
-                y: reduced ? 0 : 10,
-                scale: reduced ? 1 : 0.98,
+                y: readerReduced ? 0 : 10,
+                scale: readerReduced ? 1 : 0.98,
               }}
-              transition={{ duration: reduced ? 0 : 0.2 }}
+              transition={{ duration: readerReduced ? 0 : 0.2 }}
             >
               <div className="dialog-top">
                 <span>{project.type}</span>
@@ -756,6 +557,20 @@ function Portfolio() {
               </div>
               <h2 id="dialog-title">{project.name}</h2>
               <p className="dialog-intro">{project.intro}</p>
+              {selected < 3 && (
+                <div className="reader-preview">
+                  {selected === 0 ? (
+                    <AnalyticsArt withoutMotion={!!readerReduced} />
+                  ) : selected === 1 ? (
+                    <DocumentArt />
+                  ) : (
+                    <TaskArt />
+                  )}
+                  <p className="reader-preview-note">
+                    Sanitized concept preview · fictional data
+                  </p>
+                </div>
+              )}
               <div className="dialog-section">
                 <h3>The engineering problem</h3>
                 <p>{project.challenge}</p>

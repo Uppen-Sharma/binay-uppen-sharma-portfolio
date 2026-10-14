@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./project-universe.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://binay-uppen-sharma-portfolio.vercel.app"),

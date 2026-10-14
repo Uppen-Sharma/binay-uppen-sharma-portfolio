@@ -2,6 +2,8 @@
 
 Updated 14 October 2026; work-log coverage remains through 13 October.
 
+The later project-browser refinement is documented in `QUASAR-DESIGN.md`. It replaces the decorative replay scene, featured-card/archive layout and forced viewport-height contact ending described below. Employment, work-log chapters, source boundaries and case-study content remain intact.
+
 ## Visual system
 
 The space illustration remains the memorable visual. All titles now use the self-hosted Manrope family with normal-width letterforms, less extreme tracking and a restrained type scale. The page has a segmented left section index on desktop and labelled bottom navigation on smaller screens. The header stays accessible while scrolling, including the theme control.
