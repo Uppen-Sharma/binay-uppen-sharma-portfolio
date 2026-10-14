@@ -52,7 +52,7 @@ export const projects: Project[] = [
       "Develop pinned-result interfaces with refresh states, pagination, reordering and clearer component/state boundaries.",
       "Earlier autonomous-analytics and DeepAgent POCs are iterations of this same project, not separate product achievements.",
     ],
-    note: "Based on personal work records and project documentation, February–13 October 2026. Team contribution; proprietary source and company data are not published here. The visual is a sanitized reconstruction of high-level interface patterns, with fictional sample data.",
+    note: "Ongoing project contribution at SRM Technologies. This case study draws on work records and documentation available through 13 October 2026; that is an evidence cutoff, not an employment or project end date. Proprietary source and company data are not published here. The visual is a sanitized reconstruction of high-level interface patterns, with fictional sample data.",
   },
   {
     name: "Document Intelligence",

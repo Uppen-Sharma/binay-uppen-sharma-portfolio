@@ -333,7 +333,7 @@ function Portfolio() {
               Currently at SRM Technologies
             </span>
             <h2>Programmer Analyst Trainee</h2>
-            <p className="role-date">Full time · April 2026 — present</p>
+            <p className="role-date">Full time · April 2026 — Present</p>
             <p>
               I connect interfaces, data and AI—with JavaScript at the
               foundation. At SRM, I contribute to React experiences, backend

@@ -54,6 +54,8 @@ The private tracker, résumé, credentials and internal screenshots remain outsi
 
 ## Current-project and reader refinement
 
+Employment wording: the SRM journey runs September 2025–Present, with the full-time Programmer Analyst Trainee role April 2026–Present. The 13 October work-log snapshot is explicitly an evidence cutoff, not an employment or Accelerator AI end date. No unrecorded work entries have been added.
+
 - Accelerator AI is outside the orbit collection; all 12 case studies remain available, with 11 orbit objects and one dedicated current project.
 - Page and reader scrollbars use theme-aware colors and thin native scrolling. The reader's scroll container stays inside its rounded shell, with an opaque sticky close bar; no simulated scroll behavior is introduced.
 - Checked reader keyboard scrolling to the end, Escape and mouse close, focus return, both themes, and 320/390-pixel layouts. The narrow Accelerator preview wraps its controls and has no overflowing SQL/data content.

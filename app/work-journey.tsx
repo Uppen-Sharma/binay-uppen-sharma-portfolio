@@ -27,9 +27,9 @@ export function WorkJourney({ onOpen }: { onOpen: (index: number) => void }) {
             </h2>
           </div>
           <p>
-            A curated view of my daily work log.
+            My ongoing journey at SRM Technologies.
             <br />
-            September 2025 — 13 October 2026
+            September 2025 — Present
           </p>
         </div>
         <div className="role-progression">
@@ -45,7 +45,7 @@ export function WorkJourney({ onOpen }: { onOpen: (index: number) => void }) {
             <BriefcaseBusiness size={20} />
             <p>
               <strong>Programmer Analyst Trainee</strong>
-              <span>Full time · April 2026 — present</span>
+              <span>Full time · April 2026 — Present</span>
             </p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export function WorkJourney({ onOpen }: { onOpen: (index: number) => void }) {
             <div className="month-summary" aria-live="polite">
               <span className="chapter-date">
                 {chapter.month}
-                {selected === 0 ? " · through 13 October" : ""}
+                {selected === 0 ? " · selected log entries" : ""}
               </span>
               <h3 id="month-title">{chapter.title}</h3>
               <p>{chapter.overview}</p>
@@ -122,6 +122,8 @@ export function WorkJourney({ onOpen }: { onOpen: (index: number) => void }) {
           </article>
         </div>
         <p className="journey-source-note">
+          I continue to work at SRM Technologies. This snapshot covers work-log
+          entries recorded through 13 October 2026, not an employment end date.
           Selected learning exercises, POCs and team contributions—not a list of
           separate shipped products. Company data and raw log entries stay
           private.
