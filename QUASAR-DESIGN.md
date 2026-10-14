@@ -4,13 +4,13 @@
 
 ## Design direction
 
-The black hole is the project browser, not a second decorative hero. All 12 existing, source-reviewed projects become labelled, keyboard-operable objects. The previous three featured cards and separate archive are replaced by one filtered, searchable collection. No claims or confidential project material are added.
+The black hole is the project browser, not a second decorative hero. Eleven source-reviewed projects are labelled, keyboard-operable objects. Accelerator AI is featured separately as the current SRM project immediately below the constellation, with its sanitized interactive concept and existing full case study. No claims or confidential project material are added.
 
 Palette: midnight #090e1c, lunar #f4f8fc, text #edf2fb, slate #3e5471, gravity orange #f39a50 in dark mode and blue #2369be in light mode. Manrope remains the single self-hosted type family.
 
 Desktop composition: project objects / black hole / project objects. Mobile: portal above a compact two-column object set. If a selected object has scrolled beyond the main portal, a small viewport-local portal joins the transition; the page is not forcibly scrolled.
 
-Opening refinement: the full name and a short focus line sit above the project universe. The current SRM role and working toolkit follow the constellation, before the monthly work journey. The sidebar and project intake/return behavior are unchanged. Desktop project rows are compact enough to show the collection in a normal 1280 × 720 opening viewport; narrow screens retain readable touch targets and natural scrolling.
+Opening refinement: the full name and a short focus line sit above the project universe. Accelerator AI, then the current SRM role and working toolkit follow the constellation, before the monthly work journey. The sidebar and orbit intake/return behavior are unchanged. The dedicated Accelerator reader opens directly and restores focus to its own button, without an orbit transition. Desktop project rows are compact enough to show the collection in a normal 1280 × 720 opening viewport; narrow screens retain readable touch targets and natural scrolling.
 
 The design concentrates motion in one visitor-driven interaction rather than decorative autoplay. The header divider and redundant project/journey/top navigation links are removed; the section rail remains.
 
@@ -51,3 +51,10 @@ The private tracker, résumé, credentials and internal screenshots remain outsi
 - Checked effective widths of 320, 390, 1280, 1920 and 3840 pixels without horizontal overflow; on mobile, the black hole sits above the project objects.
 - Rechecked the Accelerator AI reader's mouse-close/return path: the dialog closed, no objects stayed hidden, and focus returned to its project button.
 - The Projects rail link lands approximately 24 pixels below the fixed header.
+
+## Current-project and reader refinement
+
+- Accelerator AI is outside the orbit collection; all 12 case studies remain available, with 11 orbit objects and one dedicated current project.
+- Page and reader scrollbars use theme-aware colors and thin native scrolling. The reader's scroll container stays inside its rounded shell, with an opaque sticky close bar; no simulated scroll behavior is introduced.
+- Checked reader keyboard scrolling to the end, Escape and mouse close, focus return, both themes, and 320/390-pixel layouts. The narrow Accelerator preview wraps its controls and has no overflowing SQL/data content.
+- Rechecked TaskFlows intake/return with the 11-object collection: focus restored, no objects remained hidden, and no browser warnings/errors were reported.

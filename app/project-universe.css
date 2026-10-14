@@ -27,6 +27,100 @@
   padding-block: 32px 40px;
   border-top: 1px solid var(--line);
 }
+.current-project {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 48px;
+  padding-block: 40px 48px;
+  border-top: 1px solid var(--line);
+}
+.current-project-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--gravity);
+}
+.current-project h2 {
+  margin-block: 12px 18px;
+  font-size: clamp(28px, 3vw, 38px);
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+.current-project-copy > p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--secondary);
+  max-width: 58ch;
+}
+.current-project-copy .current-project-lead {
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  max-width: 35ch;
+}
+.current-project-focus {
+  padding-left: 18px;
+  margin-block: 18px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--secondary);
+}
+.current-project-focus li::marker {
+  color: var(--gravity);
+}
+.current-project-copy .current-project-stack {
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+.current-project-note {
+  display: block;
+  font-size: 11px;
+  color: var(--secondary);
+  margin-top: 12px;
+}
+.current-project-preview {
+  min-width: 0;
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--preview-canvas);
+  border: 1px solid var(--line);
+}
+.current-project-preview .analytics-art {
+  max-width: 100%;
+  transform: none;
+}
+.current-project-preview > p {
+  font-size: 11px;
+  color: var(--secondary);
+  text-align: center;
+  margin-top: 14px;
+  line-height: 1.6;
+}
+@media (max-width: 1000px) {
+  .current-project {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+  .current-project-preview {
+    max-width: 640px;
+    width: 100%;
+  }
+}
+@media (max-width: 540px) {
+  .current-project {
+    padding-block: 28px 32px;
+  }
+  .current-project-preview {
+    padding: 12px;
+  }
+  .current-project .button {
+    font-size: 12px;
+    padding-inline: 14px;
+  }
+}
 .work-context-role h2 {
   font-size: 24px;
   line-height: 1.35;
@@ -413,6 +507,27 @@
   color: var(--secondary);
   font-size: 11px;
   margin-top: 12px;
+}
+@media (max-width: 540px) {
+  .reader-preview {
+    padding: 10px;
+  }
+  .reader-preview .analytics-art {
+    padding: 0;
+  }
+  .reader-preview .analytics-sidebar {
+    display: none;
+  }
+  .reader-preview .analytics-main {
+    padding: 12px;
+  }
+  .reader-preview .stage-tabs {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .reader-preview .stage-tabs button {
+    padding-inline: 9px;
+  }
 }
 .contact-section {
   min-height: 0;

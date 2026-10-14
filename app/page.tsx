@@ -279,6 +279,52 @@ function Portfolio() {
         </section>
         <ProjectUniverse ref={universe} onOpen={open} />
         <section
+          className="current-project wrap"
+          aria-labelledby="current-project-title"
+        >
+          <div className="current-project-copy">
+            <span className="current-project-status">
+              <Sparkles size={15} aria-hidden="true" /> Current project at SRM
+            </span>
+            <h2 id="current-project-title">Accelerator AI</h2>
+            <p className="current-project-lead">
+              Business questions. Connected data. Answers you can inspect.
+            </p>
+            <p>
+              I contribute to the React experience and backend workflows that
+              connect semantic retrieval, datasource context and validated SQL.
+              The focus: useful analytics, with a clear path back to the data.
+            </p>
+            <ul
+              className="current-project-focus"
+              aria-label="Contribution areas"
+            >
+              <li>Semantic retrieval &amp; SQL validation</li>
+              <li>Pinned results, refresh &amp; dashboard widgets</li>
+              <li>Clearer frontend and backend boundaries</li>
+            </ul>
+            <p className="current-project-stack">
+              React · Node.js · Express · Qdrant · Ollama
+            </p>
+            <button
+              className="button primary"
+              aria-haspopup="dialog"
+              onClick={() => open(0)}
+            >
+              Read Accelerator AI case study <ArrowUpRight size={16} />
+            </button>
+            <small className="current-project-note">
+              Team contribution. Company source and data stay private.
+            </small>
+          </div>
+          <div className="current-project-preview">
+            <AnalyticsArt />
+            <p>
+              Interactive concept preview · fictional data, not a live dashboard
+            </p>
+          </div>
+        </section>
+        <section
           className="work-context wrap"
           aria-label="Current role and working toolkit"
         >

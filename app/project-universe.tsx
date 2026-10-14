@@ -80,6 +80,7 @@ export const ProjectUniverse = forwardRef<
     .map((project, index) => ({ ...project, index }))
     .filter(
       (project) =>
+        project.index !== 0 &&
         (filter === "All" || filter === project.category) &&
         (project.name + " " + project.summary + " " + project.stack)
           .toLowerCase()
