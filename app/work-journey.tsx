@@ -123,7 +123,7 @@ export function WorkJourney({ onOpen }: { onOpen: (index: number) => void }) {
         </div>
         <p className="journey-source-note">
           I continue to work at SRM Technologies. This snapshot covers work-log
-          entries recorded through 13 October 2026, not an employment end date.
+          entries recorded through 24 November 2026, not an employment end date.
           Selected learning exercises, POCs and team contributions—not a list of
           separate shipped products. Company data and raw log entries stay
           private.

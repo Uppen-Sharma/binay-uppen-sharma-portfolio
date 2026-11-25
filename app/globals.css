@@ -3029,6 +3029,47 @@ h4 {
   color: var(--secondary);
   line-height: 1.85;
 }
+.certificates {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.certificates h3 {
+  font-size: 12px;
+  letter-spacing: 0;
+  margin-bottom: 10px;
+}
+.certificates ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.certificates li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.certificates li a,
+.certificates li span {
+  color: var(--text);
+  min-width: 0;
+}
+.certificates li a {
+  gap: 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+}
+.certificates li small {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--secondary);
+}
 .social-icon {
   flex-shrink: 0;
   color: currentColor;

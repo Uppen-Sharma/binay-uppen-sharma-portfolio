@@ -30,7 +30,7 @@ export const projects: Project[] = [
     category: "AI",
     summary: "From a business question to a grounded, validated answer.",
     stack:
-      "Node.js / Express / React / Qdrant / Ollama / TypeScript (AI-assisted)",
+      "Node.js / Express / React / Qdrant / Milvus / Ollama / TypeScript (AI-assisted)",
     intro:
       "A business question is only useful when it reaches the right data. On Accelerator AI, I contribute to the React interface and the backend steps that connect datasource schemas, business definitions, semantic retrieval and SQL validation.",
     challenge:
@@ -50,9 +50,10 @@ export const projects: Project[] = [
       "Resolve the datasource in the backend and validate generated SQL before handing it to query execution.",
       "Separate routes, services, repositories and frontend features as the prototype grows into a more maintainable application.",
       "Develop pinned-result interfaces with refresh states, pagination, reordering and clearer component/state boundaries.",
+      "Run structured follow-up evaluation rounds (206 questions across 58 conversations) and package a one-command Docker launch with Milvus on self-hosted model endpoints.",
       "Earlier autonomous-analytics and DeepAgent POCs are iterations of this same project, not separate product achievements.",
     ],
-    note: "Ongoing project contribution at SRM Technologies. This case study draws on work records and documentation available through 13 October 2026; that is an evidence cutoff, not an employment or project end date. Proprietary source and company data are not published here. The visual is a sanitized reconstruction of high-level interface patterns, with fictional sample data.",
+    note: "Ongoing project contribution at SRM Technologies. This case study draws on work records and documentation available through 24 November 2026; that is an evidence cutoff, not an employment or project end date. Proprietary source and company data are not published here. The visual is a sanitized reconstruction of high-level interface patterns, with fictional sample data.",
   },
   {
     name: "Document Intelligence",

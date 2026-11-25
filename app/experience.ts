@@ -9,10 +9,38 @@ export type WorkChapter = {
   project?: number;
 };
 
-// Curated from the owner's daily tracker through 13 October 2026.
-// Deliberately excludes raw entries, credentials, customer names and internal metrics.
+// Curated from the owner's daily tracker through 24 November 2026.
+// Deliberately excludes raw entries, credentials, customer names, pass rates and internal business metrics.
 // MySQL follows the owner's explicit correction to an older log entry.
 export const workChapters: WorkChapter[] = [
+  {
+    id: "2026-11",
+    month: "November 2026",
+    title: "Testing AI systems the way users will meet them",
+    overview:
+      "November was about evidence: structured evaluation rounds for Accelerator AI, a repeatable one-command launch, and end-to-end testing of an AI-driven software delivery platform. I also built a small authentication app to practise token handling properly.",
+    stack: ["Node.js", "Docker", "Milvus", "vLLM", "API testing", "JWT"],
+    highlights: [
+      "Ran three follow-up evaluation rounds covering 206 questions across 58 conversations, grouping failures into root causes rather than one-off fixes.",
+      "Packaged a one-command Docker launch for the vector database (Milvus), backend and frontend, running on self-hosted vLLM model endpoints.",
+      "Tested an AI-driven delivery platform through all seven stages: audited generated drafts, ran 27 contract and 17 edge-case checks, found 3 validation bugs and documented 26 platform issues.",
+    ],
+    weeks: [
+      {
+        period: "2–6 November",
+        work: "Studied the latest platform architecture, connected self-hosted LLM and embedding endpoints, and packaged the Docker launch.",
+      },
+      {
+        period: "12–16 November",
+        work: "Ran and documented three conversation evaluation rounds, cataloguing context-loss, ranking and silent-failure patterns.",
+      },
+      {
+        period: "17–24 November",
+        work: "Tested the AIDLC platform end to end across several LLM providers, then built a Todo app with JWT access/refresh tokens and client/admin routes.",
+      },
+    ],
+    project: 0,
+  },
   {
     id: "2026-10",
     month: "October 2026",
@@ -41,8 +69,12 @@ export const workChapters: WorkChapter[] = [
         work: "Studied query-key and cache patterns; refined widget drag interactions, recovery after failed saves, and code naming.",
       },
       {
-        period: "12–13 October",
+        period: "12–14 October",
         work: "Continued analytics and widget refactoring, clarified live-result ownership, and improved architecture documentation.",
+      },
+      {
+        period: "20–30 October",
+        work: "Walked through the newer agent-based architecture: planning, datasource routing, SQL evaluation and repair loops, and streaming responses.",
       },
     ],
     project: 0,

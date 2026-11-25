@@ -24,6 +24,17 @@ import { MotionRoot, ReadingProgress, Tilt } from "./motion-ui";
 const github = "https://github.com/Uppen-Sharma",
   linkedin = "https://www.linkedin.com/in/BinayUppenSharma";
 
+// Completion certificates; ids come from the certificate PDFs (verify at udemy.com/certificate/<id>).
+const certificates = [
+  { name: "AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents", date: "Feb 2026", id: "UC-005d684c-6737-4708-a884-8f8d5fc0993a" },
+  { name: "AI Agents – Azure AI Foundry Agent Service", date: "Jun 2026", id: "UC-739f9bf2-281b-4ff3-82e7-28f0a4e78bfd" },
+  { name: "Local LLMs via Ollama & LM Studio", date: "Completed", id: "" },
+  { name: "The Complete JavaScript Course 2025", date: "Mar 2026", id: "UC-b2680466-606b-4d7e-827e-0ae2302cdc59" },
+  { name: "Node.js – The Complete RESTful API Masterclass", date: "Nov 2025", id: "UC-3ec90f30-d6c6-4a1c-8573-1e20ecb0a46e" },
+  { name: "FastAPI – The Complete Course 2026", date: "Jan 2026", id: "UC-45e1c441-96f2-467e-b165-61833559d5c1" },
+  { name: "React 18 / 19 Course 2025", date: "Sep 2025", id: "UC-8d7c5654-fc58-48f7-9c23-e7981d735e65" },
+];
+
 function AnalyticsArt({
   withoutMotion = false,
 }: { withoutMotion?: boolean } = {}) {
@@ -304,7 +315,7 @@ function Portfolio() {
               <li>Clearer frontend and backend boundaries</li>
             </ul>
             <p className="current-project-stack">
-              React · Node.js · Express · Qdrant · Ollama
+              React · Node.js · Express · Qdrant · Milvus · Ollama
             </p>
             <button
               className="button primary"
@@ -407,7 +418,7 @@ function Portfolio() {
               </div>
               <div>
                 <span>Mar — Jun 2025</span>
-                <strong>Internship</strong>
+                <strong>Java Backend Internship · Remote</strong>
                 <p>Fimo Info Solutions · Live streaming; messaging POC</p>
               </div>
             </div>
@@ -461,16 +472,37 @@ function Portfolio() {
               </div>
               <div>
                 <h3>Currently exploring</h3>
-                <p>TanStack Query · TypeORM + MySQL · SQL optimization</p>
+                <p>TanStack Query · Milvus · AI platform testing</p>
               </div>
             </div>
             <div className="working-methods">
               <h3>Methods behind the tools</h3>
               <p>
                 Semantic retrieval and SQL validation. JWT/RBAC for permissions.
-                Producer/evaluator feedback for AI workflows. Repository and
-                QueryBuilder patterns in my current TypeORM learning.
+                Producer/evaluator feedback for AI workflows. Contract and
+                edge-case testing before trusting generated code.
               </p>
+            </div>
+            <div className="working-methods certificates">
+              <h3>Certificates · Udemy</h3>
+              <ul>
+                {certificates.map((c) => (
+                  <li key={c.name}>
+                    {c.id ? (
+                      <a
+                        href={`https://www.udemy.com/certificate/${c.id}/`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {c.name} <ArrowUpRight size={13} />
+                      </a>
+                    ) : (
+                      <span>{c.name}</span>
+                    )}
+                    <small>{c.date}</small>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="learning">
               <GitBranch size={18} />

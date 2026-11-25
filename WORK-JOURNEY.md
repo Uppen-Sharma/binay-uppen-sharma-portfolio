@@ -1,6 +1,6 @@
 # Readable themes and an evidence-backed work journey
 
-Updated 14 October 2026; work-log coverage remains through 13 October.
+Updated 25 November 2026; work-log coverage now runs through 24 November 2026 (15 monthly chapters, with a November chapter and a late-October period added). Udemy certificates and the Fimo "Remote" detail were added to the About section; TypeORM was removed from the learning lines at the owner's request.
 
 The later project-browser refinement is documented in `QUASAR-DESIGN.md`. It replaces the decorative replay scene, featured-card/archive layout and forced viewport-height contact ending described below. Employment, work-log chapters, source boundaries and case-study content remain intact.
 
