@@ -285,8 +285,15 @@ function Portfolio() {
           <div>
             <h1 id="identity-title">Binay Uppen Sharma</h1>
             <p>Applied AI · MERN · Integrations</p>
+            <p className="opening-tagline">
+              Full-stack developer at SRM Technologies, building LLM-powered
+              tools that are tested and ready for real users.
+            </p>
           </div>
-          <span>Chennai, India</span>
+          <span className="status-chip">
+            <i aria-hidden="true" />
+            Career goal: Forward Deployed Engineer · Chennai
+          </span>
         </section>
         <ProjectUniverse ref={universe} onOpen={open} />
         <section
