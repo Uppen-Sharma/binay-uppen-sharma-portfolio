@@ -773,3 +773,32 @@
     border-top: 1px solid var(--line);
   }
 }
+
+/* Tighter vertical rhythm between sections (Nov 2026).
+   `main` prefix keeps these ahead of the older per-breakpoint rules. */
+main .current-project {
+  padding-block: 32px 36px;
+}
+main .work-context {
+  padding-block: 28px 32px;
+}
+main .journey-section {
+  padding-block: 44px 40px;
+}
+main .journey-heading {
+  margin-bottom: 24px;
+}
+main .about-section {
+  padding-block: 44px 48px;
+}
+main .about-art {
+  padding-top: 0;
+}
+@media (max-width: 760px) {
+  main .current-project,
+  main .work-context,
+  main .journey-section,
+  main .about-section {
+    padding-block: 32px;
+  }
+}
